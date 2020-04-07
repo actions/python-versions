@@ -1,0 +1,71 @@
+steps:
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: 'current'
+    artifact: 'python-$(VERSION)-$(Platform)-$(Architecture)'
+    path: $(Build.BinariesDirectory)
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(Build.BinariesDirectory)/python-$(VERSION)-$(Platform)-$(Architecture).zip'
+    destinationFolder: $(Build.BinariesDirectory)
+    cleanDestinationFolder: false
+
+- task: PowerShell@2
+  displayName: 'Apply build artifact to the local machines'
+  inputs:
+    TargetType: inline
+    script: './setup.ps1'
+    workingDirectory: '$(Build.BinariesDirectory)'
+
+- task: UsePythonVersion@0
+  displayName: 'Use Python $(VERSION)'
+  inputs:
+    versionSpec: '$(VERSION)'
+    architecture: '$(Architecture)'
+
+- task: PowerShell@2
+  displayName: 'Verbose sysconfig dump'
+  inputs:
+    TargetType: inline
+    script: |
+      Invoke-Expression "python ./sources/python-config-output.py"
+    workingDirectory: '$(Build.SourcesDirectory)/tests'
+  condition: ne(variables['Platform'], 'windows-2016')
+
+- task: PowerShell@2
+  displayName: 'Verbose python binary links'
+  inputs:
+    TargetType: inline
+    script: |
+      $pythonLocation = which python
+      if ($env:PLATFORM -match 'macos') { otool -L $pythonLocation } else { ldd $pythonLocation }
+    workingDirectory: '$(Build.BinariesDirectory)'
+  condition: ne(variables['Platform'], 'windows-2016')
+
+- task: PowerShell@2
+  displayName: 'Run tests'
+  inputs:
+    TargetType: inline
+    script: |
+      Install-Module Pester -Force -Scope CurrentUser
+      Import-Module Pester
+      $pesterParams = @{
+        Path="./python-tests.ps1";
+        Parameters=@{
+          Version="$(VERSION)";
+          Platform="$(Platform)";
+        }
+      }
+      Invoke-Pester -Script $pesterParams -OutputFile "test_results.xml" -OutputFormat NUnitXml
+    workingDirectory: '$(Build.SourcesDirectory)/tests'
+
+- task: PublishTestResults@2
+  displayName: 'Publish test results'
+  inputs:
+    testResultsFiles: '*.xml'
+    testResultsFormat: NUnit
+    searchFolder: 'tests'
+    failTaskOnFailedTests: true
+    testRunTitle: "$(TestRunTitle)"
+  condition: always()

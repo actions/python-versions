@@ -1,0 +1,99 @@
+name: $(date:yyyyMMdd)$(rev:.r)-Python-$(VERSION)
+trigger: none
+pr: none
+
+stages:
+- stage: Build_Python_MacOS
+  dependsOn: []
+  variables:
+    VmImage: 'macOS-10.14'
+    Platform: macos-1014
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_MacOS
+  condition: succeeded()
+  dependsOn: Build_Python_MacOS
+  variables:
+    VmImage: 'macOS-10.14'
+    Platform: macos-1014
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml
+
+- stage: Build_Python_Ubuntu_1604
+  dependsOn: []
+  variables:
+    VmImage: 'ubuntu-16.04'
+    Platform: ubuntu-1604
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_Ubuntu_1604
+  condition: succeeded()
+  dependsOn: Build_Python_Ubuntu_1604
+  variables:
+    VmImage: 'ubuntu-16.04'
+    Platform: ubuntu-1604
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml
+
+- stage: Build_Python_Ubuntu_1804
+  dependsOn: []
+  variables:
+    VmImage: 'ubuntu-18.04'
+    Platform: ubuntu-1804
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_Ubuntu_1804
+  condition: succeeded()
+  dependsOn: Build_Python_Ubuntu_1804
+  variables:
+    VmImage: 'ubuntu-18.04'
+    Platform: ubuntu-1804
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml
+
+- stage: Build_Python_X64_Windows
+  dependsOn: []
+  variables:
+    VmImage: 'vs2017-win2016'
+    Platform: windows-2016
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_x64_Windows
+  condition: succeeded()
+  dependsOn: Build_Python_X64_Windows
+  variables:
+    VmImage: 'vs2017-win2016'
+    Platform: windows-2016
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml
+
+- stage: Build_Python_x86_Windows
+  dependsOn: []
+  variables:
+    VmImage: 'vs2017-win2016'
+    Platform: windows-2016
+    Architecture: x86
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_x86_Windows
+  condition: succeeded()
+  dependsOn: Build_Python_x86_Windows
+  variables:
+    VmImage: 'vs2017-win2016'
+    Platform: windows-2016
+    Architecture: x86
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml

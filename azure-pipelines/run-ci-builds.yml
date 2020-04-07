@@ -1,0 +1,30 @@
+trigger: none
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - master
+
+jobs:
+- job: Run_Builds
+  pool:
+    name: Azure Pipelines
+    vmImage: 'ubuntu-latest'
+
+  steps:
+  - checkout: self
+    submodules: true
+
+  - task: PowerShell@2
+    displayName: 'Run build'
+    inputs:
+      targetType: filePath
+      filePath: './helpers/azure-devops/run-ci-builds.ps1 '
+      arguments: |
+          -TeamFoundationCollectionUri $(System.TeamFoundationCollectionUri) `
+          -AzureDevOpsProjectName $(System.TeamProject) `
+          -AzureDevOpsAccessToken $(System.AccessToken) `
+          -SourceBranch $(Build.SourceBranch) `
+          -SourceVersion $(Build.SourceVersion) `
+          -ToolVersions "$(PYTHON_VERSIONS)" `
+          -DefinitionId $(DEFINITION_ID) 
