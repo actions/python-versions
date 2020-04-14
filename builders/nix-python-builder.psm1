@@ -20,6 +20,9 @@ class NixPythonBuilder : PythonBuilder {
     .PARAMETER InstallationTemplateName
     The name of template that will be used to create installation script for generated Python artifact.
 
+    .PARAMETER InstallationScriptName	
+    The name of installation script that will be generated for Python artifact.
+
     .PARAMETER OutputArtifactName
     The name of archive with Python binaries that will be generated as part of Python artifact. 
 
@@ -28,6 +31,7 @@ class NixPythonBuilder : PythonBuilder {
     [string] $Platform
     [string] $PlatformVersion
     [string] $InstallationTemplateName
+    [string] $InstallationScriptName
     [string] $OutputArtifactName
 
     NixPythonBuilder(
@@ -36,7 +40,8 @@ class NixPythonBuilder : PythonBuilder {
     ) : Base($version, "x64") {
         $this.Platform = $platform.Split("-")[0]
         $this.PlatformVersion = $platform.Split("-")[1]
-        $this.InstallationTemplateName = "nix-setup-template.ps1"
+        $this.InstallationTemplateName = "nix-setup-template.sh"	
+        $this.InstallationScriptName = "setup.sh"
 
         $this.OutputArtifactName = "tool.zip"
     }
@@ -101,16 +106,13 @@ class NixPythonBuilder : PythonBuilder {
         Create Python artifact installation script based on template specified in InstallationTemplateName property.
         #>
 
-        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
-        $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
         $installationScriptLocation = New-Item -Path $this.ArtifactLocation -Name $this.InstallationScriptName -ItemType File
+        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
 
-        $variablesToReplace = @{
-            "{{__VERSION__}}" = $this.Version;
-        }
-
-        $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
+        $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
+        $installationTemplateContent = $installationTemplateContent -f $this.Version.Major, $this.Version.Minor, $this.Version.Build
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
+
         Write-Debug "Done; Installation script location: $installationScriptLocation)"
     }
 

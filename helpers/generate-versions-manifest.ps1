@@ -12,16 +12,53 @@ Optional parameter. The name of tool repository
 Required parameter. PAT Token to overcome GitHub API Rate limit
 .PARAMETER OutputFile
 Required parameter. File "*.json" where generated results will be saved
+.PARAMETER PlatformMapFile
+Optional parameter. Path to the json file with platform map
+Structure example:
+{
+    "macos-1014": [
+        {
+            "platform": "darwin",
+            "platform_version": "10.14"
+        }, ...
+    ], ...
+}
 #>
 
 param (
     [Parameter(Mandatory)] [string] $GitHubRepositoryOwner,
     [Parameter(Mandatory)] [string] $GitHubRepositoryName,
     [Parameter(Mandatory)] [string] $GitHubAccessToken,
-    [Parameter(Mandatory)] [string] $OutputFile
+    [Parameter(Mandatory)] [string] $OutputFile,
+    [string] $PlatformMapFile
 )
 
 Import-Module (Join-Path $PSScriptRoot "github-api.psm1")
+
+if ($PlatformMapFile -and (Test-Path $PlatformMapFile)) {
+    $PlatformMap = Get-Content $PlatformMapFile -Raw | ConvertFrom-Json -AsHashtable
+} else {
+    $PlatformMap = @{}
+}
+
+function New-AssetItem {
+    param (
+        [Parameter(Mandatory)][string]$Filename,
+        [Parameter(Mandatory)][string]$DownloadUrl,
+        [Parameter(Mandatory)][string]$Arch,
+        [Parameter(Mandatory)][string]$Platform,
+        [string]$PlatformVersion
+    )
+    $asset = New-Object PSObject
+
+    $asset | Add-Member -Name "filename" -Value $Filename -MemberType NoteProperty
+    $asset | Add-Member -Name "arch" -Value $Arch -MemberType NoteProperty
+    $asset | Add-Member -Name "platform" -Value $Platform -MemberType NoteProperty
+    if ($PlatformVersion) { $asset | Add-Member -Name "platform_version" -Value $PlatformVersion -MemberType NoteProperty }
+    $asset | Add-Member -Name "download_url" -Value $DownloadUrl -MemberType NoteProperty
+
+    return $asset
+}
 
 function Build-AssetsList {
     param (
@@ -29,16 +66,31 @@ function Build-AssetsList {
         [Parameter(Mandatory)][array]$ReleaseAssets
     )
 
-    return $ReleaseAssets | ForEach-Object {
-        $parts = [IO.path]::GetFileNameWithoutExtension($_.name).Split("-")
+    
+    $assets = @()
+    foreach($releaseAsset in $ReleaseAssets) {
+        $parts = [IO.path]::GetFileNameWithoutExtension($releaseAsset.name).Split("-")
+        $arch = $parts[-1]
+        $buildPlatform = [string]::Join("-", $parts[2..($parts.Length-2)])
 
-        return [PSCustomObject]@{
-            filename = $_.name
-            arch = $parts[-1]
-            platform = [string]::Join("-", $parts[2..($parts.Length-2)])
-            download_url = $_.browser_download_url
+        if ($PlatformMap[$buildPlatform]) {
+            $PlatformMap[$buildPlatform] | ForEach-Object {
+                $assets += New-AssetItem -Filename $releaseAsset.name `
+                                         -DownloadUrl $releaseAsset.browser_download_url `
+                                         -Arch $arch `
+                                         -Platform $_.platform `
+                                         -PlatformVersion $_.platform_version
+            }
+
+        } else {
+            $assets += New-AssetItem -Filename $releaseAsset.name `
+                                     -DownloadUrl $releaseAsset.browser_download_url `
+                                     -Arch $arch `
+                                     -Platform $buildPlatform
         }
     }
+
+    return $assets
 }
 
 function Get-VersionFromRelease {
@@ -84,7 +136,7 @@ function Build-VersionsManifest {
     }
 
     # Sort versions by descending
-    return $versionsHash.Values | Sort-Object -Property "version" -Descending
+    return $versionsHash.Values | Sort-Object -Property @{ Expression = { [Version]$_.version }; Descending = $true }
 }
 
 $gitHubApi = Get-GitHubApi -AccountName $GitHubRepositoryOwner -ProjectName $GitHubRepositoryName -AccessToken $GitHubAccessToken

@@ -17,15 +17,20 @@ class WinPythonBuilder : PythonBuilder {
     .PARAMETER InstallationTemplateName
     The name of installation script template that will be used in generated artifact.
 
+    .PARAMETER InstallationScriptName
+    The name of generated installation script.
+
     #>
 
     [string] $InstallationTemplateName
+    [string] $InstallationScriptName
 
     WinPythonBuilder(
         [version] $version,
         [string] $architecture
     ) : Base($version, $architecture) {
         $this.InstallationTemplateName = "win-setup-template.ps1"
+        $this.InstallationScriptName = "setup.ps1"
     }
 
     [string] GetPythonExtension() {

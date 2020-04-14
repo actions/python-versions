@@ -15,7 +15,8 @@ steps:
   displayName: 'Apply build artifact to the local machines'
   inputs:
     TargetType: inline
-    script: './setup.ps1'
+    script: |
+      if ($env:PLATFORM -match 'windows') { powershell ./setup.ps1 } else { sh ./setup.sh }
     workingDirectory: '$(Build.BinariesDirectory)'
 
 - task: UsePythonVersion@0

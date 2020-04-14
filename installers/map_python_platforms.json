@@ -1,0 +1,29 @@
+{
+    "macos-1014": [
+        {
+            "platform": "darwin",
+            "platform_version": "10.14"
+        },
+        {
+            "platform": "darwin",
+            "platform_version": "10.15"
+        }
+    ],
+    "ubuntu-1604": [
+        {
+            "platform": "linux",
+            "platform_version": "16.04"
+        }
+    ],
+    "ubuntu-1804": [
+        {
+            "platform": "linux",
+            "platform_version": "18.04"
+        }
+    ],
+    "windows-2016": [
+        {
+            "platform": "win32"
+        }
+    ]
+}

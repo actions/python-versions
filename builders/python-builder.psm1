@@ -24,9 +24,6 @@ class PythonBuilder {
     .PARAMETER InstallationTemplatesLocation
     The location of installation script template. Using "installers" folder from current repository.
 
-    .PARAMETER InstallationScriptName
-    The name of installation script that will be generated for Python artifact.
-
     #>
 
     [version] $Version
@@ -35,7 +32,6 @@ class PythonBuilder {
     [string] $TempFolderLocation
     [string] $ArtifactLocation
     [string] $InstallationTemplatesLocation
-    [string] $InstallationScriptName
 
     PythonBuilder ([version] $version, [string] $architecture) {
         $this.Version = $version
@@ -46,7 +42,6 @@ class PythonBuilder {
         $this.ArtifactLocation = $env:BUILD_BINARIESDIRECTORY
 
         $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
-        $this.InstallationScriptName = "setup.ps1"
     }
 
     [uri] GetBaseUri() {

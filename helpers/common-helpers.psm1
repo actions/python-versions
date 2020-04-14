@@ -39,8 +39,9 @@ function Download-File {
         (New-Object System.Net.WebClient).DownloadFile($Uri, $targetFilepath)
         return $targetFilepath
     } catch {
+        Write-Host "Error during downloading file from '$Uri'"
         "$_"
-        break
+        exit 1
     }    
 }
 

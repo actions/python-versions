@@ -1,9 +1,7 @@
 ## Contributing
 
-TO-DO: Fix the links after moving to final repository  
-
-[fork]: https://github.com/actions/virtual-environments/fork  
-[pr]: https://github.com//actions/virtual-environments/compare  
+[fork]: https://github.com/actions/python-versions/fork  
+[pr]: https://github.com/actions/python-versions/compare  
 [code-of-conduct]: CODE_OF_CONDUCT.md  
 
 Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
