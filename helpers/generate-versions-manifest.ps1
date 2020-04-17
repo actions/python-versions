@@ -33,7 +33,7 @@ param (
     [string] $PlatformMapFile
 )
 
-Import-Module (Join-Path $PSScriptRoot "github-api.psm1")
+Import-Module (Join-Path $PSScriptRoot "github/github-api.psm1")
 
 if ($PlatformMapFile -and (Test-Path $PlatformMapFile)) {
     $PlatformMap = Get-Content $PlatformMapFile -Raw | ConvertFrom-Json -AsHashtable

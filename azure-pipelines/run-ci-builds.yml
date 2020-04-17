@@ -4,6 +4,9 @@ pr:
   branches:
     include:
     - master
+  paths:
+    exclude:
+    - versions-manifest.json
 
 jobs:
 - job: Run_Builds
