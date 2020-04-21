@@ -85,6 +85,11 @@ function Get-ExecParams {
     }
 }
 
+$ToolcacheRoot = $env:AGENT_TOOLSDIRECTORY
+if ([string]::IsNullOrEmpty($ToolcacheRoot)) {
+    # GitHub images don't have `AGENT_TOOLSDIRECTORY` variable
+    $ToolcacheRoot = $env:RUNNER_TOOL_CACHE
+}
 $PythonToolcachePath = Join-Path -Path $env:AGENT_TOOLSDIRECTORY -ChildPath "Python"
 $PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version.ToString()
 $PythonArchPath = Join-Path -Path $PythonVersionPath -ChildPath $Architecture
