@@ -94,6 +94,100 @@
     ]
   },
   {
+    "version": "3.7.5",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.7.5-20200422.19",
+    "files": [
+      {
+        "filename": "python-3.7.5-macos-1014-x64.zip",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.14",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-macos-1014-x64.zip"
+      },
+      {
+        "filename": "python-3.7.5-macos-1014-x64.zip",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.15",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-macos-1014-x64.zip"
+      },
+      {
+        "filename": "python-3.7.5-ubuntu-1604-x64.zip",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "16.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-ubuntu-1604-x64.zip"
+      },
+      {
+        "filename": "python-3.7.5-ubuntu-1804-x64.zip",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-ubuntu-1804-x64.zip"
+      },
+      {
+        "filename": "python-3.7.5-windows-2016-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-windows-2016-x64.zip"
+      },
+      {
+        "filename": "python-3.7.5-windows-2016-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.5-20200422.19/python-3.7.5-windows-2016-x86.zip"
+      }
+    ]
+  },
+  {
+    "version": "3.7.4",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.7.4-20200422.26",
+    "files": [
+      {
+        "filename": "python-3.7.4-macos-1014-x64.zip",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.14",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-macos-1014-x64.zip"
+      },
+      {
+        "filename": "python-3.7.4-macos-1014-x64.zip",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.15",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-macos-1014-x64.zip"
+      },
+      {
+        "filename": "python-3.7.4-ubuntu-1604-x64.zip",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "16.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-ubuntu-1604-x64.zip"
+      },
+      {
+        "filename": "python-3.7.4-ubuntu-1804-x64.zip",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-ubuntu-1804-x64.zip"
+      },
+      {
+        "filename": "python-3.7.4-windows-2016-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-windows-2016-x64.zip"
+      },
+      {
+        "filename": "python-3.7.4-windows-2016-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.4-20200422.26/python-3.7.4-windows-2016-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.6.10",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.10-20200421.12",
