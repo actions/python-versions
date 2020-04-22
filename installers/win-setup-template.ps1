@@ -35,7 +35,8 @@ function Uninstall-Python {
             if ($propKey.Property -eq "DisplayName")
             {
                 $prop = Get-ItemProperty -Path Registry::$($propKey.Name)
-                if ($prop.DisplayName -match "Python $MajorVersion.$MinorVersion.*($ArchFilter)") {
+                if ($prop.DisplayName -match "Python $MajorVersion.$MinorVersion.*($ArchFilter)") 
+                {
                     Remove-Item -Path Registry::$regKey -Recurse -Force
                 }
             }
