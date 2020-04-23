@@ -1,26 +1,10 @@
 jobs:
-- job:
+- job: Test_Python
   pool: 
     name: Azure Pipelines
     vmImage: $(VmImage)
-  strategy:
-    matrix:
-      Validate_Python_Clean_Machine:
-        NeedCleanToolcacheDir: true
-        TestRunTitle: "Python $(VERSION) $(Platform) $(Architecture) (clean-machine)"
-      Validate_Python:
-        NeedCleanToolcacheDir: false
-        TestRunTitle: "Python $(VERSION) $(Platform) $(Architecture)"
-
   steps:
   - checkout: self
     submodules: true
-
-  - task: PowerShell@2
-    displayName: Fully cleanup the toolcache directory
-    inputs:
-      TargetType: filePath
-      filePath: tests/clean-toolcache.ps1
-    condition: eq(variables['NeedCleanToolcacheDir'], true)
 
   - template: test-steps.yml
