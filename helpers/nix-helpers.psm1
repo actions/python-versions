@@ -28,7 +28,23 @@ function Unpack-TarArchive {
         [String]$OutputDirectory
     )
 
-    Write-Debug "Unpack $ArchivePath to $OutputDirectory"
+    Write-Debug "tar -C $OutputDirectory -xzf $ArchivePath"
     tar -C $OutputDirectory -xzf $ArchivePath
+}
 
+function Create-TarArchive {
+    param(
+        [Parameter(Mandatory=$true)]
+        [String]$SourceFolder,
+        [Parameter(Mandatory=$true)]
+        [String]$ArchivePath,
+        [string]$CompressionType = "gz"
+    )
+
+    $CompressionTypeArgument = If ([string]::IsNullOrWhiteSpace($CompressionType)) { "" } else { "--${CompressionType}" }
+
+    Push-Location $SourceFolder
+    Write-Debug "tar -c $CompressionTypeArgument -f $ArchivePath ."
+    tar -c $CompressionTypeArgument -f $ArchivePath .
+    Pop-Location
 }
