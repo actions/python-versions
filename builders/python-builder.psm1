@@ -44,9 +44,10 @@ class PythonBuilder {
         $this.Platform = $platform
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
-        $this.TempFolderLocation = Join-Path $env:BUILD_STAGINGDIRECTORY "Temp"
+        $this.TempFolderLocation = Join-Path $env:HOME "Temp"
         $this.WorkFolderLocation = $env:BUILD_BINARIESDIRECTORY
         $this.ArtifactFolderLocation = $env:BUILD_STAGINGDIRECTORY
+        New-Item -Path $this.TempFolderLocation -ItemType Directory
 
         $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
     }
