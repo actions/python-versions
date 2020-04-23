@@ -89,9 +89,9 @@ class PythonBuilder {
         if (Test-Path $pythonBinariesLocation) {
             Write-Host "Purge $pythonBinariesLocation folder..."
             Remove-Item $pythonBinariesLocation -Recurse -Force
-        } else {
-            Write-Host "Create $pythonBinariesLocation folder..."
-            New-Item -ItemType Directory -Path $pythonBinariesLocation 
         }
+
+        Write-Host "Create $pythonBinariesLocation folder..."
+        New-Item -ItemType Directory -Path $pythonBinariesLocation 
     }
 }
