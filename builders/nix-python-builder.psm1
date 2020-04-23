@@ -35,15 +35,16 @@ class NixPythonBuilder : PythonBuilder {
     [string] $OutputArtifactName
 
     NixPythonBuilder(
-        [string] $platform,
-        [version] $version
-    ) : Base($version, "x64") {
+        [version] $version,
+        [string] $architecture,
+        [string] $platform
+    ) : Base($version, $architecture, $platform) {
         $this.Platform = $platform.Split("-")[0]
         $this.PlatformVersion = $platform.Split("-")[1]
         $this.InstallationTemplateName = "nix-setup-template.sh"	
         $this.InstallationScriptName = "setup.sh"
 
-        $this.OutputArtifactName = "tool.zip"
+        $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.tar.gz"
     }
 
     [uri] GetSourceUri() {
@@ -77,27 +78,12 @@ class NixPythonBuilder : PythonBuilder {
         $sourceUri = $this.GetSourceUri()
         Write-Host "Sources URI: $sourceUri"
 
-        $archiveFilepath = Download-File -Uri $sourceUri -OutputFolder $this.ArtifactLocation
+        $archiveFilepath = Download-File -Uri $sourceUri -OutputFolder $this.WorkFolderLocation
         Unpack-TarArchive -ArchivePath $archiveFilepath -OutputDirectory $this.TempFolderLocation
         $expandedSourceLocation = Join-Path -Path $this.TempFolderLocation -ChildPath "Python-$($this.Version)"
         Write-Debug "Done; Sources location: $expandedSourceLocation"
 
         return $expandedSourceLocation
-    }
-
-    [void] ArchiveArtifact([string] $pythonToolLocation) {
-        <#
-        .SYNOPSIS
-        Create .zip archive with Python binaries.
-        
-        .PARAMETER pythonToolLocation
-        The location of Python binaries that's need to be archived.
-
-        #>
-
-        $artifact = Join-Path -Path $this.ArtifactLocation -ChildPath $this.OutputArtifactName
-        Pack-Zip -PathToArchive $pythonToolLocation -ToolZipFile $artifact 
-        Write-Debug "Done; Artifact location: $artifact"
     }
 
     [void] CreateInstallationScript() {
@@ -106,7 +92,7 @@ class NixPythonBuilder : PythonBuilder {
         Create Python artifact installation script based on template specified in InstallationTemplateName property.
         #>
 
-        $installationScriptLocation = New-Item -Path $this.ArtifactLocation -Name $this.InstallationScriptName -ItemType File
+        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName -ItemType File
         $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
 
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
@@ -122,18 +108,28 @@ class NixPythonBuilder : PythonBuilder {
         Executes "make" and "make install" commands for configured build sources. Make output will be writen in build_output.txt located in artifact location folder.
         #>
 
-        Write-Debug "make Python $($this.Version)-$($this.Architecture) $($this.Platform)-$($this.PlatformVersion)"
-        $buildOutputLocation = New-Item -Path $this.ArtifactLocation -Name "build_output.txt" -ItemType File
+        Write-Debug "make Python $($this.Version)-$($this.Architecture) $($this.Platform)"
+        $buildOutputLocation = New-Item -Path $this.WorkFolderLocation -Name "build_output.txt" -ItemType File
         
         # Fix error "find: build": build dir not exist before first compilation
         New-Item -ItemType Directory -Path ./build
 
         # execute "make" with error action = continue for python 2.* for ubuntu, because it throws errors with some modules
-        $makeErrorAction = if ($this.Version.Major -eq 2 -and $this.Platform -eq "ubuntu") { "Continue" } else { "Stop" }
+        $makeErrorAction = if ($this.Version.Major -eq 2 -and $this.Platform -match "ubuntu") { "Continue" } else { "Stop" }
         Execute-Command -Command "make 2>&1 | tee $buildOutputLocation" -ErrorAction $makeErrorAction
         Execute-Command -Command "make install" -ErrorAction $makeErrorAction
 
         Write-Debug "Done; Make log location: $buildOutputLocation"
+    }
+
+    [void] CopyBuildResults() {
+        $buildFolder = $this.GetFullPythonToolcacheLocation()
+        Copy-Item -Path $buildFolder/* -Destination $this.WorkFolderLocation
+    }
+
+    [void] ArchiveArtifact() {
+        $OutputPath = Join-Path $this.ArtifactFolderLocation $this.OutputArtifactName
+        Create-TarArchive -SourceFolder $this.WorkFolderLocation -ArchivePath $OutputPath
     }
 
     [void] Build() {
@@ -152,19 +148,23 @@ class NixPythonBuilder : PythonBuilder {
         $sourcesLocation = $this.Download()
 
         Push-Location -Path $sourcesLocation
-        Write-Host "Configure for $($this.Platform)-$($this.PlatformVersion)..."
+        Write-Host "Configure for $($this.Platform)..."
         $this.Configure()
 
-        Write-Host "Make for $($this.Platform)-$($this.PlatformVersion)..."
+        Write-Host "Make for $($this.Platform)..."
         $this.Make()
         Pop-Location
 
-        New-ToolStructureDump -ToolPath $this.GetFullPythonToolcacheLocation() -OutputFolder $this.ArtifactLocation
+        Write-Host "Generate structure dump"
+        New-ToolStructureDump -ToolPath $this.GetFullPythonToolcacheLocation() -OutputFolder $this.WorkFolderLocation
 
-        Write-Host "Archive generated artifact..."
-        $this.ArchiveArtifact($this.GetFullPythonToolcacheLocation())
+        Write-Host "Copying build results to destination location"
+        $this.CopyBuildResults()
 
         Write-Host "Create installation script..."
         $this.CreateInstallationScript()
+
+        Write-Host "Archive artifact..."
+        $this.ArchiveArtifact()
     }
 }

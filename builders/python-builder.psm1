@@ -28,18 +28,23 @@ class PythonBuilder {
 
     [version] $Version
     [string] $Architecture
+    [string] $Platform
     [string] $HostedToolcacheLocation
     [string] $TempFolderLocation
+    [string] $WorkFolderLocation
+    [string] $ArtifactFolderLocation
     [string] $ArtifactLocation
     [string] $InstallationTemplatesLocation
 
-    PythonBuilder ([version] $version, [string] $architecture) {
+    PythonBuilder ([version] $version, [string] $architecture, [string] $platform) {
         $this.Version = $version
         $this.Architecture = $architecture
+        $this.Platform = $platform
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
-        $this.TempFolderLocation = $env:BUILD_STAGINGDIRECTORY
-        $this.ArtifactLocation = $env:BUILD_BINARIESDIRECTORY
+        $this.TempFolderLocation = [IO.Path]::GetTempPath()
+        $this.WorkFolderLocation = $env:BUILD_STAGINGDIRECTORY
+        $this.ArtifactFolderLocation = $env:BUILD_BINARIESDIRECTORY
 
         $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
     }

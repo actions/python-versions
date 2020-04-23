@@ -24,13 +24,16 @@ class WinPythonBuilder : PythonBuilder {
 
     [string] $InstallationTemplateName
     [string] $InstallationScriptName
+    [string] $OutputArtifactName
 
     WinPythonBuilder(
         [version] $version,
-        [string] $architecture
-    ) : Base($version, $architecture) {
+        [string] $architecture,
+        [string] $platform
+    ) : Base($version, $architecture, $platform) {
         $this.InstallationTemplateName = "win-setup-template.ps1"
         $this.InstallationScriptName = "setup.ps1"
+        $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.zip"
     }
 
     [string] GetPythonExtension() {
@@ -86,7 +89,7 @@ class WinPythonBuilder : PythonBuilder {
         $sourceUri = $this.GetSourceUri()
 
         Write-Host "Sources URI: $sourceUri"
-        $sourcesLocation = Download-File -Uri $sourceUri -OutputFolder $this.ArtifactLocation
+        $sourcesLocation = Download-File -Uri $sourceUri -OutputFolder $this.WorkFolderLocation
         Write-Debug "Done; Sources location: $sourcesLocation"
 
         return $sourcesLocation
@@ -102,7 +105,7 @@ class WinPythonBuilder : PythonBuilder {
         $pythonExecName = [IO.path]::GetFileName($sourceUri.AbsoluteUri)
         $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
-        $installationScriptLocation = New-Item -Path $this.ArtifactLocation -Name $this.InstallationScriptName -ItemType File
+        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName -ItemType File
 
         $variablesToReplace = @{
             "{{__ARCHITECTURE__}}" = $this.Architecture;
@@ -113,6 +116,11 @@ class WinPythonBuilder : PythonBuilder {
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
         Write-Debug "Done; Installation script location: $installationScriptLocation)"
+    }
+
+    [void] ArchiveArtifact() {
+        $OutputPath = Join-Path $this.ArtifactFolderLocation $this.OutputArtifactName
+        Create-SevenZipArchive -SourceFolder $this.WorkFolderLocation -ArchivePath $OutputPath
     }
 
     [void] Build() {
@@ -126,5 +134,8 @@ class WinPythonBuilder : PythonBuilder {
 
         Write-Host "Create installation script..."
         $this.CreateInstallationScript()
+
+        Write-Host "Archive artifact"
+        $this.ArchiveArtifact()
     }
 }

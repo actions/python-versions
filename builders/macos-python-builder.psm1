@@ -17,11 +17,10 @@ class macOSPythonBuilder : NixPythonBuilder {
     #>
 
     macOSPythonBuilder(
-        [string] $platform,
-        [version] $version
-    ) : Base($platform, $version) {
-        
-    }
+        [version] $version,
+        [string] $architecture,
+        [string] $platform
+    ) : Base($version, $architecture, $platform) { }
 
     [void] Configure() {
         <#

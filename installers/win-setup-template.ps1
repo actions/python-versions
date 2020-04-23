@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Stop"
+
 [String]$Architecture = "{{__ARCHITECTURE__}}"
 [Version]$Version = "{{__VERSION__}}"
 [String]$PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
