@@ -56,12 +56,20 @@ function Uninstall-Python
                 $prop = Get-ItemProperty -Path Registry::$($propKey.Name)
                 if ($prop.DisplayName -match $versionFilter) 
                 {
-                    Remove-Item -Path Registry::$regKey -Recurse -Force
+                    Remove-Item -Path Registry::$regKey -Recurse -Force -Verbose
                 }
             }
 
             break
         }
+    }
+
+    $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
+    Get-ChildItem -Path Registry::$regPath | Where-Object {
+        $productName = $_.GetValue("ProductName")
+        return $productName -and $productName -match $versionFilter
+    } | ForEach-Object {
+        Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 }
 
