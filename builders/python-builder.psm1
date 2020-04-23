@@ -44,7 +44,7 @@ class PythonBuilder {
         $this.Platform = $platform
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
-        $this.TempFolderLocation = Join-Path $env:BUILD_SOURCESDIRECTORY
+        $this.TempFolderLocation = $env:BUILD_SOURCESDIRECTORY
         $this.WorkFolderLocation = $env:BUILD_BINARIESDIRECTORY
         $this.ArtifactFolderLocation = $env:BUILD_STAGINGDIRECTORY
 
