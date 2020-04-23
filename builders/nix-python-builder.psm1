@@ -61,7 +61,6 @@ class NixPythonBuilder : PythonBuilder {
         #>
 
         if ($this.Version.Major -eq 2) { $pythonBinary = "python" } else { $pythonBinary = "python3" }
-
         return $pythonBinary
     }
 
@@ -120,8 +119,10 @@ class NixPythonBuilder : PythonBuilder {
 
     [void] CopyBuildResults() {
         $buildFolder = $this.GetFullPythonToolcacheLocation()
-        Get-ChildItem $buildFolder -Depth 2 | ForEach-Object { Write-Host $_.FullName }
-        Move-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation
+        $temp = $this.GetPythonToolcacheLocation()
+        $temp2 = Join-Path $temp $this.Version
+        Get-ChildItem $temp2 -Depth 2 | ForEach-Object { Write-Host $_.FullName }
+        Copy-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation -Recurse
     }
 
     [void] ArchiveArtifact() {
@@ -154,6 +155,8 @@ class NixPythonBuilder : PythonBuilder {
 
         Write-Host "Generate structure dump"
         New-ToolStructureDump -ToolPath $this.GetFullPythonToolcacheLocation() -OutputFolder $this.WorkFolderLocation
+
+        Get-ChildItem $this.WorkFolderLocation | ForEach-Object { Write-Host $_.FullName }
 
         Write-Host "Copying build results to destination location"
         $this.CopyBuildResults()

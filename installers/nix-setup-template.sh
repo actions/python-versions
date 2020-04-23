@@ -29,6 +29,12 @@ echo "Copy Python binaries to hostedtoolcache folder"
 cp -R ./* $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
+echo "debug"
+echo $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
+ls $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
+
+cd $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
+
 echo "Create additional symlinks (Required for UsePythonVersion VSTS task)"
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
 
