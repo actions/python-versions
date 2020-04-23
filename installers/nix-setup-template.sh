@@ -26,14 +26,8 @@ echo "Create Python $PYTHON_FULL_VERSION folder"
 mkdir -p $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 
 echo "Copy Python binaries to hostedtoolcache folder"
-cp ./tool.zip $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
-
-cd $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
-
-echo "Unzip python to $PYTHON_TOOLCACHE_VERSION_PATH"
-unzip -q tool.zip
-echo "Python unzipped successfully"
-rm tool.zip
+cp -R ./* $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
+rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
 echo "Create additional symlinks (Required for UsePythonVersion VSTS task)"
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python

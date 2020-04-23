@@ -28,8 +28,6 @@ class NixPythonBuilder : PythonBuilder {
 
     #>
 
-    [string] $Platform
-    [string] $PlatformVersion
     [string] $InstallationTemplateName
     [string] $InstallationScriptName
     [string] $OutputArtifactName
@@ -39,8 +37,6 @@ class NixPythonBuilder : PythonBuilder {
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) {
-        $this.Platform = $platform.Split("-")[0]
-        $this.PlatformVersion = $platform.Split("-")[1]
         $this.InstallationTemplateName = "nix-setup-template.sh"	
         $this.InstallationScriptName = "setup.sh"
 
@@ -124,7 +120,8 @@ class NixPythonBuilder : PythonBuilder {
 
     [void] CopyBuildResults() {
         $buildFolder = $this.GetFullPythonToolcacheLocation()
-        Copy-Item -Path $buildFolder/* -Destination $this.WorkFolderLocation
+        Get-ChildItem $buildFolder -Depth 2
+        Copy-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation
     }
 
     [void] ArchiveArtifact() {
