@@ -45,22 +45,12 @@ function Uninstall-Python
     }
     
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse
-
-    foreach ($regKey in $regKeys)
+    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
+    foreach ($key in $regKeys)
     {
-        foreach ($propKey in $regKey)
+        if ($key.getValue("DisplayName") -match $versionFilter)
         {
-            if ($propKey.Property -eq "DisplayName")
-            {
-                $prop = Get-ItemProperty -Path Registry::$($propKey.Name)
-                if ($prop.DisplayName -match $versionFilter) 
-                {
-                    Remove-Item -Path Registry::$regKey -Recurse -Force -Verbose
-                }
-            }
-
-            break
+            Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
         }
     }
 
