@@ -120,8 +120,8 @@ class NixPythonBuilder : PythonBuilder {
 
     [void] CopyBuildResults() {
         $buildFolder = $this.GetFullPythonToolcacheLocation()
-        Get-ChildItem $buildFolder -Depth 2
-        Copy-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation
+        Get-ChildItem $buildFolder -Depth 2 | ForEach-Object { Write-Host $_.FullName }
+        Move-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation
     }
 
     [void] ArchiveArtifact() {

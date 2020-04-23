@@ -44,6 +44,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl"
         }
+        Write-Host $configureString
 
         Execute-Command -Command $configureString
     }
