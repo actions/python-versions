@@ -44,7 +44,7 @@ class PythonBuilder {
         $this.Platform = $platform
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
-        $this.TempFolderLocation = [IO.Path]::GetTempPath()
+        $this.TempFolderLocation = Join-Path $env:BUILD_STAGINGDIRECTORY "Temp"
         $this.WorkFolderLocation = $env:BUILD_BINARIESDIRECTORY
         $this.ArtifactFolderLocation = $env:BUILD_STAGINGDIRECTORY
 
@@ -89,9 +89,9 @@ class PythonBuilder {
         if (Test-Path $pythonBinariesLocation) {
             Write-Host "Purge $pythonBinariesLocation folder..."
             Remove-Item $pythonBinariesLocation -Recurse -Force
+        } else {
+            Write-Host "Create $pythonBinariesLocation folder..."
+            New-Item -ItemType Directory -Path $pythonBinariesLocation 
         }
-
-        Write-Host "Create $pythonBinariesLocation folder..."
-        New-Item -ItemType Directory -Path $pythonBinariesLocation 
     }
 }
