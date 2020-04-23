@@ -119,10 +119,7 @@ class NixPythonBuilder : PythonBuilder {
 
     [void] CopyBuildResults() {
         $buildFolder = $this.GetFullPythonToolcacheLocation()
-        $temp = $this.GetPythonToolcacheLocation()
-        $temp2 = Join-Path $temp $this.Version
-        Get-ChildItem $temp2 -Depth 2 | ForEach-Object { Write-Host $_.FullName }
-        Copy-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation -Recurse
+        Move-Item -Path "$buildFolder/*" -Destination $this.WorkFolderLocation
     }
 
     [void] ArchiveArtifact() {
@@ -155,8 +152,6 @@ class NixPythonBuilder : PythonBuilder {
 
         Write-Host "Generate structure dump"
         New-ToolStructureDump -ToolPath $this.GetFullPythonToolcacheLocation() -OutputFolder $this.WorkFolderLocation
-
-        Get-ChildItem $this.WorkFolderLocation | ForEach-Object { Write-Host $_.FullName }
 
         Write-Host "Copying build results to destination location"
         $this.CopyBuildResults()
