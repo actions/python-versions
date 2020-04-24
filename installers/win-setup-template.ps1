@@ -2,7 +2,7 @@
 [Version] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
-function Uninstall-Python
+function Remove-RegistryEntries
 {
     param
     (
@@ -84,10 +84,11 @@ else
     Write-Host "Check if current Python version is installed..."
     $InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVersion.$MinorVersion.*"
 
+    Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
+    Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+
     if ($null -ne $InstalledVersion)
     {
-        Uninstall-Python -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
-
         if (Test-Path -Path "$($InstalledVersion.FullName)/$Architecture")
         {
             Write-Host "Python$MajorVersion.$MinorVersion/$Architecture was found in $PythonToolcachePath"
