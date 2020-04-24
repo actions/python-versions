@@ -1,5 +1,3 @@
-$ErrorActionPreference = "Stop"
-
 [String] $Architecture = "{{__ARCHITECTURE__}}"
 [Version] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
@@ -119,8 +117,9 @@ if ($LASTEXITCODE -ne 0)
     Throw "Error happened during Python installation"
 }
 
+Write-Host "Install and upgrade Pip"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
-cmd.exe /c "$PythonExePath --version && $PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip"
+cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip"
 
 Write-Host "Create complete file"
 New-Item -ItemType File -Path $PythonVersionPath -Name "$Architecture.complete" | Out-Null
