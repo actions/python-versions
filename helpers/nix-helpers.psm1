@@ -20,7 +20,7 @@ function Pack-Zip {
 .SYNOPSIS
 Unpack *.tar file
 #>
-unction Extract-TarArchive {
+function Extract-TarArchive {
     param(
         [Parameter(Mandatory=$true)]
         [String]$ArchivePath,
