@@ -730,47 +730,47 @@
   {
     "version": "2.7.18",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/2.7.18-20200424.33",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/2.7.18-20200424.53",
     "files": [
       {
         "filename": "python-2.7.18-macos-1014-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
         "platform_version": "10.14",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-macos-1014-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-macos-1014-x64.tar.gz"
       },
       {
         "filename": "python-2.7.18-macos-1014-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
         "platform_version": "10.15",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-macos-1014-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-macos-1014-x64.tar.gz"
       },
       {
         "filename": "python-2.7.18-ubuntu-1604-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-ubuntu-1604-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-ubuntu-1604-x64.tar.gz"
       },
       {
         "filename": "python-2.7.18-ubuntu-1804-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-ubuntu-1804-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-ubuntu-1804-x64.tar.gz"
       },
       {
         "filename": "python-2.7.18-windows-2016-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-windows-2016-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-windows-2016-x64.zip"
       },
       {
         "filename": "python-2.7.18-windows-2016-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.33/python-2.7.18-windows-2016-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/2.7.18-20200424.53/python-2.7.18-windows-2016-x86.zip"
       }
     ]
   },
