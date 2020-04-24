@@ -20,7 +20,7 @@ function Pack-Zip {
 .SYNOPSIS
 Unpack *.tar file
 #>
-function Unpack-TarArchive {
+function Extract-TarArchive {
     param(
         [Parameter(Mandatory=$true)]
         [String]$ArchivePath,
@@ -28,7 +28,23 @@ function Unpack-TarArchive {
         [String]$OutputDirectory
     )
 
-    Write-Debug "Unpack $ArchivePath to $OutputDirectory"
-    tar -C $OutputDirectory -xzf $ArchivePath
+    Write-Debug "tar -C $OutputDirectory -xzf $ArchivePath --strip 1"
+    tar -C $OutputDirectory -xzf $ArchivePath --strip 1
+}
 
+function Create-TarArchive {
+    param(
+        [Parameter(Mandatory=$true)]
+        [String]$SourceFolder,
+        [Parameter(Mandatory=$true)]
+        [String]$ArchivePath,
+        [string]$CompressionType = "gz"
+    )
+
+    $CompressionTypeArgument = If ([string]::IsNullOrWhiteSpace($CompressionType)) { "" } else { "--${CompressionType}" }
+
+    Push-Location $SourceFolder
+    Write-Debug "tar -c $CompressionTypeArgument -f $ArchivePath ."
+    tar -c $CompressionTypeArgument -f $ArchivePath .
+    Pop-Location
 }

@@ -16,9 +16,12 @@ class PythonBuilder {
     The location of hostedtoolcache artifacts. Using system AGENT_TOOLSDIRECTORY variable value.
 
     .PARAMETER TempFolderLocation
-    The location of temporary files that will be used during Python generation. Using system BUILD_STAGINGDIRECTORY variable value.
+    The location of temporary files that will be used during Python generation. Using system TEMP directory.
 
-    .PARAMETER ArtifactLocation
+    .PARAMETER WorkFolderLocation
+    The location of generated Python artifact. Using system environment BUILD_STAGINGDIRECTORY variable value.
+
+    .PARAMETER ArtifactFolderLocation
     The location of generated Python artifact. Using system environment BUILD_BINARIESDIRECTORY variable value.
 
     .PARAMETER InstallationTemplatesLocation
@@ -28,18 +31,22 @@ class PythonBuilder {
 
     [version] $Version
     [string] $Architecture
+    [string] $Platform
     [string] $HostedToolcacheLocation
     [string] $TempFolderLocation
-    [string] $ArtifactLocation
+    [string] $WorkFolderLocation
+    [string] $ArtifactFolderLocation
     [string] $InstallationTemplatesLocation
 
-    PythonBuilder ([version] $version, [string] $architecture) {
+    PythonBuilder ([version] $version, [string] $architecture, [string] $platform) {
         $this.Version = $version
         $this.Architecture = $architecture
+        $this.Platform = $platform
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
-        $this.TempFolderLocation = $env:BUILD_STAGINGDIRECTORY
-        $this.ArtifactLocation = $env:BUILD_BINARIESDIRECTORY
+        $this.TempFolderLocation = $env:BUILD_SOURCESDIRECTORY
+        $this.WorkFolderLocation = $env:BUILD_BINARIESDIRECTORY
+        $this.ArtifactFolderLocation = $env:BUILD_STAGINGDIRECTORY
 
         $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
     }

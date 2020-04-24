@@ -21,15 +21,14 @@ Required parameter. The platform for which Python will be built.
 #>
 
 param(
-    [Parameter (Mandatory=$true)]
-    [version] $Version,
-    [string] $Architecture = "x64",
-    [Parameter (Mandatory=$true)]
-    [string] $Platform
+    [Parameter (Mandatory=$true)][Version] $Version,
+    [Parameter (Mandatory=$true)][string] $Platform,
+    [string] $Architecture = "x64"
 )
 
 Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "common-helpers.psm1") -DisableNameChecking
 Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "nix-helpers.psm1") -DisableNameChecking
+Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "win-helpers.psm1") -DisableNameChecking
 
 function Get-PythonBuilder {
     <#
@@ -58,11 +57,11 @@ function Get-PythonBuilder {
 
     $Platform = $Platform.ToLower()  
     if ($Platform -match 'windows') {
-        $builder = [WinPythonBuilder]::New($Version, $Architecture)
+        $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'ubuntu') {
-        $builder = [UbuntuPythonBuilder]::New($Platform, $Version)
+        $builder = [UbuntuPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'macos') {
-        $builder = [macOSPythonBuilder]::New($Platform, $Version)
+        $builder = [macOSPythonBuilder]::New($Version, $Architecture, $Platform)
     } else {
         Write-Host "##vso[task.logissue type=error;] Invalid platform: $Platform"
         exit 1
@@ -72,5 +71,5 @@ function Get-PythonBuilder {
 }
 
 ### Create Python builder instance, and build artifact
-$Builder = Get-PythonBuilder -Version $Version -Platform $Platform -Architecture $Architecture
+$Builder = Get-PythonBuilder -Version $Version -Architecture $Architecture  -Platform $Platform 
 $Builder.Build()

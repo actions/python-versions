@@ -1,39 +1,19 @@
+$ErrorActionPreference = "Stop"
+
 [String] $Architecture = "{{__ARCHITECTURE__}}"
 [Version] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
-
-function Get-ArchitectureFilter 
-{
-    param
-    (
-        [Parameter (Mandatory)]
-        [String] $Architecture
-    )
-
-    if ($Architecture -eq 'x86')
-    {
-        "32-bit"
-    }
-    else
-    {
-        "64-bit"
-    }
-}
 
 function Uninstall-Python
 {
     param
     (
-        [Parameter (Mandatory)]
-        [String] $Architecture,
-        [Parameter (Mandatory)]
-        [Int32] $MajorVersion,
-        [Parameter (Mandatory)]
-        [Int32] $MinorVersion
+        [Parameter(Mandatory)][String] $Architecture,
+        [Parameter(Mandatory)][Int32] $MajorVersion,
+        [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    
-    $archFilter = Get-ArchitectureFilter -Architecture $Architecture
+    $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
     ### Python 2.7 x86 have no architecture postfix
     $versionFilter = if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
     {
@@ -63,27 +43,11 @@ function Uninstall-Python
     }
 }
 
-function Delete-PythonVersion 
-{
-    param
-    (
-        [Parameter (Mandatory)]
-        [System.IO.FileSystemInfo] $InstalledVersion,
-        [Parameter (Mandatory)]
-        [String] $Architecture
-    )
-
-    Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture" -Recurse -Force
-    Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture.complete" -Force  
-}
-
 function Get-ExecParams {
     param
     (
-        [Parameter (Mandatory)]
-        [Boolean] $IsMSI,
-        [Parameter (Mandatory)]
-        [String] $PythonArchPath
+        [Parameter(Mandatory)][Boolean] $IsMSI,
+        [Parameter(Mandatory)][String] $PythonArchPath
     )
 
     if ($IsMSI) 
@@ -122,7 +86,7 @@ else
     Write-Host "Check if current Python version is installed..."
     $InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVersion.$MinorVersion.*"
 
-    if ($InstalledVersion -ne $null)
+    if ($null -ne $InstalledVersion)
     {
         Uninstall-Python -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
@@ -130,7 +94,8 @@ else
         {
             Write-Host "Python$MajorVersion.$MinorVersion/$Architecture was found in $PythonToolcachePath"
             Write-Host "Delete Python$MajorVersion.$MinorVersion $Architecture"
-            Delete-PythonVersion -InstalledVersion $InstalledVersion -Architecture $Architecture
+            Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture" -Recurse -Force
+            Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture.complete" -Force
         }
     }
     else
