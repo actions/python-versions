@@ -20,7 +20,7 @@ function Pack-Zip {
 .SYNOPSIS
 Unpack *.tar file
 #>
-function Unpack-TarArchive {
+unction Extract-TarArchive {
     param(
         [Parameter(Mandatory=$true)]
         [String]$ArchivePath,
@@ -28,8 +28,8 @@ function Unpack-TarArchive {
         [String]$OutputDirectory
     )
 
-    Write-Debug "tar -C $OutputDirectory -xzf $ArchivePath"
-    tar -C $OutputDirectory -xzf $ArchivePath
+    Write-Debug "tar -C $OutputDirectory -xzf $ArchivePath --strip 1"
+    tar -C $OutputDirectory -xzf $ArchivePath --strip 1
 }
 
 function Create-TarArchive {
