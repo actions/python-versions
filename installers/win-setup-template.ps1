@@ -106,11 +106,7 @@ $InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVers
 Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
 Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
-Write-Host $InstalledVersion
-Write-Host $InstalledVersion.Fullname
-Test-Path $InstalledVersion
-Test-Path $InstalledVersion.FullName
-if (($null -ne $InstalledVersion) -and (Test-Path $InstalledVersion)) {
+if (($null -ne $InstalledVersion) -and (Test-Path -Path $InstalledVersion.FullName)) {
     Write-Host "Python$MajorVersion.$MinorVersion was found in $PythonToolcachePath"
     Write-Host "Deleting $($InstalledVersion.FullName)..."
     Remove-Item -Path $InstalledVersion.FullName -Recurse -Force
