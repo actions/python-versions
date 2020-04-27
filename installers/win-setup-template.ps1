@@ -43,8 +43,7 @@ function Remove-RegistryEntries
     }
 
     $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
-    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object
-    {
+    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
         Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 
@@ -55,10 +54,8 @@ function Remove-RegistryEntries
         "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"  # all users, x86
     )
 
-    $uninstallRegistrySections | Where-Object { Test-Path -Path Registry::$_ } | ForEach-Object
-    {
-        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object
-        {
+    $uninstallRegistrySections | Where-Object { Test-Path -Path Registry::$_ } | ForEach-Object {
+        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
             Remove-Item Registry::$_ -Recurse -Force -Verbose
         }
     }
