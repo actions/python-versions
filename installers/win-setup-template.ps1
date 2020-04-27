@@ -36,7 +36,7 @@ function Remove-RegistryEntries
         Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 
-    $regPath = "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+    $regPath = "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall"
     Get-ChildItem -Path Registry::$regPath | ForEach-Object {
         $pn = $_.GetValue("ProductName")
         $dn = $_.getValue("DisplayName")
