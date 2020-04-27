@@ -2,8 +2,7 @@
 [Version] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
-function Remove-RegistryEntries
-{
+function Get-RegistryVersionFilter {
     param
     (
         [Parameter(Mandatory)][String] $Architecture,
@@ -13,7 +12,7 @@ function Remove-RegistryEntries
 
     $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
     ### Python 2.7 x86 have no architecture postfix
-    $versionFilter = if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
+    if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
     {
         "Python $MajorVersion.$MinorVersion.\d+$"
     }
@@ -21,7 +20,19 @@ function Remove-RegistryEntries
     {
         "Python $MajorVersion.$MinorVersion.*($archFilter)"
     }
-    
+}
+
+function Remove-RegistryEntries
+{
+    param
+    (
+        [Parameter(Mandatory)][String] $Architecture,
+        [Parameter(Mandatory)][Int32] $MajorVersion,
+        [Parameter(Mandatory)][Int32] $MinorVersion
+    )
+
+    $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
     foreach ($key in $regKeys)
@@ -33,11 +44,21 @@ function Remove-RegistryEntries
     }
 
     $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
-    Get-ChildItem -Path Registry::$regPath | Where-Object {
-        $productName = $_.GetValue("ProductName")
-        return $productName -and $productName -match $versionFilter
-    } | ForEach-Object {
+    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
         Remove-Item Registry::$_ -Recurse -Force -Verbose
+    }
+
+    $uninstallRegistrySections = @(
+        "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall",  # current user, x64
+        "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall", # all users, x64
+        "HKEY_CURRENT_USER\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",  # current user, x86
+        "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"  # all users, x86
+    )
+
+    $uninstallRegistrySections | Where-Object { Test-Path -Path Registry::$_ } | ForEach-Object {
+        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
+            Remove-Item Registry::$_ -Recurse -Force -Verbose
+        }
     }
 }
 
@@ -78,29 +99,20 @@ if (-Not (Test-Path $PythonToolcachePath))
 {
     Write-Host "Create Python toolcache folder"
     New-Item -ItemType Directory -Path $PythonToolcachePath | Out-Null
-} 
-else 
-{
-    Write-Host "Check if current Python version is installed..."
-    $InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVersion.$MinorVersion.*"
+}
 
-    Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
-    Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+Write-Host "Check if current Python version is installed..."
+$InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVersion.$MinorVersion.*"
 
-    if ($null -ne $InstalledVersion)
-    {
-        if (Test-Path -Path "$($InstalledVersion.FullName)/$Architecture")
-        {
-            Write-Host "Python$MajorVersion.$MinorVersion/$Architecture was found in $PythonToolcachePath"
-            Write-Host "Delete Python$MajorVersion.$MinorVersion $Architecture"
-            Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture" -Recurse -Force
-            Remove-Item -Path "$($InstalledVersion.FullName)/$Architecture.complete" -Force
-        }
-    }
-    else
-    {
-        Write-Host "No Python$MajorVersion.$MinorVersion.* found"
-    }
+Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
+Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+
+if (($null -ne $InstalledVersion) -and (Test-Path -Path $InstalledVersion.FullName)) {
+    Write-Host "Python$MajorVersion.$MinorVersion was found in $PythonToolcachePath"
+    Write-Host "Deleting $($InstalledVersion.FullName)..."
+    Remove-Item -Path $InstalledVersion.FullName -Recurse -Force
+} else {
+    Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
 
 Write-Host "Create Python $Version folder in $PythonToolcachePath"
