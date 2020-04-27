@@ -6,7 +6,8 @@ function Get-RegistryVersionFilter {
     param
     (
         [Parameter(Mandatory)][String] $Architecture,
-        [Parameter(Mandatory)][Int32] $MajorVersion
+        [Parameter(Mandatory)][Int32] $MajorVersion,
+        [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
     $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
@@ -30,7 +31,7 @@ function Remove-RegistryEntries
         [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion
+    $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
