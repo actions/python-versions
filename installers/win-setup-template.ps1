@@ -25,7 +25,7 @@ function Remove-RegistryEntries
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
     $regKeys | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
-        Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
+        Remove-Item -Path $_.PSParentPath -Recurse -Force -Verbose
     }
 
     $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
@@ -37,10 +37,16 @@ function Remove-RegistryEntries
     }
 
     $regPath = "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall"
-    Get-ChildItem -Path Registry::$regPath | ForEach-Object {
-        $pn = $_.GetValue("ProductName")
+    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
         $dn = $_.getValue("DisplayName")
-        Write-Host "pn: $pn"
+        Write-Host "dn: $dn"
+        Remove-Item Registry::$_ -Recurse -Force -Verbose
+    }
+
+    Write-Host "debug"
+    $regPath = "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+    Get-ChildItem -Path Registry::$regPath | ForEach-Object {
+        $dn = $_.getValue("DisplayName")
         Write-Host "dn: $dn"
     }
 }
@@ -92,6 +98,7 @@ Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -
 
 if (($null -ne $InstalledVersion) -and (Test-Path $InstalledVersion)) {
     Write-Host "Python$MajorVersion.$MinorVersion was found in $PythonToolcachePath"
+    Write-Host "Deleting $($InstalledVersion.FullName)..."
     Remove-Item -Path $InstalledVersion.FullName -Recurse -Force
 } else {
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
