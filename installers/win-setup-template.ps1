@@ -2,6 +2,25 @@
 [Version] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
+function Get-RegistryVersionFilter {
+    param
+    (
+        [Parameter(Mandatory)][String] $Architecture,
+        [Parameter(Mandatory)][Int32] $MajorVersion
+    )
+
+    $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
+    ### Python 2.7 x86 have no architecture postfix
+    if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
+    {
+        "Python $MajorVersion.$MinorVersion.\d+$"
+    }
+    else
+    {
+        "Python $MajorVersion.$MinorVersion.*($archFilter)"
+    }
+}
+
 function Remove-RegistryEntries
 {
     param
@@ -11,46 +30,33 @@ function Remove-RegistryEntries
         [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
-    ### Python 2.7 x86 have no architecture postfix
-    $versionFilter = if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
-    {
-        "Python $MajorVersion.$MinorVersion.\d+$"
-    }
-    else
-    {
-        "Python $MajorVersion.$MinorVersion.*($archFilter)"
-    }
-
-    Write-Host "------------------------------------"
-    Get-ChildItem "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products" -Recurse | Where-Object Property -CContains DisplayName | Where-Object { $_.getValue("DisplayName") -match "Python*" } | ForEach-Object { Write-Host $_.getValue("DisplayName") }
-    Write-Host "------------------------------------"
+    $versionFilter = Get-RegistryVersionFilter
+    $registryKeysToDelete = @()
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
-    $regKeys | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
-        Remove-Item -Path $_.PSParentPath -Recurse -Force -Verbose
+    Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName | ForEach-Object {
+        if ($_.getValue("DisplayName") -match $versionFilter) {
+            Remove-Item $_.PSParentPath -Recurse -Force -Verbose
+        }
     }
 
-    $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
-    Get-ChildItem -Path Registry::$regPath | Where-Object {
-        $productName = $_.GetValue("ProductName")
-        return $productName -and $productName -match $versionFilter
-    } | ForEach-Object {
-        Remove-Item Registry::$_ -Recurse -Force -Verbose
+    Get-ChildItem -Path "Registry::HKEY_CLASSES_ROOT\Installer\Products" | ForEach-Object {
+        if ($_.getValue("ProductName") -match $versionFilter) {
+            Remove-Item Registry::$_ -Recurse -Force -Verbose
+        }
     }
 
-    $regPath = "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall"
-    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
-        $dn = $_.getValue("DisplayName")
-        Write-Host "dn: $dn"
-        Remove-Item Registry::$_ -Recurse -Force -Verbose
-    }
+    $uninstallRegistrySections = @(
+        "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall",  # current user, x64
+        "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall", # all users, x64
+        "HKEY_CURRENT_USER\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",  # current user, x86
+        "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"  # all users, x86
+    )
 
-    $regPath = "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
-    Get-ChildItem -Path Registry::$regPath | ForEach-Object {
-        $dn = $_.getValue("DisplayName")
-        Write-Host "dn: $dn"
+    $uninstallRegistrySections | ForEach-Object {
+        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
+            Remove-Item Registry::$_ -Recurse -Force -Verbose
+        }
     }
 }
 
