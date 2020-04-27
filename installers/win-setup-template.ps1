@@ -30,20 +30,22 @@ function Remove-RegistryEntries
         [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    $versionFilter = Get-RegistryVersionFilter
-    $registryKeysToDelete = @()
+    $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-    Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName | ForEach-Object {
-        if ($_.getValue("DisplayName") -match $versionFilter) {
-            Remove-Item $_.PSParentPath -Recurse -Force -Verbose
+    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
+    foreach ($key in $regKeys)
+    {
+        if ($key.getValue("DisplayName") -match $versionFilter)
+        {
+            Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
         }
     }
 
-    Get-ChildItem -Path "Registry::HKEY_CLASSES_ROOT\Installer\Products" | ForEach-Object {
-        if ($_.getValue("ProductName") -match $versionFilter) {
-            Remove-Item Registry::$_ -Recurse -Force -Verbose
-        }
+    $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
+    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object
+    {
+        Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 
     $uninstallRegistrySections = @(
@@ -53,8 +55,10 @@ function Remove-RegistryEntries
         "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"  # all users, x86
     )
 
-    $uninstallRegistrySections | ForEach-Object {
-        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
+    $uninstallRegistrySections | Where-Object { Test-Path -Path Registry::$_ } | ForEach-Object
+    {
+        Get-ChildItem -Path Registry::$_ | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object
+        {
             Remove-Item Registry::$_ -Recurse -Force -Verbose
         }
     }
