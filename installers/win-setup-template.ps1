@@ -21,7 +21,11 @@ function Remove-RegistryEntries
     {
         "Python $MajorVersion.$MinorVersion.*($archFilter)"
     }
-    
+
+    Write-Host "------------------------------------"
+    Get-ChildItem "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products" -Recurse | Where-Object Property -CContains DisplayName | Where-Object { $_.getValue("DisplayName") -match "Python*" } | ForEach-Object { Write-Host $_.getValue("DisplayName") }
+    Write-Host "------------------------------------"
+
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
     $regKeys | Where-Object { $_.getValue("DisplayName") -match $versionFilter } | ForEach-Object {
@@ -43,7 +47,6 @@ function Remove-RegistryEntries
         Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 
-    Write-Host "debug"
     $regPath = "HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
     Get-ChildItem -Path Registry::$regPath | ForEach-Object {
         $dn = $_.getValue("DisplayName")
