@@ -31,16 +31,13 @@ class macOSPythonBuilder : NixPythonBuilder {
         $pythonBinariesLocation = $this.GetFullPythonToolcacheLocation()
         $configureString = "./configure --prefix=$pythonBinariesLocation --enable-optimizations --enable-shared --with-lto"
 
-        ### Supress gcc warnings
-        $env:CFLAGS="-w"
-
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
             $env:LDFLAGS="-L$(brew --prefix openssl)/lib"
-            $env:CFLAGS="-I$(brew --prefix openssl)/include $($env:CFLAGS)"
+            $env:CFLAGS="-I$(brew --prefix openssl)/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl"
         }

@@ -32,7 +32,6 @@ class UbuntuPythonBuilder : NixPythonBuilder {
 
         ### To build Python with SO we must pass full path to lib folder to the linker
         $env:LDFLAGS="-Wl,--rpath=${pythonBinariesLocation}/lib"
-        $env:CFLAGS="-w"
         $configureString = "./configure --prefix=$pythonBinariesLocation --enable-shared --enable-optimizations"
 
         if ($this.Version -lt "3.0.0") {
