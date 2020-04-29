@@ -107,14 +107,14 @@ $InstalledVersions = Get-Item "$PythonToolcachePath\$MajorVersion.$MinorVersion.
 if ($null -ne $InstalledVersions)
 {
     Write-Host "Python$MajorVersion.$MinorVersion ($Architecture) was found in $PythonToolcachePath..."
-    
+
     foreach ($InstalledVersion in $InstalledVersions)
     {
         if (Test-Path -Path $InstalledVersion)
         {
             Write-Host "Deleting $InstalledVersion..."
             Remove-Item -Path $InstalledVersion -Recurse -Force
-            Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force
+            Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force -Verbose
         }
     }
 } 
