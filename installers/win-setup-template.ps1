@@ -102,15 +102,22 @@ if (-Not (Test-Path $PythonToolcachePath))
 }
 
 Write-Host "Check if current Python version is installed..."
-$InstalledVersion = Get-ChildItem -Path $PythonToolcachePath -Filter "$MajorVersion.$MinorVersion.*"
-$InstalledVersionPath = Join-Path $InstalledVersion.FullName $Architecture
+$InstalledVersions = Get-Item "$PythonToolcachePath\$MajorVersion.$MinorVersion.*\$Architecture"
 
-if (($null -ne $InstalledVersion) -and (Test-Path -Path $InstalledVersionPath)) {
-    Write-Host "Python$MajorVersion.$MinorVersion was found in $PythonToolcachePath"
-    Write-Host "Deleting $InstalledVersionPath..."
-    Remove-Item -Path $InstalledVersionPath -Recurse -Force
-    Remove-Item -Path "$($InstalledVersion.FullName)/${Architecture}.complete" -Force
-} else {
+if ($null -ne $InstalledVersions)
+{
+    foreach ($InstalledVersion in $InstalledVersions)
+    {
+        if (Test-Path -Path $InstalledVersion)
+        {
+            Write-Host "Python$MajorVersion.$MinorVersion ($Architecture) was found in $PythonToolcachePath..."
+            Write-Host "Deleting $InstalledVersion..."
+            Remove-Item -Path $InstalledVersion -Recurse -Force
+            Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force
+        }
+    }
+} else 
+{
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
 
