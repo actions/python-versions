@@ -116,7 +116,8 @@ if ($null -ne $InstalledVersions)
             Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force
         }
     }
-} else 
+} 
+else 
 {
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
