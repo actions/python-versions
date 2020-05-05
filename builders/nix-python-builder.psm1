@@ -93,7 +93,14 @@ class NixPythonBuilder : PythonBuilder {
         $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
 
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
-        $installationTemplateContent = $installationTemplateContent -f $this.Version.Major, $this.Version.Minor, $this.Version.Build
+
+        $variablesToReplace = @{
+            "{{__VERSION_MAJOR__}}" = $this.Version.Major;
+            "{{__VERSION_MINOR__}}" = $this.Version.Minor;
+            "{{__VERSION_BUILD__}}" = $this.Version.Build;
+        }
+        $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
+
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
 
         Write-Debug "Done; Installation script location: $installationScriptLocation)"

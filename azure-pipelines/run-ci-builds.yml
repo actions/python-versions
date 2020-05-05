@@ -13,6 +13,7 @@ jobs:
   pool:
     name: Azure Pipelines
     vmImage: 'ubuntu-latest'
+  timeoutInMinutes: 180
 
   steps:
   - checkout: self
