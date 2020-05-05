@@ -101,7 +101,6 @@ class NixPythonBuilder : PythonBuilder {
         }
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
 
-        $installationTemplateContent = $installationTemplateContent -f $this.Version.Major, $this.Version.Minor, $this.Version.Build
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
 
         Write-Debug "Done; Installation script location: $installationScriptLocation)"
