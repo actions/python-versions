@@ -38,7 +38,7 @@ rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
 cd $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 
-echo "Create additional symlinks (Required for UsePythonVersion VSTS task)"
+echo "Create additional symlinks (Required for the UsePythonVersion Azure Pipelines task and the setup-python GitHub Action)"
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
 
 cd bin/
