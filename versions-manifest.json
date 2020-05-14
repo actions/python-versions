@@ -1,5 +1,52 @@
 [
   {
+    "version": "3.8.3",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.3-20200514.1",
+    "files": [
+      {
+        "filename": "python-3.8.3-macos-1014-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.14",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-macos-1014-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.8.3-macos-1014-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "platform_version": "10.15",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-macos-1014-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.8.3-ubuntu-1604-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "16.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-ubuntu-1604-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.8.3-ubuntu-1804-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-ubuntu-1804-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.8.3-windows-2016-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-windows-2016-x64.zip"
+      },
+      {
+        "filename": "python-3.8.3-windows-2016-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.3-20200514.1/python-3.8.3-windows-2016-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.8.2",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.2-20200505.19",
