@@ -32,7 +32,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
 
         ### To build Python with SO we must pass full path to lib folder to the linker
         $env:LDFLAGS="-Wl,--rpath=${pythonBinariesLocation}/lib"
-        $configureString = "./configure --prefix=$pythonBinariesLocation --enable-shared --enable-optimizations"
+        $configureString = "./configure"
+        $configureString += " --prefix=$pythonBinariesLocation"
+        $configureString += " --enable-shared"
+        $configureString += " --enable-optimizations"
+        $configureString += " --enable-loadable-sqlite-extensions"
 
         if ($this.Version -lt "3.0.0") {
             ### Compile with ucs4 for Python 2.x. On 3.x, ucs4 is enabled by default

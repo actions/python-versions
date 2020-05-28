@@ -29,7 +29,12 @@ class macOSPythonBuilder : NixPythonBuilder {
         #>
 
         $pythonBinariesLocation = $this.GetFullPythonToolcacheLocation()
-        $configureString = "./configure --prefix=$pythonBinariesLocation --enable-optimizations --enable-shared --with-lto"
+        $configureString = "./configure"
+        $configureString += " --prefix=$pythonBinariesLocation"
+        $configureString += " --enable-optimizations"
+        $configureString += " --enable-shared"
+        $configureString += " --enable-loadable-sqlite-extensions"
+        $configureString += " --with-lto"
 
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
