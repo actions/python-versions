@@ -41,6 +41,12 @@ Describe "Tests" {
         "python ./sources/simple-test.py" | Should -ReturnZeroExitCode
     }
 
+    if ($Version -ge "3.2.0") {
+        It "Check if sqlite3 module is installed" {
+            "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
+        }
+    }
+
     if (IsNixPlatform $Platform) {
 
         It "Check for failed modules in build_output" {
