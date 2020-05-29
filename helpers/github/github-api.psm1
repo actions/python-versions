@@ -60,9 +60,26 @@ class GitHubApi
         return $this.InvokeRestMethod($url, 'Post', $null, $requestBody)
     }
 
-    [object] GetGitHubReleases(){
+    [array] GetReleases(){
         $url = "releases"
-        return $this.InvokeRestMethod($url, 'GET', $null, $null)
+        $releases = @()
+        $pageNumber = 1
+        $releaseNumberLimit = 10000
+
+        while ($releases.Count -le $releaseNumberLimit)
+        {
+            $requestParams = "page=${pageNumber}&per_page=100"
+            [array] $response = $this.InvokeRestMethod($url, 'GET', $requestParams, $null)
+            
+            if ($response.Count -eq 0) {
+                break
+            } else {
+                $releases += $response
+                $pageNumber++
+            }
+        }
+
+        return $releases
     }
 
     [string] hidden BuildUrl([string]$Url, [string]$RequestParams) {

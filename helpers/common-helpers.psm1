@@ -12,10 +12,15 @@ function Execute-Command {
 
     try {
         Invoke-Expression $Command | ForEach-Object { Write-Host $_ }
+        if ($LASTEXITCODE -ne 0) { throw "Exit code: $LASTEXITCODE"}
     }
     catch {
-        Write-Host "Error happened during command execution: $Command"
-        Write-Host "##vso[task.logissue type=error;] $_"
+        $errorMessage = "Error happened during command execution: $Command `n $_"
+        Write-Host $errorMessage
+        if ($ErrorActionPreference -ne "Continue") {
+            # avoid logging Azure DevOps issues in case of $ErrorActionPreference -eq Continue
+            Write-Host "##vso[task.logissue type=error;] $errorMessage"
+        }
     }
 }
 
@@ -76,5 +81,5 @@ function IsNixPlatform {
         [String]$Platform
     )
 
-    return ($Platform -match "macos") -or ($Platform -match "ubuntu")
+    return ($Platform -match "macos") -or ($Platform -match "ubuntu") -or ($Platform -match "linux")
 }
