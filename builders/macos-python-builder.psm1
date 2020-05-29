@@ -45,6 +45,8 @@ class macOSPythonBuilder : NixPythonBuilder {
             $env:CFLAGS="-I$(brew --prefix openssl)/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl"
+            $env:LDFLAGS="-L$(brew --prefix sqlite3)/lib"
+            $env:CFLAGS="-I$(brew --prefix sqlite3)/include"
         }
 
         Execute-Command -Command $configureString
