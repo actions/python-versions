@@ -41,8 +41,8 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS="-L$(brew --prefix openssl)/lib"
-            $env:CFLAGS="-I$(brew --prefix openssl)/include"
+            $env:LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix sqlite3)/lib"
+            $env:CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix sqlite3)/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl"
             $env:LDFLAGS="-L$(brew --prefix sqlite3)/lib"
