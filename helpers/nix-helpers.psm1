@@ -25,7 +25,7 @@ function Create-TarArchive {
     )
 
     If ($CompressionType) {
-        $CompressionType += "--${CompressionType}"
+        $CompressionType = "--${CompressionType}"
     }
 
     $arguments = @(
