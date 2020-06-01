@@ -24,13 +24,14 @@ function Create-TarArchive {
         [switch]$DereferenceSymlinks
     )
 
+    If ($CompressionType) {
+        $CompressionType += "--${CompressionType}"
+    }
+
     $arguments = @(
-        "-c",
+        "-c", $CompressionType,
         "-f"
     )
-    If ($CompressionType) {
-        $arguments += "--${CompressionType}"
-    }
 
     if ($DereferenceSymlinks) {
         $arguments += "-h"
