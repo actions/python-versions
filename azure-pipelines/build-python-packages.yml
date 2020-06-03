@@ -60,6 +60,25 @@ stages:
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
 
+- stage: Build_Python_Ubuntu_2004
+  dependsOn: []
+  variables:
+    VmImage: 'ubuntu-20.04'
+    Platform: ubuntu-2004
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/build-job.yml
+
+- stage: Test_Python_Ubuntu_2004
+  condition: succeeded()
+  dependsOn: Build_Python_Ubuntu_2004
+  variables:
+    VmImage: 'ubuntu-20.04'
+    Platform: ubuntu-2004
+    Architecture: x64
+  jobs:
+  - template: /azure-pipelines/templates/test-job.yml
+
 - stage: Build_Python_X64_Windows
   dependsOn: []
   variables:
