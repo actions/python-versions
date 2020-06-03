@@ -56,11 +56,11 @@ function Get-PythonBuilder {
     )
 
     $Platform = $Platform.ToLower()  
-    if ($Platform -match 'windows') {
+    if ($Platform -match 'win32') {
         $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
-    } elseif ($Platform -match 'ubuntu') {
+    } elseif ($Platform -match 'linux') {
         $builder = [UbuntuPythonBuilder]::New($Version, $Architecture, $Platform)
-    } elseif ($Platform -match 'macos') {
+    } elseif ($Platform -match 'darwin') {
         $builder = [macOSPythonBuilder]::New($Version, $Architecture, $Platform)
     } else {
         Write-Host "##vso[task.logissue type=error;] Invalid platform: $Platform"
