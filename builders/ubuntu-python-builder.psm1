@@ -76,7 +76,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
-        if ($this.Platform -ne "ubuntu-1604") {
+        if ($this.Platform -ne "linux-16.04") {
             ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
             Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
         }

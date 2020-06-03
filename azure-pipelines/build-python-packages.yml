@@ -7,7 +7,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'macOS-10.14'
-    Platform: macos-1014
+    Platform: darwin
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -17,7 +17,7 @@ stages:
   dependsOn: Build_Python_MacOS
   variables:
     VmImage: 'macOS-10.14'
-    Platform: macos-1014
+    Platform: darwin
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
@@ -26,7 +26,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'ubuntu-16.04'
-    Platform: ubuntu-1604
+    Platform: linux-16.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -36,7 +36,7 @@ stages:
   dependsOn: Build_Python_Ubuntu_1604
   variables:
     VmImage: 'ubuntu-16.04'
-    Platform: ubuntu-1604
+    Platform: linux-16.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
@@ -45,7 +45,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'ubuntu-18.04'
-    Platform: ubuntu-1804
+    Platform: linux-18.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -55,7 +55,7 @@ stages:
   dependsOn: Build_Python_Ubuntu_1804
   variables:
     VmImage: 'ubuntu-18.04'
-    Platform: ubuntu-1804
+    Platform: linux-18.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
@@ -64,7 +64,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'ubuntu-20.04'
-    Platform: ubuntu-2004
+    Platform: linux-20.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -74,7 +74,7 @@ stages:
   dependsOn: Build_Python_Ubuntu_2004
   variables:
     VmImage: 'ubuntu-20.04'
-    Platform: ubuntu-2004
+    Platform: linux-20.04
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
@@ -83,7 +83,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'vs2017-win2016'
-    Platform: windows-2016
+    Platform: win32
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -93,7 +93,7 @@ stages:
   dependsOn: Build_Python_X64_Windows
   variables:
     VmImage: 'vs2017-win2016'
-    Platform: windows-2016
+    Platform: win32
     Architecture: x64
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
@@ -102,7 +102,7 @@ stages:
   dependsOn: []
   variables:
     VmImage: 'vs2017-win2016'
-    Platform: windows-2016
+    Platform: win32
     Architecture: x86
   jobs:
   - template: /azure-pipelines/templates/build-job.yml
@@ -112,7 +112,7 @@ stages:
   dependsOn: Build_Python_x86_Windows
   variables:
     VmImage: 'vs2017-win2016'
-    Platform: windows-2016
+    Platform: win32
     Architecture: x86
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
