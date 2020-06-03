@@ -7,6 +7,13 @@ jobs:
   - checkout: self
     submodules: true
 
+  - task: PowerShell@2
+    displayName: Fully cleanup the toolcache directory before testing
+    inputs:
+      targetType: filePath
+      filePath: helpers/clean-toolcache.ps1
+      arguments: -ToolName "Python"
+
   - task: DownloadPipelineArtifact@2
     inputs:
       source: 'current'
