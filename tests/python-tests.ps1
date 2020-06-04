@@ -52,6 +52,10 @@ Describe "Tests" {
             "python ./sources/python-modules.py" | Should -ReturnZeroExitCode
         }
 
+        It "Check if sqlite3 module is installed" {
+            "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
+        }
+
         It "Check if python configuration is correct" {
             "python ./sources/python-config-test.py" | Should -ReturnZeroExitCode
         }
