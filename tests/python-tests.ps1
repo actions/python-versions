@@ -41,6 +41,10 @@ Describe "Tests" {
         "python ./sources/simple-test.py" | Should -ReturnZeroExitCode
     }
 
+    It "Check if sqlite3 module is installed" {
+        "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
+    }
+
     if (IsNixPlatform $Platform) {
 
         It "Check for failed modules in build_output" {
@@ -50,10 +54,6 @@ Describe "Tests" {
 
         It "Check if all required python modules are installed"  {
             "python ./sources/python-modules.py" | Should -ReturnZeroExitCode
-        }
-
-        It "Check if sqlite3 module is installed" {
-            "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }
 
         It "Check if python configuration is correct" {
