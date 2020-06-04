@@ -5,7 +5,7 @@ def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        print(sqlite3.version)
+        print('Sqlite3 version: ', sqlite3.version)
         conn = sqlite3.connect(db_file)
         conn.enable_load_extension(True)
     except Error as e:
