@@ -10,10 +10,10 @@ def create_connection(db_file):
         print(sqlite3.version)
     except Error as e:
         print(e)
+        exit(1)
     finally:
         if conn:
             conn.close()
-
 
 if __name__ == '__main__':
     create_connection(r"pythonsqlite.db")
