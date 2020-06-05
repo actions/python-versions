@@ -37,8 +37,8 @@ class macOSPythonBuilder : NixPythonBuilder {
         $configureString += " --with-lto"
 
         ### Link to sqlite3 instance
-        $env:LDFLAGS="-L$(brew --prefix sqlite3)/lib"
-        $env:CFLAGS="-I$(brew --prefix sqlite3)/include"
+        $env:LDFLAGS = "-L$(brew --prefix sqlite3)/lib"
+        $env:CFLAGS = "-I$(brew --prefix sqlite3)/include"
 
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
