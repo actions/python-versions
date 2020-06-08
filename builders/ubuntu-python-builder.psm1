@@ -36,11 +36,16 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         $configureString += " --prefix=$pythonBinariesLocation"
         $configureString += " --enable-shared"
         $configureString += " --enable-optimizations"
-        $configureString += " --enable-loadable-sqlite-extensions"
 
+        ### Compile with ucs4 for Python 2.x. On 3.x, ucs4 is enabled by default
         if ($this.Version -lt "3.0.0") {
-            ### Compile with ucs4 for Python 2.x. On 3.x, ucs4 is enabled by default
             $configureString += " --enable-unicode=ucs4"
+        }
+
+        ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
+        ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
+        if ($this.Version -ge "3.2.0") {
+            $configureString += " --enable-loadable-sqlite-extensions"
         }
 
         Execute-Command -Command $configureString

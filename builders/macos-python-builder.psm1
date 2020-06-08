@@ -33,22 +33,25 @@ class macOSPythonBuilder : NixPythonBuilder {
         $configureString += " --prefix=$pythonBinariesLocation"
         $configureString += " --enable-optimizations"
         $configureString += " --enable-shared"
-        $configureString += " --enable-loadable-sqlite-extensions"
         $configureString += " --with-lto"
-
-        ### Link to sqlite3 instance
-        $env:LDFLAGS = "-L$(brew --prefix sqlite3)/lib"
-        $env:CFLAGS = "-I$(brew --prefix sqlite3)/include"
 
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS += " -L$(brew --prefix openssl)/lib"
-            $env:CFLAGS += " -I$(brew --prefix openssl)/include"
+            $env:LDFLAGS = "-L$(brew --prefix openssl)/lib"
+            $env:CFLAGS = "-I$(brew --prefix openssl)/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl"
+        }
+
+        ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
+        ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
+        if ($this.Version -ge "3.2.0") {
+            $configureString += " --enable-loadable-sqlite-extensions"
+            $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
+            $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
         }
 
         Execute-Command -Command $configureString
