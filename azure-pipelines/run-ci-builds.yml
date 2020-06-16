@@ -29,6 +29,10 @@ jobs:
           -AzureDevOpsProjectName $(System.TeamProject) `
           -AzureDevOpsAccessToken $(System.AccessToken) `
           -SourceBranch $(Build.SourceBranch) `
+          -DefinitionId $(DEFINITION_ID) `
           -SourceVersion $(Build.SourceVersion) `
+          -ManifestLink $(MANIFEST_LINK) `
+          -WaitForBuilds $(WAIT_FOR_BUILDS) `
           -ToolVersions "$(PYTHON_VERSIONS)" `
-          -DefinitionId $(DEFINITION_ID) 
+          -RetryIntervalSec $(RETRY_INTERVAL_SEC) `
+          -RetryCount $(RETRY_COUNT)
