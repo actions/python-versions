@@ -6,7 +6,7 @@ import os
 
 # Define variables
 os_type = platform.system()
-version = sys.version.split(" ")[0]
+version = sys.argv[1]
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
