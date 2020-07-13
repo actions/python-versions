@@ -98,7 +98,7 @@ class NixPythonBuilder : PythonBuilder {
         $variablesToReplace = @{
             "{{__VERSION_MAJOR__}}" = $this.Version.Major;
             "{{__VERSION_MINOR__}}" = $this.Version.Minor;
-            "{{__VERSION_BUILD__}}" = $this.Version.Patch;
+            "{{__VERSION_FULL__}}" = $this.Version;
         }
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
 

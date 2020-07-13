@@ -1,5 +1,5 @@
 [String] $Architecture = "{{__ARCHITECTURE__}}"
-[Version] $Version = "{{__VERSION__}}"
+[String] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
 function Get-RegistryVersionFilter {
@@ -73,13 +73,13 @@ if ([string]::IsNullOrEmpty($ToolcacheRoot)) {
     $ToolcacheRoot = $env:RUNNER_TOOL_CACHE
 }
 $PythonToolcachePath = Join-Path -Path $ToolcacheRoot -ChildPath "Python"
-$PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version.ToString()
+$PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version
 $PythonArchPath = Join-Path -Path $PythonVersionPath -ChildPath $Architecture
 
 $IsMSI = $PythonExecName -match "msi"
 
-$MajorVersion = $Version.Major
-$MinorVersion = $Version.Minor
+$MajorVersion = $Version.Split('.')[0]
+$MinorVersion = $Version.Split('.')[1]
 
 Write-Host "Check if Python hostedtoolcache folder exist..."
 if (-Not (Test-Path $PythonToolcachePath)) {

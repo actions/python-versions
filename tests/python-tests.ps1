@@ -1,5 +1,5 @@
 param (
-    [Version] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
+    [String] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Version,
     [String] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Platform
