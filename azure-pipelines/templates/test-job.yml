@@ -3,6 +3,8 @@ jobs:
   pool: 
     name: Azure Pipelines
     vmImage: $(VmImage)
+  variables:
+    TestRunTitle: 'python-$(VmImage)-$(Architecture)'
   steps:
   - checkout: self
     submodules: true
