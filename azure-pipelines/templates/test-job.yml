@@ -4,7 +4,7 @@ jobs:
     name: Azure Pipelines
     vmImage: $(VmImage)
   variables:
-    TestRunTitle: 'python-$(VmImage)-$(Architecture)'
+    TestRunTitle: 'python-$(Platform)-$(Architecture)'
   steps:
   - checkout: self
     submodules: true
