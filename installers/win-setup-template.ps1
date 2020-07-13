@@ -3,8 +3,7 @@
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
 function Get-RegistryVersionFilter {
-    param
-    (
+    param(
         [Parameter(Mandatory)][String] $Architecture,
         [Parameter(Mandatory)][Int32] $MajorVersion,
         [Parameter(Mandatory)][Int32] $MinorVersion
@@ -12,20 +11,15 @@ function Get-RegistryVersionFilter {
 
     $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
     ### Python 2.7 x86 have no architecture postfix
-    if (($Architecture -eq "x86") -and ($MajorVersion -eq 2))
-    {
+    if (($Architecture -eq "x86") -and ($MajorVersion -eq 2)) {
         "Python $MajorVersion.$MinorVersion.\d+$"
-    }
-    else
-    {
+    } else {
         "Python $MajorVersion.$MinorVersion.*($archFilter)"
     }
 }
 
-function Remove-RegistryEntries
-{
-    param
-    (
+function Remove-RegistryEntries {
+    param(
         [Parameter(Mandatory)][String] $Architecture,
         [Parameter(Mandatory)][Int32] $MajorVersion,
         [Parameter(Mandatory)][Int32] $MinorVersion
@@ -35,10 +29,8 @@ function Remove-RegistryEntries
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
-    foreach ($key in $regKeys)
-    {
-        if ($key.getValue("DisplayName") -match $versionFilter)
-        {
+    foreach ($key in $regKeys) {
+        if ($key.getValue("DisplayName") -match $versionFilter) {
             Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
         }
     }
@@ -63,25 +55,20 @@ function Remove-RegistryEntries
 }
 
 function Get-ExecParams {
-    param
-    (
+    param(
         [Parameter(Mandatory)][Boolean] $IsMSI,
         [Parameter(Mandatory)][String] $PythonArchPath
     )
 
-    if ($IsMSI) 
-    {
+    if ($IsMSI) {
         "TARGETDIR=$PythonArchPath ALLUSERS=1"
-    } 
-    else 
-    {
+    } else {
         "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1"
     }
 }
 
 $ToolcacheRoot = $env:AGENT_TOOLSDIRECTORY
-if ([string]::IsNullOrEmpty($ToolcacheRoot))
-{
+if ([string]::IsNullOrEmpty($ToolcacheRoot)) {
     # GitHub images don't have `AGENT_TOOLSDIRECTORY` variable
     $ToolcacheRoot = $env:RUNNER_TOOL_CACHE
 }
@@ -95,8 +82,7 @@ $MajorVersion = $Version.Major
 $MinorVersion = $Version.Minor
 
 Write-Host "Check if Python hostedtoolcache folder exist..."
-if (-Not (Test-Path $PythonToolcachePath)) 
-{
+if (-Not (Test-Path $PythonToolcachePath)) {
     Write-Host "Create Python toolcache folder"
     New-Item -ItemType Directory -Path $PythonToolcachePath | Out-Null
 }
@@ -104,22 +90,17 @@ if (-Not (Test-Path $PythonToolcachePath))
 Write-Host "Check if current Python version is installed..."
 $InstalledVersions = Get-Item "$PythonToolcachePath\$MajorVersion.$MinorVersion.*\$Architecture"
 
-if ($null -ne $InstalledVersions)
-{
+if ($null -ne $InstalledVersions) {
     Write-Host "Python$MajorVersion.$MinorVersion ($Architecture) was found in $PythonToolcachePath..."
 
-    foreach ($InstalledVersion in $InstalledVersions)
-    {
-        if (Test-Path -Path $InstalledVersion)
-        {
+    foreach ($InstalledVersion in $InstalledVersions) {
+        if (Test-Path -Path $InstalledVersion) {
             Write-Host "Deleting $InstalledVersion..."
             Remove-Item -Path $InstalledVersion -Recurse -Force
             Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force -Verbose
         }
     }
-} 
-else 
-{
+} else {
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
 
@@ -136,8 +117,7 @@ Write-Host "Install Python $Version in $PythonToolcachePath..."
 $ExecParams = Get-ExecParams -IsMSI $IsMSI -PythonArchPath $PythonArchPath
 
 cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
-if ($LASTEXITCODE -ne 0)
-{
+if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
 }
 

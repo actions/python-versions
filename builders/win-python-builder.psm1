@@ -27,7 +27,7 @@ class WinPythonBuilder : PythonBuilder {
     [string] $OutputArtifactName
 
     WinPythonBuilder(
-        [version] $version,
+        [semver] $version,
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) {
@@ -72,10 +72,12 @@ class WinPythonBuilder : PythonBuilder {
         #>
 
         $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $nativeVersion = Convert-Version -version $this.Version
         $architecture = $this.GetArchitectureExtension()
         $extension = $this.GetPythonExtension()
 
-        $uri = "${base}/$($this.Version)/python-$($this.Version)${architecture}${extension}"
+        $uri = "${base}/${versionName}/python-${nativeVersion}${architecture}${extension}"
 
         return $uri
     }
