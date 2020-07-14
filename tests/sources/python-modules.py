@@ -251,6 +251,10 @@ if sys.version_info >= (3, 7):
 if sys.version_info > (3, 7):
     standard_library.remove('macpath')
 
+# 'dummy_threading' module has been removed from Python 3.9
+if sys.version_info > (3, 8):
+    standard_library.remove('dummy_threading')
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
