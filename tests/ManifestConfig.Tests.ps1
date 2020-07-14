@@ -1,6 +1,6 @@
 Import-Module (Join-Path $PSScriptRoot "../helpers/packages-generation/manifest-utils.psm1")
 
-$ConfigurationFile = Join-Path $PSScriptRoot "python-manifest-config.json"
+$ConfigurationFile = Join-Path $PSScriptRoot "../config/python-manifest-config.json"
 $Configuration = Read-ConfigurationFile -Filepath $ConfigurationFile
 
 Describe "Python manifest config" {
