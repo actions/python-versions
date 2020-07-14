@@ -1,3 +1,4 @@
+name: Manifest config tests
 on: 
   pull_request:
     branches:
@@ -6,7 +7,7 @@ on:
       - 'versions-manifest.json'
 
 jobs:
-  Manifest_Config_Tests:
+  RunTests:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
