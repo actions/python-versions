@@ -1,0 +1,27 @@
+name: Validate 'versions-manifest.json' file
+on: 
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'versions-manifest.json'
+
+jobs:
+  Manifest_Config_Tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Install Pester
+      shell: pwsh
+      run: |
+        Install-Module Pester -Force -Scope CurrentUser -RequiredVersion 4.10.1
+
+    - name: Run tests
+      shell: pwsh  
+      run: |
+        Import-Module Pester
+        Invoke-Pester tests/ManifestConfig.Tests.ps1 -EnableExit
