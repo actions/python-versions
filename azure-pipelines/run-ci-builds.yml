@@ -3,7 +3,7 @@ pr:
   autoCancel: true
   branches:
     include:
-    - master
+    - main
   paths:
     exclude:
     - versions-manifest.json
