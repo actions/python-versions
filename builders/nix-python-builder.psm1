@@ -33,13 +33,12 @@ class NixPythonBuilder : PythonBuilder {
     [string] $OutputArtifactName
 
     NixPythonBuilder(
-        [version] $version,
+        [semver] $version,
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) {
         $this.InstallationTemplateName = "nix-setup-template.sh"	
         $this.InstallationScriptName = "setup.sh"
-
         $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.tar.gz"
     }
 
@@ -50,8 +49,10 @@ class NixPythonBuilder : PythonBuilder {
         #>
 
         $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $nativeVersion = Convert-Version -version $this.Version
 
-        return "${base}/$($this.Version)/Python-$($this.Version).tgz"
+        return "${base}/${versionName}/Python-${nativeVersion}.tgz"
     }
 
     [string] GetPythonBinary() {
@@ -95,9 +96,7 @@ class NixPythonBuilder : PythonBuilder {
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
 
         $variablesToReplace = @{
-            "{{__VERSION_MAJOR__}}" = $this.Version.Major;
-            "{{__VERSION_MINOR__}}" = $this.Version.Minor;
-            "{{__VERSION_BUILD__}}" = $this.Version.Build;
+            "{{__VERSION_FULL__}}" = $this.Version;
         }
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
 

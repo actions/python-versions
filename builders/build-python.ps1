@@ -21,7 +21,7 @@ Required parameter. The platform for which Python will be built.
 #>
 
 param(
-    [Parameter (Mandatory=$true)][Version] $Version,
+    [Parameter (Mandatory=$true)][semver] $Version,
     [Parameter (Mandatory=$true)][string] $Platform,
     [string] $Architecture = "x64"
 )
@@ -29,6 +29,7 @@ param(
 Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "common-helpers.psm1") -DisableNameChecking
 Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "nix-helpers.psm1") -DisableNameChecking
 Import-Module (Join-Path $PSScriptRoot "../helpers" | Join-Path -ChildPath "win-helpers.psm1") -DisableNameChecking
+Import-Module (Join-Path $PSScriptRoot "python-version.psm1") -DisableNameChecking
 
 function Get-PythonBuilder {
     <#
@@ -49,13 +50,13 @@ function Get-PythonBuilder {
 
     #>
 
-    param (
-        [version] $Version,
+    param(
+        [semver] $Version,
         [string] $Architecture,
         [string] $Platform
     )
 
-    $Platform = $Platform.ToLower()  
+    $Platform = $Platform.ToLower()
     if ($Platform -match 'win32') {
         $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'linux') {

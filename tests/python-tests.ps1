@@ -1,5 +1,5 @@
 param (
-    [Version] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
+    [String] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Version,
     [String] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Platform
@@ -59,7 +59,7 @@ Describe "Tests" {
         }
 
         It "Check if python configuration is correct" {
-            "python ./sources/python-config-test.py" | Should -ReturnZeroExitCode
+            "python ./sources/python-config-test.py $Version" | Should -ReturnZeroExitCode
         }
 
         It "Check if shared libraries are linked correctly" {

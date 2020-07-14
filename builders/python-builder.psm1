@@ -29,7 +29,7 @@ class PythonBuilder {
 
     #>
 
-    [version] $Version
+    [semver] $Version
     [string] $Architecture
     [string] $Platform
     [string] $HostedToolcacheLocation
@@ -38,17 +38,17 @@ class PythonBuilder {
     [string] $ArtifactFolderLocation
     [string] $InstallationTemplatesLocation
 
-    PythonBuilder ([version] $version, [string] $architecture, [string] $platform) {
-        $this.Version = $version
-        $this.Architecture = $architecture
-        $this.Platform = $platform
+    PythonBuilder ([semver] $version, [string] $architecture, [string] $platform) {
+        $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
 
         $this.HostedToolcacheLocation = $env:AGENT_TOOLSDIRECTORY
         $this.TempFolderLocation = $env:BUILD_SOURCESDIRECTORY
         $this.WorkFolderLocation = $env:BUILD_BINARIESDIRECTORY
         $this.ArtifactFolderLocation = $env:BUILD_STAGINGDIRECTORY
 
-        $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
+        $this.Version = $version
+        $this.Architecture = $architecture
+        $this.Platform = $platform
     }
 
     [uri] GetBaseUri() {
@@ -79,11 +79,21 @@ class PythonBuilder {
         return "$pythonToolcacheLocation/$($this.Version)/$($this.Architecture)"
     }
 
+    [string] GetBaseVersion() {
+        <#
+        .SYNOPSIS
+        Return Major.Minor.Patch version string.
+        #>
+
+        return "$($this.Version.Major).$($this.Version.Minor).$($this.Version.Patch)"
+    }
+
     [void] PreparePythonToolcacheLocation() {
         <#
         .SYNOPSIS
         Prepare system hostedtoolcache folder for new Python version. 
         #>
+        
         $pythonBinariesLocation = $this.GetFullPythonToolcacheLocation()
 
         if (Test-Path $pythonBinariesLocation) {
