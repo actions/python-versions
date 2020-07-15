@@ -56,7 +56,6 @@ function Get-PythonBuilder {
         [string] $Platform
     )
 
-    $Platform = $Platform
     if ($Platform -match 'win32') {
         $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'linux') {
