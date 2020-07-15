@@ -17,7 +17,7 @@ class macOSPythonBuilder : NixPythonBuilder {
     #>
 
     macOSPythonBuilder(
-        [version] $version,
+        [semver] $version,
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) { }

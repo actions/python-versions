@@ -1,0 +1,32 @@
+name: Manifest config tests
+on: 
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'versions-manifest.json'
+
+jobs:
+  RunTests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Install Pester
+      shell: pwsh
+      run: |
+        Install-Module Pester -Force -Scope CurrentUser
+
+    - name: Run tests
+      shell: pwsh  
+      run: |
+        Import-Module Pester
+        Invoke-Pester -Configuration @{
+          Run = @{
+            Path = "tests/ManifestConfig.Tests.ps1"
+            Exit = $true
+          }
+        }

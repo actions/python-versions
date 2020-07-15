@@ -17,7 +17,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
     #>
 
     UbuntuPythonBuilder(
-        [version] $version,
+        [semver] $version,
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) { }
@@ -68,6 +68,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         } else {
             $tkinterInstallString = "sudo apt install -y python-tk tk-dev"
         }
+
         Execute-Command -Command $tkinterInstallString
 
         ### Install dependent packages
