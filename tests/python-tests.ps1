@@ -1,5 +1,5 @@
 param (
-    [string] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
+    [semver] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Version,
     [string] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Platform
