@@ -2,7 +2,7 @@ name: Manifest config tests
 on: 
   pull_request:
     branches:
-      - main
+      - master
     paths-ignore:
       - 'versions-manifest.json'
 
@@ -18,7 +18,7 @@ jobs:
     - name: Install Pester
       shell: pwsh
       run: |
-        Install-Module Pester -Force -Scope CurrentUser -RequiredVersion 4.10.1
+        Install-Module Pester -Force -Scope CurrentUser
 
     - name: Run tests
       shell: pwsh  

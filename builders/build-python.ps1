@@ -56,7 +56,7 @@ function Get-PythonBuilder {
         [string] $Platform
     )
 
-    $Platform = $Platform.ToLower()
+    $Platform = $Platform
     if ($Platform -match 'win32') {
         $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'linux') {
@@ -72,5 +72,5 @@ function Get-PythonBuilder {
 }
 
 ### Create Python builder instance, and build artifact
-$Builder = Get-PythonBuilder -Version $Version -Architecture $Architecture  -Platform $Platform 
+$Builder = Get-PythonBuilder -Version $Version -Architecture $Architecture -Platform $Platform 
 $Builder.Build()
