@@ -10,7 +10,7 @@ Some versions are pre-installed on [virtual-environments](https://github.com/act
 More versions will (soon!) be available to install on-the-fly through the [`setup-python`](https://github.com/actions/setup-python) action.
 
 ## Adding new versions
-We are trying to build and release new versions of Python as soon as they are released. Please open an issue if any versions are missing.
+We are trying to build and release new versions of Python as soon as they are released. Please open an issue in [actions/virtual-environments](https://github.com/actions/virtual-environments) if any versions are missing.
 
 ## Contribution
 Contributions are welcome! See [Contributor's Guide](./CONTRIBUTING.md) for more details about contribution process and code structure
