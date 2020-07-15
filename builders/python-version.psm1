@@ -13,7 +13,7 @@ function Convert-Label() {
         "alpha" { return "a" }
         "beta" { return "b" }
         "rc" { return "rc" }
-        Default { throw "Invalid version label '$label'" }
+        default { throw "Invalid version label '$label'" }
     }
 }
 
@@ -29,15 +29,11 @@ function Convert-Version {
         [char] $delimiter = "."
     )
 
-    $majorVersion = $version.Major
-    $minorVersion = $version.Minor
-    $patchVersion = $version.Patch
-
-    $nativeVersion = "${majorVersion}.${minorVersion}.${patchVersion}"
+    $nativeVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Patch
 
     if ($version.PreReleaseLabel)
     {
-        $preReleaseLabel = ($version.PreReleaseLabel).Split($delimiter)
+        $preReleaseLabel = $version.PreReleaseLabel.Split($delimiter)
         
         $preReleaseLabelName = Convert-Label -Label $preReleaseLabel[0]
         $preReleaseLabelVersion = $preReleaseLabel[1]
