@@ -24,4 +24,9 @@ jobs:
       shell: pwsh  
       run: |
         Import-Module Pester
-        Invoke-Pester tests/ManifestConfig.Tests.ps1 -EnableExit
+        Invoke-Pester -Configuration @{
+          Run = @{
+            Path = "tests/ManifestConfig.Tests.ps1"
+            Exit = $true
+          }
+        }
