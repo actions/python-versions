@@ -76,6 +76,7 @@ jobs:
           }
         }
         Invoke-Pester -Script $pesterParams -OutputFile "test_results.xml" -OutputFormat NUnitXml
+      pwsh: true
       workingDirectory: '$(Build.SourcesDirectory)/tests'
 
   - task: PublishTestResults@2
