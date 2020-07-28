@@ -829,25 +829,29 @@
     "version": "3.4.10",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.4.10",
-    "files": {
-      "filename": "python-3.4.10-linux-18.04-x64.tar.gz",
-      "arch": "x64",
-      "platform": "linux",
-      "platform_version": "18.04",
-      "download_url": "https://github.com/actions/python-versions/releases/download/3.4.10/python-3.4.10-linux-18.04-x64.tar.gz"
-    }
+    "files": [
+      {
+        "filename": "python-3.4.10-linux-18.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.4.10/python-3.4.10-linux-18.04-x64.tar.gz"
+      }
+    ]
   },
   {
     "version": "3.3.7",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.3.7",
-    "files": {
-      "filename": "python-3.3.7-linux-18.04-x64.tar.gz",
-      "arch": "x64",
-      "platform": "linux",
-      "platform_version": "18.04",
-      "download_url": "https://github.com/actions/python-versions/releases/download/3.3.7/python-3.3.7-linux-18.04-x64.tar.gz"
-    }
+    "files": [
+      {
+        "filename": "python-3.3.7-linux-18.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.3.7/python-3.3.7-linux-18.04-x64.tar.gz"
+      }
+    ]
   },
   {
     "version": "2.7.18",
