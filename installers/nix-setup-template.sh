@@ -49,6 +49,7 @@ fi
 chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR python
 
 echo "Upgrading PIP..."
+export LD_LIBRARY_PATH="$PYTHON_TOOLCACHE_VERSION_ARCH_PATH/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 ./python -m ensurepip
 ./python -m pip install --ignore-installed pip
 
