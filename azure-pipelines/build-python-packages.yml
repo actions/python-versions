@@ -116,3 +116,17 @@ stages:
     Architecture: x86
   jobs:
   - template: /azure-pipelines/templates/test-job.yml
+
+- stage: Publish_Release
+  dependsOn: [Test_Python_MacOS, Test_Python_Ubuntu_1604, Test_Python_Ubuntu_1804, Test_Python_Ubuntu_2004, Test_Python_x64_Windows, Test_Python_x86_Windows]
+  jobs:
+  - deployment: Publish_Release
+    pool:
+      name: Azure Pipelines
+      vmImage: ubuntu-18.04
+    environment: 'Get Available Tools Versions - Publishing Approval'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: /azure-pipelines/templates/publish-release-steps.yml
