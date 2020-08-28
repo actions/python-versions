@@ -43,4 +43,5 @@ steps:
       Import-Module (Join-Path (Get-Location).Path "github-api.psm1")
       $gitHubApi = Get-GitHubApi -RepositoryFullName "$(Build.Repository.Name)" -AccessToken "$(GITHUB_TOKEN)"
       $gitHubApi.CreateWorkflowDispatch("$(WORKFLOW_FILE_NAME)", "$(WORKFLOW_DISPATCH_REF)", "$(INPUTS)")
+      Write-Host "Please find created Pull request here: $(Build.Repository.Uri)/pulls"
     workingDirectory: '$(Build.SourcesDirectory)/helpers/github'
