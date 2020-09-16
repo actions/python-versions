@@ -31,7 +31,7 @@ fi
 echo "Create Python $PYTHON_FULL_VERSION folder"
 mkdir -p $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 
-echo "Copy Python binaries to hostedtoolcache folder"
+echo "Copy Python binaries to $PYTHON_TOOLCACHE_VERSION_ARCH_PATH"
 cp -R ./* $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
