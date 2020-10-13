@@ -1,4 +1,5 @@
 import distutils.sysconfig
+from distutils.version import StrictVersion
 import sysconfig
 import sys
 import platform
@@ -7,6 +8,7 @@ import os
 # Define variables
 os_type = platform.system()
 version = sys.argv[1]
+nativeVersion = sys.argv[2]
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
@@ -41,7 +43,7 @@ else:
 ### Validate macOS
 if os_type == 'Darwin':
     ### Validate openssl links
-    if version < "3.7.0":
+    if StrictVersion(nativeVersion) < StrictVersion("3.7.0"):
         expected_ldflags = '-L/usr/local/opt/openssl@1.1/lib'
         ldflags = sysconfig.get_config_var('LDFLAGS')
 

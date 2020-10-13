@@ -7,6 +7,7 @@ param (
 
 Import-Module (Join-Path $PSScriptRoot "../helpers/pester-extensions.psm1")
 Import-Module (Join-Path $PSScriptRoot "../helpers/common-helpers.psm1")
+Import-Module (Join-Path $PSScriptRoot "../builders/python-version.psm1")
 
 function Analyze-MissingModules([string] $buildOutputLocation) {
     $searchStringStart = "Failed to build these modules:"
@@ -59,7 +60,8 @@ Describe "Tests" {
         }
 
         It "Check if python configuration is correct" {
-            "python ./sources/python-config-test.py $Version" | Should -ReturnZeroExitCode
+            $nativeVersion = Convert-Version -version $Version
+            "python ./sources/python-config-test.py $Version $nativeVersion" | Should -ReturnZeroExitCode
         }
 
         It "Check if shared libraries are linked correctly" {
