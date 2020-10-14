@@ -255,6 +255,10 @@ if sys.version_info > (3, 7):
 if sys.version_info > (3, 8):
     standard_library.remove('dummy_threading')
 
+# 'symbol' module has been removed from Python 3.10
+if sys.version_info >= (3, 10):
+    standard_library.remove('symbol')
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
