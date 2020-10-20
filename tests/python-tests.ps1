@@ -50,7 +50,7 @@ Describe "Tests" {
 
     It "Run pip" {
         "pip install requests" | Should -ReturnZeroExitCode
-        "pip uninstall requests" | Should -ReturnZeroExitCode
+        "pip uninstall requests -y" | Should -ReturnZeroExitCode
     }
 
     if (IsNixPlatform $Platform) {
