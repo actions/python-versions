@@ -39,11 +39,12 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
+        Write-Host "openssl path: $(brew --prefix openssl)"
         if ($this.Version -lt "3.7.0") {
             $env:LDFLAGS = "-L$(brew --prefix openssl)/lib"
             $env:CFLAGS = "-I$(brew --prefix openssl)/include"
         } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl"
+            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
         }
 
         ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*

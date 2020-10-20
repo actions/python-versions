@@ -51,8 +51,8 @@ if os_type == 'Darwin':
             print('Invalid ldflags: %s; Expected: %s' % (ldflags, expected_ldflags))
             exit(1)
     else:
-        expected_openssl_includes = '-I/usr/local/opt/openssl/include'
-        expected_openssl_ldflags ='-L/usr/local/opt/openssl/lib'
+        expected_openssl_includes = '-I/usr/local/opt/openssl@1.1/include'
+        expected_openssl_ldflags ='-L/usr/local/opt/openssl@1.1/lib'
         
         openssl_includes = sysconfig.get_config_var('OPENSSL_INCLUDES')
         openssl_ldflags = sysconfig.get_config_var('OPENSSL_LDFLAGS')
