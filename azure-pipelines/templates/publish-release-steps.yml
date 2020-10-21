@@ -25,7 +25,7 @@ steps:
 - task: GitHubRelease@1
   displayName: 'Upload release assets'
   inputs:
-    gitHubConnection: 'Github Connection'
+    gitHubConnection: 'GithubConnectionDSH'
     action: edit
     tag: '$(VERSION)-$(Build.BuildId)'
     title: '$(VERSION)'
