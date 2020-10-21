@@ -48,46 +48,46 @@
   {
     "version": "3.9.0",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.9.0-83838",
+    "release_url": "https://github.com/dmitry-shibanov/python-versions/releases/tag/3.9.0-1176554",
     "files": [
       {
         "filename": "python-3.9.0-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-darwin-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.9.0-linux-16.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-linux-16.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-linux-16.04-x64.tar.gz"
       },
       {
         "filename": "python-3.9.0-linux-18.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-linux-18.04-x64.tar.gz"
       },
       {
         "filename": "python-3.9.0-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.9.0-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-win32-x64.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-win32-x64.zip"
       },
       {
         "filename": "python-3.9.0-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.0-83838/python-3.9.0-win32-x86.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.9.0-1176554/python-3.9.0-win32-x86.zip"
       }
     ]
   },
@@ -278,46 +278,46 @@
   {
     "version": "3.8.6",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.6-82502",
+    "release_url": "https://github.com/dmitry-shibanov/python-versions/releases/tag/3.8.6-1175600",
     "files": [
       {
         "filename": "python-3.8.6-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-darwin-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.8.6-linux-16.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-linux-16.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-linux-16.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.6-linux-18.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-linux-18.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.6-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.6-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-win32-x64.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-win32-x64.zip"
       },
       {
         "filename": "python-3.8.6-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.6-82502/python-3.8.6-win32-x86.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.8.6-1175600/python-3.8.6-win32-x86.zip"
       }
     ]
   },
@@ -828,184 +828,48 @@
     ]
   },
   {
-    "version": "3.6.12",
-    "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.12-20200818.3",
-    "files": [
-      {
-        "filename": "python-3.6.12-darwin-x64.tar.gz",
-        "arch": "x64",
-        "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.12-20200818.3/python-3.6.12-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.12-linux-16.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.12-20200818.3/python-3.6.12-linux-16.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.12-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.12-20200818.3/python-3.6.12-linux-18.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.12-linux-20.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.12-20200818.3/python-3.6.12-linux-20.04-x64.tar.gz"
-      }
-    ]
-  },
-  {
-    "version": "3.6.11",
-    "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.11-20200629.6",
-    "files": [
-      {
-        "filename": "python-3.6.11-darwin-x64.tar.gz",
-        "arch": "x64",
-        "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.11-20200629.6/python-3.6.11-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.11-linux-16.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.11-20200629.6/python-3.6.11-linux-16.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.11-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.11-20200629.6/python-3.6.11-linux-18.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.11-linux-20.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.11-20200629.6/python-3.6.11-linux-20.04-x64.tar.gz"
-      }
-    ]
-  },
-  {
-    "version": "3.6.10",
-    "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.10-20200609.6",
-    "files": [
-      {
-        "filename": "python-3.6.10-darwin-x64.tar.gz",
-        "arch": "x64",
-        "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.10-20200609.6/python-3.6.10-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.10-linux-16.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.10-20200609.6/python-3.6.10-linux-16.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.10-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.10-20200609.6/python-3.6.10-linux-18.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.10-linux-20.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.10-20200609.6/python-3.6.10-linux-20.04-x64.tar.gz"
-      }
-    ]
-  },
-  {
-    "version": "3.6.9",
-    "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.9-20200610.1",
-    "files": [
-      {
-        "filename": "python-3.6.9-darwin-x64.tar.gz",
-        "arch": "x64",
-        "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.9-20200610.1/python-3.6.9-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.9-linux-16.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.9-20200610.1/python-3.6.9-linux-16.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.9-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.9-20200610.1/python-3.6.9-linux-18.04-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.6.9-linux-20.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.9-20200610.1/python-3.6.9-linux-20.04-x64.tar.gz"
-      }
-    ]
-  },
-  {
     "version": "3.6.8",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.6.8-20200609.13",
+    "release_url": "https://github.com/dmitry-shibanov/python-versions/releases/tag/3.6.8-1176758",
     "files": [
       {
         "filename": "python-3.6.8-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-darwin-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.6.8-linux-16.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "16.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-linux-16.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-linux-16.04-x64.tar.gz"
       },
       {
         "filename": "python-3.6.8-linux-18.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-linux-18.04-x64.tar.gz"
       },
       {
         "filename": "python-3.6.8-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.6.8-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-win32-x64.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-win32-x64.zip"
       },
       {
         "filename": "python-3.6.8-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.6.8-20200609.13/python-3.6.8-win32-x86.zip"
+        "download_url": "https://github.com/dmitry-shibanov/python-versions/releases/download/3.6.8-1176758/python-3.6.8-win32-x86.zip"
       }
     ]
   },
