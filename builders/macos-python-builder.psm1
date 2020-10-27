@@ -41,8 +41,8 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         Write-Host "openssl path: $(brew --prefix openssl)"
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib" #"-L$(brew --prefix openssl)/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include" #"-I$(brew --prefix openssl)/include"
+            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib"
+            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
         }
