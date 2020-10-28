@@ -139,6 +139,7 @@ standard_library = [
     'sre_constants',
     'sre_parse',
     'ssl',
+    '_ssl',
     'stat',
     'string',
     'stringprep',
