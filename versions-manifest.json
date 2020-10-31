@@ -1184,6 +1184,25 @@
     ]
   },
   {
+    "version": "3.4.4",
+    "stable": true,
+    "release_url": "none yet",
+    "files": [
+      {
+        "filename": "python-3.4.4-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469583/python-3.4.4-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.4.4-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469584/python-3.4.4-win32-x86.zip"
+      },
+    ]
+  },
+  {
     "version": "3.3.7",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.3.7",
@@ -1195,6 +1214,82 @@
         "platform_version": "18.04",
         "download_url": "https://github.com/actions/python-versions/releases/download/3.3.7/python-3.3.7-linux-18.04-x64.tar.gz"
       }
+    ]
+  },
+  {
+    "version": "3.3.5",
+    "stable": true,
+    "release_url": "none yet",
+    "files": [
+      {
+        "filename": "python-3.3.5-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469581/python-3.3.5-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.3.5-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469582/python-3.3.5-win32-x86.zip"
+      },
+    ]
+  },
+  {
+    "version": "3.2.5",
+    "stable": true,
+    "release_url": "none yet",
+    "files": [
+      {
+        "filename": "python-3.2.5-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469579/python-3.2.5-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.2.5-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469580/python-3.2.5-win32-x86.zip"
+      },
+    ]
+  },
+  {
+    "version": "3.1.4",
+    "stable": true,
+    "release_url": "none yet",
+    "files": [
+      {
+        "filename": "python-3.1.4-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469576/python-3.1.4-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.1.4-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5469578/python-3.1.4-win32-x86.zip"
+      },
+    ]
+  },
+  {
+    "version": "3.0.1",
+    "stable": true,
+    "release_url": "none yet",
+    "files": [
+      {
+        "filename": "python-3.0.1-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5417589/python-3.0.1-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.0.1-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/setup-python/files/5417590/python-3.0.1-win32-x86.zip"
+      },
     ]
   },
   {
