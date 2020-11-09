@@ -1232,19 +1232,19 @@
   {
     "version": "3.4.4",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.4.4-87823",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.4.4-88098",
     "files": [
       {
         "filename": "python-3.4.4-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.4.4-87823/python-3.4.4-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.4.4-88098/python-3.4.4-win32-x64.zip"
       },
       {
         "filename": "python-3.4.4-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.4.4-87823/python-3.4.4-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.4.4-88098/python-3.4.4-win32-x86.zip"
       }
     ]
   },
@@ -1265,76 +1265,76 @@
   {
     "version": "3.3.5",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.3.5-87822",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.3.5-88104",
     "files": [
       {
         "filename": "python-3.3.5-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.3.5-87822/python-3.3.5-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.3.5-88104/python-3.3.5-win32-x64.zip"
       },
       {
         "filename": "python-3.3.5-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.3.5-87822/python-3.3.5-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.3.5-88104/python-3.3.5-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.2.5",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.2.5-87821",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.2.5-88105",
     "files": [
       {
         "filename": "python-3.2.5-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.2.5-87821/python-3.2.5-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.2.5-88105/python-3.2.5-win32-x64.zip"
       },
       {
         "filename": "python-3.2.5-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.2.5-87821/python-3.2.5-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.2.5-88105/python-3.2.5-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.1.4",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.1.4-87820",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.1.4-88106",
     "files": [
       {
         "filename": "python-3.1.4-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.1.4-87820/python-3.1.4-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.1.4-88106/python-3.1.4-win32-x64.zip"
       },
       {
         "filename": "python-3.1.4-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.1.4-87820/python-3.1.4-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.1.4-88106/python-3.1.4-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.0.1",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.0.1-87819",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.0.1-88107",
     "files": [
       {
         "filename": "python-3.0.1-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.0.1-87819/python-3.0.1-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.0.1-88107/python-3.0.1-win32-x64.zip"
       },
       {
         "filename": "python-3.0.1-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.0.1-87819/python-3.0.1-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.0.1-88107/python-3.0.1-win32-x86.zip"
       }
     ]
   },
