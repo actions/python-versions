@@ -1,4 +1,4 @@
-using module "./builders/python-builder.psm1"
+using module "./python-builder.psm1"
 
 class WinPythonBuilder : PythonBuilder {
     <#
