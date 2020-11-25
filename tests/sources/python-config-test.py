@@ -1,5 +1,5 @@
 import distutils.sysconfig
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 import sysconfig
 import sys
 import platform
@@ -43,7 +43,7 @@ else:
 ### Validate macOS
 if os_type == 'Darwin':
     ### Validate openssl links
-    if StrictVersion(nativeVersion) < StrictVersion("3.7.0"):
+    if LooseVersion(nativeVersion) < LooseVersion("3.7.0"):
         expected_ldflags = '-L/usr/local/opt/openssl@1.1/lib'
         ldflags = sysconfig.get_config_var('LDFLAGS')
 
