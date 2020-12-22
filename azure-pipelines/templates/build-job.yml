@@ -8,16 +8,6 @@ jobs:
   - checkout: self
     submodules: true
 
-# We need this temporary step to have a consistent version of PowerShell on all images.
-  - task: PowerShell@2
-    displayName: 'Update PowerShell version for macOS'
-    condition: eq(variables['Platform'], 'darwin')
-    inputs:
-      TargetType: inline
-      script: |
-        brew update
-        brew cask upgrade powershell
-
   - task: PowerShell@2
     displayName: 'Build Python $(VERSION)'
     inputs:
