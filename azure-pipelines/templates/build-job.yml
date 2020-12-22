@@ -16,7 +16,7 @@ jobs:
       TargetType: inline
       script: |
         brew update
-        brew cask upgrade powershell
+        brew upgrade --cask powershell
 
   - task: PowerShell@2
     displayName: 'Build Python $(VERSION)'
