@@ -876,7 +876,7 @@
   {
     "version": "3.7.9",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.7.9-86953",
+    "release_url": "https://github.com/vsafonkin/python-versions/releases/tag/3.7.9-1341055",
     "files": [
       {
         "filename": "python-3.7.9-darwin-x64.tar.gz",
@@ -909,13 +909,13 @@
         "filename": "python-3.7.9-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.9-86953/python-3.7.9-win32-x64.zip"
+        "download_url": "https://github.com/vsafonkin/python-versions/releases/download/3.7.9-1341055/python-3.7.9-win32-x64.zip"
       },
       {
         "filename": "python-3.7.9-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.9-86953/python-3.7.9-win32-x86.zip"
+        "download_url": "https://github.com/vsafonkin/python-versions/releases/download/3.7.9-1341055/python-3.7.9-win32-x86.zip"
       }
     ]
   },
