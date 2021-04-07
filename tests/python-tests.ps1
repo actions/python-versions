@@ -24,7 +24,7 @@ function Analyze-MissingModules([string] $buildOutputLocation) {
         $module = $regexMatch.Groups[1].Value.Trim()
         Write-Host "Failed missing modules:"
         Write-Host $module
-        if ( ($module -eq "_tkinter") -and ( $Version.StartsWith("3.10.0") -and ( ($Version -like "*beta*") -or ($Version -like "*alpha*") ) ) ) {
+        if ( ($module -eq "_tkinter") -and ( ($Version -like "3.10.0-beta*") -or ($Version -like "3.10.0-alpha*") ) ) {
           Write-Host "$module $Version ignored"
         } else {
           return 1
