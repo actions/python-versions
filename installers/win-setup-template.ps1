@@ -28,16 +28,20 @@ function Remove-RegistryEntries {
     $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
-    foreach ($key in $regKeys) {
-        if ($key.getValue("DisplayName") -match $versionFilter) {
-            Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
+    if (Test-Path -Path Registry::$regPath) {
+        $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
+        foreach ($key in $regKeys) {
+            if ($key.getValue("DisplayName") -match $versionFilter) {
+                Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
+            }
         }
     }
 
     $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
-    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
-        Remove-Item Registry::$_ -Recurse -Force -Verbose
+    if (Test-Path -Path Registry::$regPath) {
+        Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
+            Remove-Item Registry::$_ -Recurse -Force -Verbose
+        }
     }
 
     $uninstallRegistrySections = @(
