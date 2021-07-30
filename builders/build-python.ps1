@@ -1,6 +1,6 @@
-using module "./win-python-builder.psm1"
-using module "./ubuntu-python-builder.psm1"
-using module "./macos-python-builder.psm1"
+using module "./builders/win-python-builder.psm1"
+using module "./builders/ubuntu-python-builder.psm1"
+using module "./builders/macos-python-builder.psm1"
 
 <#
 .SYNOPSIS

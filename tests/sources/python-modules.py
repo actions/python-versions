@@ -139,7 +139,6 @@ standard_library = [
     'sre_constants',
     'sre_parse',
     'ssl',
-    '_ssl',
     'stat',
     'string',
     'stringprep',
@@ -256,11 +255,6 @@ if sys.version_info > (3, 7):
 if sys.version_info > (3, 8):
     standard_library.remove('dummy_threading')
 
-# 'symbol' and 'formatter' modules have been removed from Python 3.10
-if sys.version_info >= (3, 10):
-    standard_library.remove('symbol')
-    standard_library.remove('formatter')
-
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
@@ -271,6 +265,7 @@ excluded_modules = [
 def check_missing_modules(expected_modules):
     missing = []
     for module in expected_modules:
+        print('Try to import module ', module)
         try:
             importlib.import_module(module)
         except:

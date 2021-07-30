@@ -28,20 +28,16 @@ function Remove-RegistryEntries {
     $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
-    if (Test-Path -Path Registry::$regPath) {
-        $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
-        foreach ($key in $regKeys) {
-            if ($key.getValue("DisplayName") -match $versionFilter) {
-                Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
-            }
+    $regKeys = Get-ChildItem -Path Registry::$regPath -Recurse | Where-Object Property -Ccontains DisplayName
+    foreach ($key in $regKeys) {
+        if ($key.getValue("DisplayName") -match $versionFilter) {
+            Remove-Item -Path $key.PSParentPath -Recurse -Force -Verbose
         }
     }
 
     $regPath = "HKEY_CLASSES_ROOT\Installer\Products"
-    if (Test-Path -Path Registry::$regPath) {
-        Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
-            Remove-Item Registry::$_ -Recurse -Force -Verbose
-        }
+    Get-ChildItem -Path Registry::$regPath | Where-Object { $_.GetValue("ProductName") -match $versionFilter } | ForEach-Object {
+        Remove-Item Registry::$_ -Recurse -Force -Verbose
     }
 
     $uninstallRegistrySections = @(
@@ -125,14 +121,9 @@ if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
 }
 
-Write-Host "Create `python3` symlink"
-if ($MajorVersion -ne "2") {
-    New-Item -Path "$PythonArchPath\python3.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python.exe"
-}
-
 Write-Host "Install and upgrade Pip"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
-cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip --no-warn-script-location"
+cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip"
 
 Write-Host "Create complete file"
 New-Item -ItemType File -Path $PythonVersionPath -Name "$Architecture.complete" | Out-Null

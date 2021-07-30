@@ -1,4 +1,4 @@
-using module "./nix-python-builder.psm1"
+using module "./builders/nix-python-builder.psm1"
 
 class macOSPythonBuilder : NixPythonBuilder {
     <#
@@ -40,10 +40,10 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include"
+            $env:LDFLAGS = "-L$(brew --prefix openssl)/lib"
+            $env:CFLAGS = "-I$(brew --prefix openssl)/include"
         } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
+            $configureString += " --with-openssl=/usr/local/opt/openssl"
         }
 
         ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*

@@ -27,7 +27,6 @@ jobs:
       archiveFilePatterns: '$(Build.BinariesDirectory)/python-$(VERSION)-$(Platform)-$(Architecture).*'
       destinationFolder: $(Build.BinariesDirectory)
       cleanDestinationFolder: false
-      overwriteExistingFiles: true
 
   - task: PowerShell@2
     displayName: 'Apply build artifact to the local machines'
