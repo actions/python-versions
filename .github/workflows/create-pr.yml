@@ -1,0 +1,33 @@
+name: Create Pull Request
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  create_pr:
+    name: Create Pull Request
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Create versions-manifest.json
+      run: |
+        ./helpers/packages-generation/manifest-generator.ps1 -RepositoryFullName "$env:GITHUB_REPOSITORY" `
+                                                             -GitHubAccessToken "${{secrets.GITHUB_TOKEN}}" `
+                                                             -OutputFile "./versions-manifest.json" `
+                                                             -ConfigurationFile "./config/python-manifest-config.json"
+    - name: Create GitHub PR
+      run: |
+        $formattedDate = Get-Date -Format "MM/dd/yyyy"
+        ./helpers/github/create-pull-request.ps1 `
+                            -RepositoryFullName "$env:GITHUB_REPOSITORY" `
+                            -AccessToken "${{secrets.GITHUB_TOKEN}}" `
+                            -BranchName "update-versions-manifest-file" `
+                            -CommitMessage "Update versions-manifest" `
+                            -PullRequestTitle "[versions-manifest] Update for release from ${formattedDate}" `
+                            -PullRequestBody "Update versions-manifest.json for release from ${formattedDate}"

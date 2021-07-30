@@ -7,7 +7,7 @@ jobs:
   steps:
   - checkout: self
     submodules: true
-    
+
   - task: PowerShell@2
     displayName: 'Build Python $(VERSION)'
     inputs:

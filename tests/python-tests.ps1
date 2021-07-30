@@ -7,6 +7,7 @@ param (
 
 Import-Module (Join-Path $PSScriptRoot "../helpers/pester-extensions.psm1")
 Import-Module (Join-Path $PSScriptRoot "../helpers/common-helpers.psm1")
+Import-Module (Join-Path $PSScriptRoot "../builders/python-version.psm1")
 
 function Analyze-MissingModules([string] $buildOutputLocation) {
     $searchStringStart = "Failed to build these modules:"
@@ -20,9 +21,14 @@ function Analyze-MissingModules([string] $buildOutputLocation) {
     $regexMatch = [regex]::match($SplitBuiltOutput, $Pattern)
     if ($regexMatch.Success)
     {
+        $module = $regexMatch.Groups[1].Value.Trim()
         Write-Host "Failed missing modules:"
-        Write-Host $regexMatch.Groups[1].Value
-        return 1
+        Write-Host $module
+        if ( ($module -eq "_tkinter") -and ( ($Version -like "3.10.0-beta*") -or ($Version -like "3.10.0-alpha*") ) ) {
+          Write-Host "$module $Version ignored"
+        } else {
+          return 1
+        }
     }
 
     return 0
@@ -47,6 +53,11 @@ Describe "Tests" {
         }
     }
 
+    It "Run pip" {
+        "pip install requests" | Should -ReturnZeroExitCode
+        "pip uninstall requests -y" | Should -ReturnZeroExitCode
+    }
+
     if (IsNixPlatform $Platform) {
 
         It "Check for failed modules in build_output" {
@@ -59,7 +70,8 @@ Describe "Tests" {
         }
 
         It "Check if python configuration is correct" {
-            "python ./sources/python-config-test.py $Version" | Should -ReturnZeroExitCode
+            $nativeVersion = Convert-Version -version $Version
+            "python ./sources/python-config-test.py $Version $nativeVersion" | Should -ReturnZeroExitCode
         }
 
         It "Check if shared libraries are linked correctly" {
@@ -68,7 +80,7 @@ Describe "Tests" {
     }
 
     # Pyinstaller 3.5 does not support Python 3.8.0. Check issue https://github.com/pyinstaller/pyinstaller/issues/4311
-    if ($Version -lt "3.8.0") {
+    if ($Version -lt "3.8.0" -and $Version.Major -ne "2") {
         It "Validate Pyinstaller" {
             "pip install pyinstaller" | Should -ReturnZeroExitCode
             "pyinstaller --onefile ./sources/simple-test.py" | Should -ReturnZeroExitCode

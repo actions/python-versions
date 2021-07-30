@@ -1,0 +1,47 @@
+steps:
+- download: none
+
+- checkout: self
+  submodules: true
+
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: 'current'
+    path: $(Build.BinariesDirectory)
+
+- task: PowerShell@2
+  displayName: 'Create release Python $(VERSION)'
+  inputs:
+    TargetType: inline
+    script: |
+      $tagName = "$(VERSION)-$(Build.BuildId)"
+      $releaseBody = "Python $(VERSION)"
+      ./helpers/github/create-release.ps1 -RepositoryFullName "$(Build.Repository.Name)" `
+                                          -AccessToken "$(GITHUB_TOKEN)" `
+                                          -ToolVersion "$(VERSION)" `
+                                          -TagName "$tagName" `
+                                          -ReleaseBody "$releaseBody" `
+                                          -EventType "$(EVENT_TYPE)"
+- task: GitHubRelease@1
+  displayName: 'Upload release assets'
+  inputs:
+    gitHubConnection: 'Github Connection'
+    action: edit
+    tag: '$(VERSION)-$(Build.BuildId)'
+    title: '$(VERSION)'
+    releaseNotesSource: inline
+    releaseNotesInline: '$(RELEASE_NOTES_CONTENT)'
+    assets: '$(Build.BinariesDirectory)/*/*'
+    assetUploadMode: replace
+    addChangeLog: false
+
+- task: PowerShell@2
+  displayName: 'Trigger "Create Pull Request" workflow'
+  inputs:
+    TargetType: inline
+    script: |
+      Import-Module (Join-Path (Get-Location).Path "github-api.psm1")
+      $gitHubApi = Get-GitHubApi -RepositoryFullName "$(Build.Repository.Name)" -AccessToken "$(GITHUB_TOKEN)"
+      $gitHubApi.CreateWorkflowDispatch("$(WORKFLOW_FILE_NAME)", "$(WORKFLOW_DISPATCH_REF)", "$(INPUTS)")
+      Write-Host "Please find created Pull request here: $(Build.Repository.Uri)/pulls"
+    workingDirectory: '$(Build.SourcesDirectory)/helpers/github'
