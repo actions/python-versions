@@ -67,7 +67,7 @@ function Get-ExecParams {
     if ($IsMSI) {
         "TARGETDIR=$PythonArchPath ALLUSERS=1"
     } else {
-        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1"
+        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1 Include_debug=1"
     }
 }
 
