@@ -31,7 +31,7 @@ jobs:
     name: Check validation for failures 
     runs-on: ubuntu-latest
     needs: [validation]
-    if: failure()
+    if: success()
     steps:
       - uses: actions/checkout@v2
         with:
