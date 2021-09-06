@@ -52,6 +52,7 @@ class macOSPythonBuilder : NixPythonBuilder {
             $configureString += " --enable-loadable-sqlite-extensions"
             $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
             $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
+            $env:CPPFLAGS += "-I$(brew --prefix sqlite3)/include"
         }
 
         Execute-Command -Command $configureString
