@@ -23,7 +23,7 @@ jobs:
           submodules: true
           
     - name: Validate python-versions manifest
-      run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestUrl https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+      run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestUrl https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json -AccessToken ${{ secrets.GITHUB_TOKEN }}
 
   check_build:
     name: Check validation for failures 
