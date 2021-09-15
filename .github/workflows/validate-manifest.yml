@@ -1,0 +1,47 @@
+name: Validate manifest
+
+on:
+   schedule:
+    - cron:  '0 8,20 * * *'
+    
+   pull_request:
+     branches:
+      - main
+     paths:
+      - 'versions-manifest.json'
+env:
+  TOOL_NAME: "Python"
+defaults:
+  run:
+    shell: pwsh
+    
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          submodules: true
+          
+    - name: Validate python-versions manifest
+      run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestUrl https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json -AccessToken ${{ secrets.GITHUB_TOKEN }}
+
+  check_build:
+    name: Check validation for failures 
+    runs-on: ubuntu-latest
+    needs: [validation]
+    if: failure()
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Send Slack notification if validation fails
+        run: |
+          $pipelineUrl = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
+          $message = "The validation of python-versions manifest failed. \nLink to the pipeline: $pipelineUrl"
+          .\helpers\get-new-tool-versions\send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
+                                                                      -ToolName "${{ env.TOOL_NAME }}" `
+                                                                      -Text "$message" `
+                                                                      -ImageUrl "https://www.python.org/static/community_logos/python-powered-h-100x130.png"
