@@ -5,8 +5,10 @@ on:
     - cron:  '0 8,20 * * *'
     
    pull_request:
-    branches:
+     branches:
       - main
+     paths:
+      - 'versions-manifest.json'
 env:
   TOOL_NAME: "Python"
 defaults:
