@@ -42,6 +42,14 @@ class macOSPythonBuilder : NixPythonBuilder {
         $configureString += " --enable-shared"
         $configureString += " --with-lto"
 
+        ### For Python versions which support it, compile a universal2 (arm64 + x86_64 hybrid) build. The arm64 slice
+        ### will never be used itself by a Github Actions runner but using a universal2 Python is the only way to build
+        ### universal2 C extensions and wheels. This is supported by Python >= 3.10 and was backported to Python >=
+        ### 3.9.1 and >= 3.8.10.
+        if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.9.0" ) {
+            $configureString += " --enable-universalsdk --with-universal-archs=universal2"
+        }
+
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
