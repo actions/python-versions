@@ -48,9 +48,9 @@ fi
 
 chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR python
 
-echo "Upgrading PIP..."
+echo "Upgrading pip..."
 ./python -m ensurepip
-./python -m pip install --ignore-installed pip --no-warn-script-location
+./python -m pip install --ignore-installed pip --disable-pip-version-check --no-warn-script-location
 
 echo "Create complete file"
 touch $PYTHON_TOOLCACHE_VERSION_PATH/x64.complete
