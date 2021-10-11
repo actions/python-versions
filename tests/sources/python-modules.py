@@ -261,6 +261,10 @@ if sys.version_info >= (3, 10):
     standard_library.remove('symbol')
     standard_library.remove('formatter')
 
+# 'binhex' module has been removed from Python 3.11
+if sys.version_info >= (3, 11):
+    standard_library.remove('binhex')
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
