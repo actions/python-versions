@@ -99,7 +99,7 @@ stages:
   - template: /azure-pipelines/templates/test-job.yml
 
 - stage: Publish_Release
-  dependsOn: [Test_Python_MacOS, Test_Python_Ubuntu_1604, Test_Python_Ubuntu_1804, Test_Python_Ubuntu_2004, Test_Python_x64_Windows, Test_Python_x86_Windows]
+  dependsOn: [Test_Python_MacOS, Test_Python_Ubuntu_1804, Test_Python_Ubuntu_2004, Test_Python_x64_Windows, Test_Python_x86_Windows]
   jobs:
   - deployment: Publish_Release
     pool:
