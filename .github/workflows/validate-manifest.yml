@@ -1,31 +1,32 @@
 name: Validate manifest
 
 on:
-   schedule:
-    - cron:  '0 8,20 * * *'
-    
-   pull_request:
-     branches:
+  schedule:
+    - cron: '0 8,20 * * *'
+
+  pull_request:
+    branches:
       - main
-     paths:
+    paths:
       - 'versions-manifest.json'
+
 env:
   TOOL_NAME: "Python"
+
 defaults:
   run:
     shell: pwsh
-    
+
 jobs:
   validation:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v2
-      with:
+      - uses: actions/checkout@v2
+        with:
           submodules: true
-          
-    - name: Validate python-versions manifest
-      run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestPath '.\versions-manifest.json' -AccessToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate python-versions manifest
+        run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestPath '.\versions-manifest.json'
 
   check_build:
     name: Check validation for failures 
