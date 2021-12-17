@@ -22,6 +22,13 @@ class macOSPythonBuilder : NixPythonBuilder {
         [string] $platform
     ) : Base($version, $architecture, $platform) { }
 
+    [void] PrepareEnvironment() {
+        <#
+        .SYNOPSIS
+        Prepare system environment by installing dependencies and required packages.
+        #>
+    }
+
     [void] Configure() {
         <#
         .SYNOPSIS
@@ -40,8 +47,8 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include"
+            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/zlib/lib"
+            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
         }
@@ -56,16 +63,5 @@ class macOSPythonBuilder : NixPythonBuilder {
         }
 
         Execute-Command -Command $configureString
-    }
-
-    [void] PrepareEnvironment() {
-        <#
-        .SYNOPSIS
-        Prepare system environment by installing dependencies and required packages.
-        #>
-
-        ### reinstall header files to Avoid issue with X11 headers on Mojave
-        $pkgName = "/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg"
-        Execute-Command -Command "sudo installer -pkg $pkgName -target /"
     }
 }

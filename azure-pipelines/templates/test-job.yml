@@ -1,6 +1,6 @@
 jobs:
 - job: Test_Python
-  pool: 
+  pool:
     name: Azure Pipelines
     vmImage: $(VmImage)
   variables:
