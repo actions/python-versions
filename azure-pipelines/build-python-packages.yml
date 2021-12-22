@@ -6,7 +6,7 @@ stages:
 - stage: Build_Python_MacOS
   dependsOn: []
   variables:
-    VmImage: 'macOS-10.14'
+    VmImage: 'macOS-10.15'
     Platform: darwin
     Architecture: x64
   jobs:
@@ -16,7 +16,7 @@ stages:
   condition: succeeded()
   dependsOn: Build_Python_MacOS
   variables:
-    VmImage: 'macOS-10.14'
+    VmImage: 'macOS-10.15'
     Platform: darwin
     Architecture: x64
   jobs:
