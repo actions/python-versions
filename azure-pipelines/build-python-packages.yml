@@ -63,7 +63,7 @@ stages:
 - stage: Build_Python_X64_Windows
   dependsOn: []
   variables:
-    VmImage: 'vs2017-win2016'
+    VmImage: 'windows-2019'
     Platform: win32
     Architecture: x64
   jobs:
@@ -73,7 +73,7 @@ stages:
   condition: succeeded()
   dependsOn: Build_Python_X64_Windows
   variables:
-    VmImage: 'vs2017-win2016'
+    VmImage: 'windows-2019'
     Platform: win32
     Architecture: x64
   jobs:
@@ -82,7 +82,7 @@ stages:
 - stage: Build_Python_x86_Windows
   dependsOn: []
   variables:
-    VmImage: 'vs2017-win2016'
+    VmImage: 'windows-2019'
     Platform: win32
     Architecture: x86
   jobs:
@@ -92,7 +92,7 @@ stages:
   condition: succeeded()
   dependsOn: Build_Python_x86_Windows
   variables:
-    VmImage: 'vs2017-win2016'
+    VmImage: 'windows-2019'
     Platform: win32
     Architecture: x86
   jobs:
