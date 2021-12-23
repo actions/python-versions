@@ -39,7 +39,7 @@ Describe "Tests" {
         "python --version" | Should -ReturnZeroExitCode
         $pythonLocation = (Get-Command "python").Path
         $pythonLocation | Should -Not -BeNullOrEmpty
-        $expectedPath = Join-Path -Path $env:AGENT_TOOLSDIRECTORY -ChildPath "Python"
+        $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
         $pythonLocation.startsWith($expectedPath) | Should -BeTrue
     }
 
@@ -61,7 +61,7 @@ Describe "Tests" {
     if (IsNixPlatform $Platform) {
 
         It "Check for failed modules in build_output" {
-            $buildOutputLocation = Join-Path $env:BUILD_BINARIESDIRECTORY "build_output.txt"
+            $buildOutputLocation = Join-Path $env:RUNNER_TEMP "build_output.txt"
             Analyze-MissingModules $buildOutputLocation | Should -Be 0
         }
 
