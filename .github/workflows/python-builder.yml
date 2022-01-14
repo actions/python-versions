@@ -20,7 +20,7 @@ on:
     - 'main'
 
 env:
-  VERSION: ${{ github.event.inputs.VERSION}}
+  VERSION: ${{ github.event.inputs.VERSION || '3.9.9' }}
 defaults:
   run:
     shell: pwsh
@@ -48,7 +48,7 @@ jobs:
             arch: 'x86'
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
@@ -91,7 +91,7 @@ jobs:
             arch: 'x86'
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
@@ -145,7 +145,6 @@ jobs:
           }
 
       - name: Run tests
-        shell: pwsh
         run: |
             Install-Module Pester -Force -Scope CurrentUser -RequiredVersion 4.10.1
             Import-Module Pester
@@ -156,12 +155,11 @@ jobs:
                 Platform="${{ matrix.platform }}";
               }
             }
-            $Result = Invoke-Pester -PassThru -Script $pesterParams -OutputFile "test_results.xml" -OutputFormat NUnitXml
+            $Result = Invoke-Pester -PassThru -Script $pesterParams
             if ($Result.FailedCount -gt 0) {
               $host.SetShouldExit($Result.FailedCount)
               exit $Result.FailedCount
             }
-
         working-directory: ${{ github.workspace }}/tests
 
   publish_release:
