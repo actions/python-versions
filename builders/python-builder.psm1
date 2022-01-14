@@ -41,8 +41,11 @@ class PythonBuilder {
     PythonBuilder ([semver] $version, [string] $architecture, [string] $platform) {
         $this.InstallationTemplatesLocation = Join-Path -Path $PSScriptRoot -ChildPath "../installers"
 
-        New-Item -Force -Type Directory (Join-Path $env:RUNNER_TEMP "artifact")
-        New-Item -Force -Type Directory (Join-Path $env:RUNNER_TEMP "work")
+        $artifactDirectory = Join-Path $env:RUNNER_TEMP "artifact"
+        $workDirectory = Join-Path $env:RUNNER_TEMP "work"
+
+        New-Item -Force -Type Directory $artifactDirectory
+        New-Item -Force -Type Directory $workDirectory
 
         $this.HostedToolcacheLocation = $env:RUNNER_TOOL_CACHE
         $this.TempFolderLocation = $env:RUNNER_TEMP
