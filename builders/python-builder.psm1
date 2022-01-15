@@ -49,8 +49,8 @@ class PythonBuilder {
 
         $this.HostedToolcacheLocation = $env:RUNNER_TOOL_CACHE
         $this.TempFolderLocation = $env:RUNNER_TEMP
-        $this.WorkFolderLocation = Join-Path $env:RUNNER_TEMP "work"
-        $this.ArtifactFolderLocation = Join-Path $env:RUNNER_TEMP "artifact"
+        $this.WorkFolderLocation =  $workDirectory
+        $this.ArtifactFolderLocation = $artifactDirectory
 
         $this.Version = $version
         $this.Architecture = $architecture
