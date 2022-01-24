@@ -152,7 +152,7 @@ jobs:
                 Version="${{ env.VERSION }}";
                 Platform="${{ matrix.platform }}";
             }
-            Invoke-Pester -Container $pesterContainer -PassThru
+            $Result = Invoke-Pester -Container $pesterContainer -PassThru
             if ($Result.FailedCount -gt 0) {
               $host.SetShouldExit($Result.FailedCount)
               exit $Result.FailedCount
