@@ -1,0 +1,35 @@
+name: Python versions runner
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: 'Versions to build'
+        required: true
+      publish-releases:
+        description: 'Whether to publish releases'
+        required: true
+        default: 'false'
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  trigger_builds:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ${{ github.event.inputs.versions }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - name: Trigger builds
+        run: ./helpers/github/run-ci-builds.ps1 -RepositoryFullName "$env:GITHUB_REPOSITORY" `
+                                             -AccessToken "${{ secrets.PERSONAL_TOKEN }}" `
+                                             -WorkflowFileName "python-builder.yml" `
+                                             -WorkflowDispatchRef "main" `
+                                             -ToolVersions "${{ matrix.platform }}" `
+                                             -PublishReleases "${{ github.event.inputs.publish-releases }}"
