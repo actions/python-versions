@@ -146,16 +146,13 @@ jobs:
 
       - name: Run tests
         run: |
-            Install-Module Pester -Force -Scope CurrentUser -RequiredVersion 4.10.1
+            Install-Module Pester -Force -Scope CurrentUser
             Import-Module Pester
-            $pesterParams = @{
-              Path="./python-tests.ps1";
-              Parameters=@{
+            $pesterContainer = New-PesterContainer -Path './python-tests.ps1' -Data @{
                 Version="${{ env.VERSION }}";
                 Platform="${{ matrix.platform }}";
-              }
             }
-            $Result = Invoke-Pester -PassThru -Script $pesterParams
+            $Result = Invoke-Pester -Container $pesterContainer -PassThru
             if ($Result.FailedCount -gt 0) {
               $host.SetShouldExit($Result.FailedCount)
               exit $Result.FailedCount
