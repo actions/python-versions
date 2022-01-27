@@ -5,6 +5,7 @@ on:
       versions:
         description: 'Versions to build'
         required: true
+        default: '["", ""]'
       publish-releases:
         description: 'Whether to publish releases'
         required: true
@@ -20,16 +21,38 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ${{ github.event.inputs.versions }}
+        version: ${{ fromJson(github.event.inputs.versions) }}
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-      
-      - name: Trigger builds
-        run: ./helpers/github/run-ci-builds.ps1 -RepositoryFullName "$env:GITHUB_REPOSITORY" `
-                                             -AccessToken "${{ secrets.PERSONAL_TOKEN }}" `
-                                             -WorkflowFileName "python-builder.yml" `
-                                             -WorkflowDispatchRef "main" `
-                                             -ToolVersions "${{ matrix.platform }}" `
-                                             -PublishReleases "${{ github.event.inputs.publish-releases }}"
+      - run: |
+          $payload = @{
+            "ref" = "main"
+            "inputs" = @{
+              "VERSION" = "${{ matrix.version }}"
+              "PUBLISH_RELEASES" = "false"
+            }
+          } | ConvertTo-Json
+          $headers = @{
+            Authorization="Bearer ${{ secrets.PERSONAL_TOKEN }}"
+          }
+          Invoke-RestMethod -uri "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/workflows/python-builder.yml/dispatches" -method POST -headers $headers -body $payload
+          Start-Sleep -seconds 40
+          $workflowRuns = (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs").workflow_runs | Where-Object {$_.status -like "*progress*" -and $_.id -ne $env:GITHUB_RUN_ID}
+          
+          $workflowToCheck = $workflowRuns | Where-Object {
+            ((Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($_.id)/jobs").jobs.steps.name -match "${{ matrix.version }}").Count -gt 0
+          }
+          Write-Host "Triggered workflow with Id: $($workflowToCheck.id) , Url: $($workflowToCheck.url)"
+          while ($workflowToCheck.status -ne "completed") {
+            Start-Sleep -Seconds 20
+            $workflowToCheck = Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($workflowToCheck.id)"
+            if (!$workflowToCheck) {
+              Write-Host "No workflow triggered or something went wrong with fetching its status"
+              exit 1
+            }
+            Write-Host "Workflow run with Id: $($workflowToCheck.id) - status '$($workflowToCheck.status)'"
+          }
+          if ($workflowToCheck.conclusion -ne "success") {
+            Write-Host "Triggered workflow completed with result '$($workflowToCheck.conclusion)'. Check logs: $($workflowToCheck.logs_url)"
+            exit 1
+          }
+          Write-Host "Triggered workflow succeeded; Url: $($workflowToCheck.url)"
