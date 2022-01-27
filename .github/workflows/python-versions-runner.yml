@@ -43,7 +43,7 @@ jobs:
           }
           Write-Host "Triggered workflow with Id: $($workflowToCheck.id) , Url: $($workflowToCheck.url)"
           while ($workflowToCheck.status -ne "completed") {
-            Start-Sleep -Seconds 20
+            Start-Sleep -Seconds 120
             $workflowToCheck = Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($workflowToCheck.id)"
             if (!$workflowToCheck) {
               Write-Host "No workflow triggered or something went wrong with fetching its status"
