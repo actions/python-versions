@@ -46,7 +46,7 @@ while (!$workflowToCheck) {
     }
 }
 
-Write-Host "Triggered workflow with Id: $($workflowToCheck.id) , Url: $($workflowToCheck.url)"
+Write-Host "Triggered workflow with Id: $($workflowToCheck.id) , Url: $($workflowToCheck.html_url)"
 
 while ($workflowToCheck.status -ne "completed") {
     Start-Sleep -Seconds 120
@@ -59,4 +59,4 @@ if ($workflowToCheck.conclusion -ne "success") {
     exit 1
 }
 
-Write-Host "Triggered workflow succeeded; Url: $($workflowToCheck.url)"
+Write-Host "Triggered workflow succeeded; Url: $($workflowToCheck.html_url)"
