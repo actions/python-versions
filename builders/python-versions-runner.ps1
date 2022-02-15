@@ -22,7 +22,8 @@ param(
 
 function Invoke-Workflow {
     param (
-        $Version
+        [string] $Version,
+        [bool] $PublishRelease
     )
     
     $payload = @{
@@ -76,7 +77,7 @@ function Invoke-Workflow {
     return $result
 }
 
-$summary = $Versions | ForEach-Object -Parallel {Invoke-Workflow -Version $_ }
+$summary = $Versions | ForEach-Object -Parallel {Invoke-Workflow -Version $_ -PublishRelease $PublishRelease }
 Write-Host "Results of triggered workflows:"
 Write-Host $summary
 if ($result.Conclusion -contains "failure" -or $summary.Conclusion -contains "cancelled") {
