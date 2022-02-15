@@ -5,7 +5,7 @@ on:
       versions:
         description: 'Versions to build'
         required: true
-        default: '["", ""]'
+        default: '","'
       publish-releases:
         description: 'Whether to publish releases'
         required: true
