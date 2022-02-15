@@ -19,15 +19,11 @@ jobs:
   trigger_builds:
     name: Trigger python build
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ${{ fromJson(github.event.inputs.versions) }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
       
-      - run: ./builders/python-versions-runner.ps1 -Version "${{ matrix.version }}"
+      - run: ./builders/python-versions-runner.ps1 -Version "${{ fromJson(github.event.inputs.versions) }}"
         name: Trigger python workflow
         env:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
