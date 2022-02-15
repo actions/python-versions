@@ -23,7 +23,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       
-      - run: ./builders/python-versions-runner.ps1 -Versions "${{ fromJson(github.event.inputs.versions) }}"
-        name: Trigger python workflow
+      - name: Trigger python workflow
+        run: |
+          $versions = ${{ github.event.inputs.versions }}
+          ./builders/python-versions-runner.ps1 -Versions $versions.Split(",")
         env:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
