@@ -20,9 +20,11 @@ param(
     [switch] $PublishRelease
 )
 
-$result = @()
-$Versions | ForEach-Object -Parallel {
-    $version = $_
+function Invoke-Workflow {
+    param (
+        $Version
+    )
+    
     $payload = @{
         "ref" = "main"
         "inputs" = @{
@@ -46,34 +48,37 @@ $Versions | ForEach-Object -Parallel {
             $retries ++
             if ($retries -gt 10) {
                 Write-Host "No workflow triggered for version $version or something went wrong with fetching its status"
-                $result += [PSCustomObject]@{
+                $result = [PSCustomObject]@{
                     Version = $version;
                     Conclusion = "failure";
                     Url = "Not run"
                 }
+                return $result
                 break
             }
         }
-
-        Write-Host "Triggered workflow with Id: $($workflowToCheck.id) , Url: $($workflowToCheck.html_url)"
 
         Start-Sleep -Seconds 120
         $workflowToCheck = Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($workflowToCheck.id)"
         Write-Host "Workflow run with Id: $($workflowToCheck.id) for version '$($version)' - status '$($workflowToCheck.status)'"
     }
-    $result += [PSCustomObject]@{
+    $result = [PSCustomObject]@{
         Version = $version;
         Conclusion = $workflowToCheck.conclusion;
         Url = $workflowToCheck.html_url
     }
     if ($workflowToCheck.conclusion -ne "success") {
         Write-Host "Triggered workflow for version '$($version)' completed with result '$($workflowToCheck.conclusion)'. Check logs: $($workflowToCheck.html_url)"
+        return $result
         break
     }
     Write-Host "Triggered workflow for version '$($version)' succeeded; Url: $($workflowToCheck.html_url)"
+    return $result
 }
+
+$summary = $Versions | ForEach-Object -Parallel {Invoke-Workflow -Version $_ }
 Write-Host "Results of triggered workflows:"
-Write-Host $result
-if ($result.Conclusion -contains "failure" -or $result.Conclusion -contains "cancelled") {
+Write-Host $summary
+if ($result.Conclusion -contains "failure" -or $summary.Conclusion -contains "cancelled") {
     exit 1
 }
