@@ -11,6 +11,10 @@ on:
         description: 'Whether to publish releases'
         required: true
         default: 'false'
+      PLATFORMS:
+        description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
+        required: true
+        default: 'ubuntu-18.04,ubuntu-20.04,macos-10.15,windows-2019_x64,windows-2019_x86'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -26,26 +30,40 @@ defaults:
     shell: pwsh
 
 jobs:
+  generate_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - name: Generate execution matrix
+        id: generate-matrix
+        run: |
+          $configurations = "${{ github.event.inputs.platforms }}".Split(",").Trim()
+          $matrix = @()
+
+          foreach ($configuration in $configurations) {
+            $parts = $configuration.Split("_")
+            $os = $parts[0]
+            $arch = $(if ($parts[1]) {$parts[1]} else {"x64"})
+            switch -wildcard ($os) {
+              "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
+              "*macos*" { $platform = 'darwin' }
+              "*windows*" { $platform = 'win32' }
+            }
+            $matrix += @{
+              'platform' = $platform
+              'os' = $os
+              'arch' = $arch
+            }
+          }
+          echo "::set-output name=matrix::$($matrix | ConvertTo-Json -Compress)"
+
   build_python:
+    needs: generate_matrix
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - platform: 'linux-18.04'
-            os: 'ubuntu-18.04'
-            arch: 'x64'
-          - platform: 'linux-20.04'
-            os: 'ubuntu-20.04'
-            arch: 'x64'
-          - platform: 'darwin'
-            os: 'macos-10.15'
-            arch: 'x64'
-          - platform: 'win32'
-            os: 'windows-2019'
-            arch: 'x64'
-          - platform: 'win32'
-            os: 'windows-2019'
-            arch: 'x86'
+        include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
       ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
@@ -68,26 +86,11 @@ jobs:
           path: ${{ runner.temp }}/artifact
 
   test_python:
-    needs: build_python
+    needs: [generate_matrix, build_python]
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - platform: 'linux-18.04'
-            os: 'ubuntu-18.04'
-            arch: 'x64'
-          - platform: 'linux-20.04'
-            os: 'ubuntu-20.04'
-            arch: 'x64'
-          - platform: 'darwin'
-            os: 'macos-10.15'
-            arch: 'x64'
-          - platform: 'win32'
-            os: 'windows-2019'
-            arch: 'x64'
-          - platform: 'win32'
-            os: 'windows-2019'
-            arch: 'x86'
+        include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
       ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
