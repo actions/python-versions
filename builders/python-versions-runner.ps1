@@ -25,7 +25,7 @@ $summary = $Versions | ForEach-Object -Parallel {
     Invoke-Workflow -Version $_ -PublishRelease $Using:PublishRelease
 }
 Write-Host "Results of triggered workflows:"
-$summary
+$summary | Format-List
 if ($result.Conclusion -contains "failure" -or $summary.Conclusion -contains "cancelled") {
     exit 1
 }
