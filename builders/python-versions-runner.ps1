@@ -21,7 +21,7 @@ param(
 )
 
 $summary = $Versions | ForEach-Object -Parallel { 
-    Import-Module "./builders/invoke-workflow.ps1"
+    Import-Module "./builders/invoke-workflow.psm1"
     Invoke-Workflow -Version $_ -PublishRelease $Using:PublishRelease
 }
 Write-Host "Results of triggered workflows:"
