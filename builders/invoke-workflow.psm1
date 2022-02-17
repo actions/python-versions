@@ -22,21 +22,21 @@ function Invoke-Workflow {
         Conclusion = "failure"
         Url = "Not run"
     }
-        
-    while ($workflowToCheck.status -ne "completed") {
-        while (!$workflowToCheck) {
-            Start-Sleep -seconds 40
-            $workflowRuns = (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs").workflow_runs | Where-Object {$_.status -like "*progress*" -and $_.id -ne $env:GITHUB_RUN_ID}
-            $workflowToCheck = $workflowRuns | Where-Object {
-                (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($_.id)/jobs").jobs.steps.name -like "*$version"
-            }
-            $retries++
-            if ($retries -gt 10) {
-                Write-Host "No workflow triggered for version $version or something went wrong with fetching its status"
-                return $result
-            }
+    # Triggering workflow and verifying that it has been triggered with retries
+    while (-not $workflowToCheck) {
+        Start-Sleep -seconds 40
+        $workflowRuns = (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs").workflow_runs | Where-Object {$_.status -like "*progress*" -and $_.id -ne $env:GITHUB_RUN_ID}
+        $workflowToCheck = $workflowRuns | Where-Object {
+            (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($_.id)/jobs").jobs.steps.name -like "*$version"
         }
-
+        $retries++
+        if ($retries -gt 10) {
+            Write-Host "Workflow triggered for version '$version' not found or something went wrong with fetching the workflow status"
+            return $result
+        }
+    }
+    # Waiting for workflow to complete
+    while ($workflowToCheck.status -ne "completed") {
         Start-Sleep -Seconds 120
         $workflowToCheck = Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($workflowToCheck.id)"
         Write-Host "Workflow run with Id: $($workflowToCheck.id) for version '$version' - status '$($workflowToCheck.status)'"
@@ -44,7 +44,7 @@ function Invoke-Workflow {
     $result.Conclusion = $workflowToCheck.conclusion
     $result.Url = $workflowToCheck.html_url
     if ($workflowToCheck.conclusion -ne "success") {
-        Write-Host "Triggered workflow for version '$version' completed with result '$($workflowToCheck.conclusion)'. Check logs: $workflowToCheck.html_url"
+        Write-Host "Triggered workflow for version '$version' completed unsuccessfully with result '$($workflowToCheck.conclusion)'. Check the logs: $workflowToCheck.html_url"
         return $result
     }
     Write-Host "Triggered workflow for version '$($version)' succeeded; Url: $($workflowToCheck.html_url)"
