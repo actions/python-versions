@@ -14,8 +14,8 @@ function Invoke-Workflow {
     $headers = @{
         Authorization="Bearer $env:PERSONAL_TOKEN"
     }
-    $uri = "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/workflows/python-builder.yml/dispatches"
-    Invoke-RestMethod -uri $uri -method POST -headers $headers -body $payload
+    $actionsRepoUri = "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions"
+    Invoke-RestMethod -uri "$actionsRepoUri/workflows/python-builder.yml/dispatches" -method POST -headers $headers -body $payload
 
     $result = [PSCustomObject]@{
         Version = $Version
@@ -25,9 +25,9 @@ function Invoke-Workflow {
     # Triggering workflow and verifying that it has been triggered with retries
     while (-not $workflowToCheck) {
         Start-Sleep -seconds 40
-        $workflowRuns = (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs").workflow_runs | Where-Object {$_.status -like "*progress*" -and $_.id -ne $env:GITHUB_RUN_ID}
+        $workflowRuns = (Invoke-RestMethod "$actionsRepoUri/runs").workflow_runs | Where-Object {$_.status -like "*progress*" -and $_.id -ne $env:GITHUB_RUN_ID}
         $workflowToCheck = $workflowRuns | Where-Object {
-            (Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($_.id)/jobs").jobs.steps.name -like "*$Version"
+            (Invoke-RestMethod "$actionsRepoUri/runs/$($_.id)/jobs").jobs.steps.name -like "*$Version"
         }
         $retries++
         if ($retries -gt 10) {
@@ -38,7 +38,7 @@ function Invoke-Workflow {
     # Waiting for workflow to complete
     while ($workflowToCheck.status -ne "completed") {
         Start-Sleep -Seconds 120
-        $workflowToCheck = Invoke-RestMethod "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions/runs/$($workflowToCheck.id)"
+        $workflowToCheck = Invoke-RestMethod "$actionsRepoUri/runs/$($workflowToCheck.id)"
         Write-Host "Workflow run with Id: $($workflowToCheck.id) for version '$Version' - status '$($workflowToCheck.status)'"
     }
     $result.Conclusion = $workflowToCheck.conclusion
