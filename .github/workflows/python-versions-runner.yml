@@ -1,0 +1,31 @@
+name: Python versions runner
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: 'Versions to build'
+        required: true
+        default: '","'
+      publish-releases:
+        description: 'Whether to publish releases'
+        required: true
+        default: 'false'
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  trigger_builds:
+    name: Trigger python build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      
+      - name: Trigger python workflow
+        run: |
+          $versions = ${{ github.event.inputs.versions }}
+          ./builders/python-versions-runner.ps1 -Versions $versions.Split(",") -PublishRelease ${{ github.event.inputs.publish-releases }}
+        env:
+          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
