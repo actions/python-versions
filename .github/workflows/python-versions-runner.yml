@@ -26,6 +26,6 @@ jobs:
       - name: Trigger python workflow
         run: |
           $versions = ${{ github.event.inputs.versions }}
-          ./builders/python-versions-runner.ps1 -Versions $versions.Split(",")
+          ./builders/python-versions-runner.ps1 -Versions $versions.Split(",") -PublishRelease ${{ github.event.inputs.publish-releases }}
         env:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
