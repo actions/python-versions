@@ -1,7 +1,7 @@
 function Invoke-Workflow {
     param (
         [string] $Version,
-        [bool] $PublishRelease
+        [string] $PublishRelease
     )
     
     $payload = @{

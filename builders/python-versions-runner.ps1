@@ -17,7 +17,7 @@ param(
     [Parameter (Mandatory=$true, HelpMessage="Python version to trigger build for")]
     [array] $Versions,
     [Parameter (Mandatory=$false, HelpMessage="Whether to publish release for built version")]
-    [bool] $PublishRelease
+    [string] $PublishRelease
 )
 
 $summary = $Versions | ForEach-Object -Parallel { 
