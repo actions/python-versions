@@ -44,7 +44,7 @@ jobs:
           foreach ($configuration in $configurations) {
             $parts = $configuration.Split("_")
             $os = $parts[0]
-            $arch = $(if ($parts[1]) {$parts[1]} else {"x64"})
+            $arch = if ($parts[1]) {$parts[1]} else {"x64"}
             switch -wildcard ($os) {
               "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
               "*macos*" { $platform = 'darwin' }
