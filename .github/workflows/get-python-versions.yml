@@ -12,6 +12,7 @@ defaults:
 
 jobs:
   find_new_versions:
+    if: github.repository_owner == 'actions'
     name: Find new versions
     runs-on: ubuntu-latest
     outputs:
