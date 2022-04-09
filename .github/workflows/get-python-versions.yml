@@ -75,8 +75,5 @@ jobs:
                                              -ToolVersions "${{ env.TOOL_VERSIONS }}" `
                                              -PublishReleases "true"
 
-  check_build:
-    name: Check build for failures 
-    runs-on: ubuntu-latest
-    needs: [find_new_versions, check_new_versions, trigger_builds]
+
     
