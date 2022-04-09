@@ -86,6 +86,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
+        if ($this.Platform -eq "linux-18.04") {
+            ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
+            Execute-Command -Command "sudo apt install -y tcl tcl-dev"
+        }
+
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
         Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
     }
