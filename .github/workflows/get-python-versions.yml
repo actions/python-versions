@@ -42,7 +42,7 @@ jobs:
           Write-Host "No new versions were found"
           Import-Module "./helpers/github/github-api.psm1"
           $gitHubApi = Get-GitHubApi -RepositoryFullName "$env:GITHUB_REPOSITORY" `
-                                     -AccessToken "${{ GITHUB_TOKEN  }}"
+                                     -AccessToken "${{ secrets.GITHUB_TOKEN  }}"
           $gitHubApi.CancelWorkflow("$env:GITHUB_RUN_ID")
           Start-Sleep -Seconds 60
       - name: Send Slack notification
