@@ -95,7 +95,8 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
       - name: Check out repository code
         uses: actions/checkout@v2
         with:
