@@ -5,7 +5,7 @@ on:
     inputs:
       VERSION:
         description: 'Python version to build and upload'
-        default: '3.9.9'
+        default: '3.11.0-alpha.7'
         required: true
       PUBLISH_RELEASES:
         description: 'Whether to publish releases'
@@ -14,7 +14,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-18.04,ubuntu-20.04,macos-10.15,windows-2019_x64,windows-2019_x86'
+        default: 'ubuntu-18.04' #,ubuntu-20.04,macos-10.15,windows-2019_x64,windows-2019_x86'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
