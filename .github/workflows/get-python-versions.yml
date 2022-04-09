@@ -69,7 +69,7 @@ jobs:
       - name: Trigger "Build python packages" workflow
         run:
           ./helpers/github/run-ci-builds.ps1 -RepositoryFullName "$env:GITHUB_REPOSITORY" `
-                                             -AccessToken "${{ secrets.PERSONAL_TOKEN }}" `
+                                             -AccessToken "${{ secrets.GITHUB_TOKEN  }}" `
                                              -WorkflowFileName "python-builder.yml" `
                                              -WorkflowDispatchRef "main" `
                                              -ToolVersions "${{ env.TOOL_VERSIONS }}" `
