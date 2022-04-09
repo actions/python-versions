@@ -79,17 +79,4 @@ jobs:
     name: Check build for failures 
     runs-on: ubuntu-latest
     needs: [find_new_versions, check_new_versions, trigger_builds]
-    if: failure()
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: Send Slack notification if build fails
-        run: |
-          $pipelineUrl = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
-          $message = "The build of the '${{ env.TOOL_NAME }}' detection pipeline failed :progress-error:\nLink to the pipeline: $pipelineUrl"
-          ./helpers/get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
-                                                                      -ToolName "${{ env.TOOL_NAME }}" `
-                                                                      -Text "$message" `
-                                                                      -ImageUrl "https://avatars.githubusercontent.com/u/1525981?s=200&v=4"
+    
