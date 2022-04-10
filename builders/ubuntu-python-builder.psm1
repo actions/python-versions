@@ -86,9 +86,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
-        if ($this.Platform -eq "linux-18.04") {
+        if ($this.Platform -eq "linux-18.04" -and $this.Version -gt "3.11.0") {
             ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
-            Execute-Command -Command "sudo apt install -y tcl tcl-dev"
+            
+            Execute-Command -Command "sudo add-apt-repository ppa:deadsnakes/nightly -y"
+            Execute-Command -Command "sudo apt install python3.11-tk"
         }
 
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
