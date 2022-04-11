@@ -85,12 +85,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         ) | ForEach-Object {
             Execute-Command -Command "sudo apt install -y $_"
         }
-        Write-Host "Work around1"
-        Write-Host $this.Platform 
+   
         if ($this.Platform -eq "linux-18.04" -or ($this.Platform -ne "linux-18.04")) {
             ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
             Write-Host "Work around" 
-            Execute-Command -Command "sudo add-apt-repository ppa:deadsnakes/nightly -y"
+            Execute-Command -Command "sudo add-apt-repository ppa:deadsnakes/ppa -y"
             Execute-Command -Command "sudo apt update"
             Execute-Command -Command "sudo apt install python3.11-tk"
         }
