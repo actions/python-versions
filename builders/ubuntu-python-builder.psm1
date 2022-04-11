@@ -48,6 +48,10 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             $configureString += " --enable-loadable-sqlite-extensions"
         }
 
+        if ($this.Version -ge "3.11.0") {
+            $configureString += " --with-tcltk-includes=-I/usr/include/tcl8.6   --with-tcltk-libs=`"-ltcl8.6 -ltk8.6\`""
+        }
+
         Execute-Command -Command $configureString
     }
 
