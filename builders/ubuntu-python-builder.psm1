@@ -49,7 +49,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         }
 
         if ($this.Version -ge "3.11.0") {
-            $configureString += "CC=gcc CXX=g++ --with-tcltk-includes=-I/usr/include/tcl8.6   --with-tcltk-libs=`"-ltcl8.6 -ltk8.6\`""
+            $configureString += "CC=gcc CXX=g++ --with-tcltk-includes=-I/usr/include/tcl8.6   --with-tcltk-libs=`"-ltcl8.6 -ltk8.6`""
         }
 
         Execute-Command -Command $configureString
