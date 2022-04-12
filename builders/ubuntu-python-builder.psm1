@@ -70,7 +70,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         if ($this.Version -gt "3.0.0") {
             $tkinterInstallString = "sudo apt-get install -y --allow-downgrades python3-tk tk-dev"
         } else {
-            $tkinterInstallString = "sudo apt install -y python-tk tk-dev"
+            $tkinterInstallString = "sudo apt-get install -y python-tk tk-dev"
         }
 
         Execute-Command -Command $tkinterInstallString
@@ -87,19 +87,19 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             "libreadline-dev",
             "libgdbm-dev"
         ) | ForEach-Object {
-            Execute-Command -Command "sudo apt install -y $_"
+            Execute-Command -Command "sudo apt-get install -y $_"
         }
    
         if ($this.Platform -eq "linux-18.04" -or ($this.Platform -ne "linux-18.04")) {
             ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
             Write-Host "Work around" 
             Execute-Command -Command "sudo add-apt-repository ppa:deadsnakes/ppa -y"
-            Execute-Command -Command "sudo apt update"
-            Execute-Command -Command "sudo apt install python3.11-tk"
-            Execute-Command -Command "sudo apt install tcl8.6 tcl8.6-dev tk8.6 tk8.6-dev"
+            Execute-Command -Command "sudo apt-get update"
+            Execute-Command -Command "sudo apt-get install python3.11-tk"
+            Execute-Command -Command "sudo apt-get install tcl8.6 tcl8.6-dev tk8.6 tk8.6-dev"
         }
 
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
-        Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
+        Execute-Command -Command "sudo apt-get install -y libgdbm-compat-dev"
     }
 }
