@@ -48,10 +48,10 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             $configureString += " --enable-loadable-sqlite-extensions"
         }
 
-        if ($this.Version -ge "3.11.0") {
+        if ($this.Version -ge "3.11.0" -or 1) {
             $configureString += "CC=gcc CXX=g++ TCLTK_CFLAGS=-I/usr/include/tcl8.6   TCLTK_LIBS=`"-ltcl8.6 -ltk8.6`""
         }
-        Write-Host $configureString
+        Write-Host $configureString, $this.Version
         Execute-Command -Command $configureString
     }
 
