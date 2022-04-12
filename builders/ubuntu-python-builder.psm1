@@ -96,6 +96,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo add-apt-repository ppa:deadsnakes/ppa -y"
             Execute-Command -Command "sudo apt update"
             Execute-Command -Command "sudo apt install python3.11-tk"
+            Execute-Command -Command "sudo apt install tcl8.6 tcl8.6-dev"
         }
 
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
