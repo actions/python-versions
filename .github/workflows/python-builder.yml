@@ -146,9 +146,6 @@ jobs:
           $pythonLocation = which python
           if ('${{ matrix.platform }}' -eq 'darwin') { otool -L $pythonLocation } else { ldd $pythonLocation }
 
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
-        
       - name: Run tests
         run: |
             Install-Module Pester -Force -Scope CurrentUser
