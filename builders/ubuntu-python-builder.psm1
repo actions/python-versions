@@ -51,7 +51,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         if ($this.Version -ge "3.11.0") {
             $configureString += "CC=gcc CXX=g++ TCLTK_CFLAGS=-I/usr/include/tcl8.6   TCLTK_LIBS=`"-ltcl8.6 -ltk8.6`""
         }
-
+        Write-Host $configureString
         Execute-Command -Command $configureString
     }
 
