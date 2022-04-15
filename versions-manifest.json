@@ -1,5 +1,44 @@
 [
   {
+    "version": "3.11.0-alpha.7",
+    "stable": false,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.0-alpha.7-2171175503",
+    "files": [
+      {
+        "filename": "python-3.11.0-alpha.7-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.7-2171175503/python-3.11.0-alpha.7-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-alpha.7-linux-18.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "18.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.7-2171175503/python-3.11.0-alpha.7-linux-18.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-alpha.7-linux-20.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "20.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.7-2171175503/python-3.11.0-alpha.7-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-alpha.7-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.7-2171175503/python-3.11.0-alpha.7-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.11.0-alpha.7-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.7-2171175503/python-3.11.0-alpha.7-win32-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.11.0-alpha.6",
     "stable": false,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.0-alpha.6-2009545975",
