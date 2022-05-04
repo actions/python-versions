@@ -14,7 +14,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-18.04,ubuntu-20.04,macos-10.15,windows-2019_x64,windows-2019_x86'
+        default: 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-10.15,windows-2019_x64,windows-2019_x86'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -38,7 +38,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          $configurations = "${{ github.event.inputs.platforms || 'ubuntu-18.04,ubuntu-20.04,macos-10.15,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+          $configurations = "${{ github.event.inputs.platforms || 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-10.15,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
