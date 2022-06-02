@@ -18,7 +18,7 @@ jobs:
         python: [3.5.4, 3.6.7, 3.7.5, 3.8.1]
     steps:
     - name: setup-python ${{ matrix.python }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python }}
 
