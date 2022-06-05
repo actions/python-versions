@@ -1,7 +1,7 @@
 {
     "regex": "python-\\d+\\.\\d+\\.\\d+-(\\w+\\.\\d+)?-?(\\w+)-(\\d+\\.\\d+)?-?(x\\d+)",
     "groups": {
-        "arch": 4,
+        "arch": 2,
         "platform": 2,
         "platform_version": 3
     }
