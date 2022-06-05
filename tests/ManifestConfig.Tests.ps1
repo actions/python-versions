@@ -11,7 +11,7 @@ $stableTestCases = @(
 ) | ForEach-Object { $_.Configuration = $Configuration; $_ }
 
 $unstableTestCases = @(
-    @{ ReleaseName = "python-3.12.0-alpha.0-darwin-x64.tar.gz"; ExpectedResult = @{ platform = "darwin"; platform_version = $null; arch = "x64"} },
+    @{ ReleaseName = "python-3.11.0-alpha.7-darwin-x64.tar.gz"; ExpectedResult = @{ platform = "darwin"; platform_version = $null; arch = "x64"} },
     @{ ReleaseName = "python-3.10.0-rc.2-linux-18.04-x64.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "18.04"; arch = "x64"} },
     @{ ReleaseName = "python-3.11.0-beta.3-linux-20.04-x64.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "20.04"; arch = "x64"} },
     @{ ReleaseName = "python-3.11.0-beta.3-win32-x64.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x64"} }
