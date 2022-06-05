@@ -36,6 +36,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         $configureString += " --prefix=$pythonBinariesLocation"
         $configureString += " --enable-shared"
         $configureString += " --enable-optimizations"
+        $configureString += " --enable-lto"
 
         ### Compile with ucs4 for Python 2.x. On 3.x, ucs4 is enabled by default
         if ($this.Version -lt "3.0.0") {
