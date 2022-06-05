@@ -64,9 +64,9 @@ class UbuntuPythonBuilder : NixPythonBuilder {
 
         ### Compile with tkinter support
         if ($this.Version -gt "3.0.0") {
-            $tkinterInstallString = "sudo apt-get install -y --allow-downgrades python3-tk tk-dev"
+            $tkinterInstallString = "sudo apt-get install -yq --allow-downgrades python3-tk tk-dev"
         } else {
-            $tkinterInstallString = "sudo apt install -y python-tk tk-dev"
+            $tkinterInstallString = "sudo apt install -yq python-tk tk-dev"
         }
 
         Execute-Command -Command $tkinterInstallString
@@ -83,10 +83,7 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             "libreadline-dev",
             "libgdbm-dev"
         ) | ForEach-Object {
-            Execute-Command -Command "sudo apt install -y $_"
+            Execute-Command -Command "sudo apt install -yq $_"
         }
-
-        ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
-        Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
     }
 }
