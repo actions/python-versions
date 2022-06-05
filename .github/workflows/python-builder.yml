@@ -5,7 +5,7 @@ on:
     inputs:
       VERSION:
         description: 'Python version to build and upload'
-        default: '3.9.9'
+        default: '3.11.0'
         required: true
       PUBLISH_RELEASES:
         description: 'Whether to publish releases'
@@ -14,7 +14,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-10.15,windows-2019_x64,windows-2019_x86'
+        default: 'ubuntu-20.04,ubuntu-22.04,macos-10.15,macos-11,macos-12,windows-2019_x64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -24,21 +24,21 @@ on:
     - 'main'
 
 env:
-  VERSION: ${{ github.event.inputs.VERSION || '3.9.9' }}
+  VERSION: ${{ github.event.inputs.VERSION || '3.11.0' }}
 defaults:
   run:
     shell: pwsh
 
 jobs:
   generate_matrix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          $configurations = "${{ github.event.inputs.platforms || 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-10.15,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+          $configurations = "${{ github.event.inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,macos-10.15,macos-11,macos-12,windows-2019_x64' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -70,7 +70,7 @@ jobs:
     steps:
 
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
         with:
           submodules: true
 
@@ -80,7 +80,7 @@ jobs:
                   -Platform ${{ matrix.platform }} -Architecture ${{ matrix.arch }}
 
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@main
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/artifact
@@ -97,7 +97,7 @@ jobs:
     steps:
 
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
         with:
           submodules: true
 
@@ -105,7 +105,7 @@ jobs:
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           path: ${{ runner.temp }}
 
@@ -131,7 +131,7 @@ jobs:
         working-directory: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Setup Python ${{ env.VERSION }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@main
         with:
           python-version: ${{ env.VERSION }}
           architecture: ${{ matrix.arch }}
@@ -166,13 +166,13 @@ jobs:
       name: Publish release
       if: github.event_name == 'workflow_dispatch' && github.event.inputs.PUBLISH_RELEASES == 'true'
       needs: test_python
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-22.04
       steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@main
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -182,7 +182,7 @@ jobs:
             Python ${{ env.VERSION }}
 
       - name: Upload release assets
-        uses: actions/github-script@v2
+        uses: actions/github-script@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -202,10 +202,10 @@ jobs:
   trigger_pr:
     name: Trigger "Create Pull Request" workflow
     needs: publish_release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Trigger "Create Pull Request" workflow
-      uses: actions/github-script@v3
+      uses: actions/github-script@main
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}
         script: |
