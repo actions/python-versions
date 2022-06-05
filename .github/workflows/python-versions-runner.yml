@@ -18,10 +18,10 @@ defaults:
 jobs:
   trigger_builds:
     name: Trigger python build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
       
       - name: Trigger python workflow
         run: |
