@@ -58,7 +58,7 @@ class macOSPythonBuilder : NixPythonBuilder {
             $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/zlib/lib"
             $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
         } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
+            $configureString += " --with-openssl=/usr/local/opt/openssl@3.0.3"
         }
 
         ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
