@@ -13,11 +13,11 @@ defaults:
 jobs:
   find_new_versions:
     name: Find new versions
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       versions_output: ${{ steps.Get_new_versions.outputs.TOOL_VERSIONS }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
@@ -27,12 +27,12 @@ jobs:
 
   check_new_versions:
     name: Check new versions
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: find_new_versions
     env:
       TOOL_VERSIONS: ${{needs.find_new_versions.outputs.versions_output}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
@@ -56,13 +56,13 @@ jobs:
   
   trigger_builds:
     name: Trigger builds
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [find_new_versions, check_new_versions]
     env:
       TOOL_VERSIONS: ${{needs.find_new_versions.outputs.versions_output}}
     environment: Get Available Tools Versions - Publishing Approval
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
@@ -77,11 +77,11 @@ jobs:
 
   check_build:
     name: Check build for failures 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [find_new_versions, check_new_versions, trigger_builds]
     if: failure()
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
