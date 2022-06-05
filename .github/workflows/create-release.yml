@@ -6,7 +6,7 @@ on:
 jobs:
   create_release:
     name: Create release ${{ github.event.client_payload.ToolVersion }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Create release for Python ${{ github.event.client_payload.ToolVersion }}
       uses: actions/create-release@v1
