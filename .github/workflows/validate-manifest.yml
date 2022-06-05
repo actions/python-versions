@@ -19,9 +19,9 @@ defaults:
 
 jobs:
   validation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
@@ -30,11 +30,11 @@ jobs:
 
   check_build:
     name: Check validation for failures 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [validation]
     if: failure()
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
         with:
           submodules: true
 
