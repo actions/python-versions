@@ -89,4 +89,12 @@ Describe "Tests" {
             "./dist/simple-test" | Should -ReturnZeroExitCode
         }
     }
+
+    if (($Platform -match "macos") -or ($Platform -match "darwin")) {
+        if ($Version -gt "3.7.12" ) {
+            It "Check if python above 3.7.12 use tcl/tk v8.6" {
+                "python ./sources/tcltk-86.py" | Should -ReturnZeroExitCode
+            }
+        }
+    }
 }
