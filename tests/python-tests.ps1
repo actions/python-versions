@@ -49,6 +49,13 @@ Describe "Tests" {
         "python ./sources/simple-test.py" | Should -ReturnZeroExitCode
     }
 
+    # linux has no display name and no $DISPLAY environment variable - skip tk test
+    if (-not (($Platform -match "ubuntu") -or ($Platform -match "linux"))) {
+        It "Check if tcl/tk has the same headed and library versions" {
+	    "python ./sources/tcltk.py" | Should -ReturnZeroExitCode
+        }
+    }
+
     if (($Version -ge "3.2.0") -and -not ([semver]"$($Version.Major).$($Version.Minor)" -eq [semver]"3.11" -and $Version.PreReleaseLabel)) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
@@ -87,14 +94,6 @@ Describe "Tests" {
             "pip install pyinstaller" | Should -ReturnZeroExitCode
             "pyinstaller --onefile ./sources/simple-test.py" | Should -ReturnZeroExitCode
             "./dist/simple-test" | Should -ReturnZeroExitCode
-        }
-    }
-
-    if (($Platform -match "macos") -or ($Platform -match "darwin")) {
-        if ($Version -gt "3.7.12" ) {
-            It "Check if python above 3.7.12 use tcl/tk v8.6" {
-                "python ./sources/tcltk-86.py" | Should -ReturnZeroExitCode
-            }
         }
     }
 }
