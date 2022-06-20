@@ -48,6 +48,9 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             $configureString += " --enable-loadable-sqlite-extensions"
         }
 
+        Write-Host "The passed configure options are: "
+        Write-Host $configureString
+
         Execute-Command -Command $configureString
     }
 
