@@ -46,7 +46,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### will never be used itself by a Github Actions runner but using a universal2 Python is the only way to build
         ### universal2 C extensions and wheels. This is supported by Python >= 3.10 and was backported to Python >=
         ### 3.9.1 and >= 3.8.10.
-        if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.9.0" ) {
+        if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.8.13" -and $this.Version -ne "3.9.0" ) {
             $configureString += " --enable-universalsdk --with-universal-archs=universal2"
         }
 
@@ -69,6 +69,9 @@ class macOSPythonBuilder : NixPythonBuilder {
             $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
             $env:CPPFLAGS += "-I$(brew --prefix sqlite3)/include"
         }
+
+        Write-Host "The passed configure options are: "
+        Write-Host $configureString
 
         Execute-Command -Command $configureString
     }
