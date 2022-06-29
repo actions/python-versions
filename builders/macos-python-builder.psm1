@@ -7,6 +7,10 @@ class macOSPythonBuilder : NixPythonBuilder {
 
     .DESCRIPTION
     Contains methods that required to build macOS Python artifact from sources. Inherited from base NixPythonBuilder.
+    
+    While python.org provides precompiled binaries for macOS, switching to them risks breaking existing customers.
+    If we wanted to start using the official binaries instead of building from source, we should avoid changing previous versions
+    so we remain backwards compatible.
 
     .PARAMETER platform
     The full name of platform for which Python should be built.
