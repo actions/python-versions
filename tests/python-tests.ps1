@@ -50,11 +50,11 @@ Describe "Tests" {
     }
 
     # linux has no display name and no $DISPLAY environment variable - skip tk test
-    if (-not (($Platform -match "ubuntu") -or ($Platform -match "linux"))) {
-        It "Check if tcl/tk has the same headed and library versions" {
-	    "python ./sources/tcltk.py" | Should -ReturnZeroExitCode
-        }
-    }
+    # if (-not (($Platform -match "ubuntu") -or ($Platform -match "linux"))) {
+    #     It "Check if tcl/tk has the same headed and library versions" {
+	#     "python ./sources/tcltk.py" | Should -ReturnZeroExitCode
+    #     }
+    # }
 
     if (($Version -ge "3.2.0") -and -not ([semver]"$($Version.Major).$($Version.Minor)" -eq [semver]"3.11" -and $Version.PreReleaseLabel)) {
         It "Check if sqlite3 module is installed" {

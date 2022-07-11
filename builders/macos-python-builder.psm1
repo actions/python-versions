@@ -51,9 +51,9 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### universal2 C extensions and wheels. This is supported by Python >= 3.10 and was backported to Python >=
         ### 3.9.1 and >= 3.8.10.
         ### Disabled, discussion: https://github.com/actions/python-versions/pull/114
-        if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.8.13" -and $this.Version -ne "3.9.0" ) {
-            $configureString += " --enable-universalsdk --with-universal-archs=universal2"
-        }
+        # if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.8.13" -and $this.Version -ne "3.9.0" ) {
+        #     $configureString += " --enable-universalsdk --with-universal-archs=universal2"
+        # }
 
         ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
         ### Solution is to install these libraries from a third-party package manager,
