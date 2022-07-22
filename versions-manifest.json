@@ -2162,34 +2162,34 @@
   {
     "version": "3.8.13",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.13-2529578966",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.13-2717995909",
     "files": [
       {
         "filename": "python-3.8.13-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2529578966/python-3.8.13-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2717995909/python-3.8.13-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.8.13-linux-18.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2529578966/python-3.8.13-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2717995909/python-3.8.13-linux-18.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.13-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2529578966/python-3.8.13-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2717995909/python-3.8.13-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.13-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2529578966/python-3.8.13-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.13-2717995909/python-3.8.13-linux-22.04-x64.tar.gz"
       }
     ]
   },
