@@ -1,6 +1,6 @@
-using module "./nix-python-builder.psm1"
+using module "./python-builder.psm1"
 
-class macOSPythonBuilder : NixPythonBuilder {
+class macOSPythonBuilder : PythonBuilder {
     <#
     .SYNOPSIS
     MacOS Python builder class.
@@ -20,67 +20,115 @@ class macOSPythonBuilder : NixPythonBuilder {
 
     #>
 
+    [string] $InstallationTemplateName
+    [string] $InstallationScriptName
+    [string] $OutputArtifactName
+
     macOSPythonBuilder(
         [semver] $version,
         [string] $architecture,
         [string] $platform
-    ) : Base($version, $architecture, $platform) { }
-
-    [void] PrepareEnvironment() {
-        <#
-        .SYNOPSIS
-        Prepare system environment by installing dependencies and required packages.
-        #>
+    ) : Base($version, $architecture, $platform) {
+        $this.InstallationTemplateName = "macos-setup-template.ps1"
+        $this.InstallationScriptName = "setup.sh"
+        $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.zip"
     }
 
-    [void] Configure() {
+    [string] GetPythonExtension() {
         <#
         .SYNOPSIS
-        Execute configure script with required parameters.
+        Return extension for required version of Python package. 
         #>
 
-        $pythonBinariesLocation = $this.GetFullPythonToolcacheLocation()
-        $configureString = "./configure"
-        $configureString += " --prefix=$pythonBinariesLocation"
-        $configureString += " --enable-optimizations"
-        $configureString += " --enable-shared"
-        $configureString += " --with-lto"
+        $extension = ".pkg"
 
-        ### For Python versions which support it, compile a universal2 (arm64 + x86_64 hybrid) build. The arm64 slice
-        ### will never be used itself by a Github Actions runner but using a universal2 Python is the only way to build
-        ### universal2 C extensions and wheels. This is supported by Python >= 3.10 and was backported to Python >=
-        ### 3.9.1 and >= 3.8.10.
-        ### Disabled, discussion: https://github.com/actions/python-versions/pull/114
-        # if ($this.Version -ge "3.8.10" -and $this.Version -ne "3.8.13" -and $this.Version -ne "3.9.0" ) {
-        #     $configureString += " --enable-universalsdk --with-universal-archs=universal2"
-        # }
+        return $extension
+    }
 
-        ### OS X 10.11, Apple no longer provides header files for the deprecated system version of OpenSSL.
-        ### Solution is to install these libraries from a third-party package manager,
-        ### and then add the appropriate paths for the header and library files to configure command.
-        ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
-        if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/zlib/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
-        } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
-            if ($this.Version -gt "3.7.12") {
-                $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	    }
+    [string] GetArchitectureExtension() {
+        <#
+        .SYNOPSIS
+        Return architecture suffix for Python package. 
+        #>
+
+        $ArchitectureExtension = "-macos11"
+
+        return $ArchitectureExtension
+    }
+
+    [uri] GetSourceUri() {
+        <#
+        .SYNOPSIS
+        Get base Python URI and return complete URI for Python installation executable.
+        #>
+
+        $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $nativeVersion = Convert-Version -version $this.Version
+        $architecture = $this.GetArchitectureExtension()
+        $extension = $this.GetPythonExtension()
+
+        $uri = "${base}/${versionName}/python-${nativeVersion}${architecture}${extension}"
+
+        return $uri
+    }
+
+    [string] Download() {
+        <#
+        .SYNOPSIS
+        Download Python installation executable into artifact location.
+        #>
+
+        $sourceUri = $this.GetSourceUri()
+
+        Write-Host "Sources URI: $sourceUri"
+        $sourcesLocation = Download-File -Uri $sourceUri -OutputFolder $this.WorkFolderLocation
+        Write-Debug "Done; Sources location: $sourcesLocation"
+
+        return $sourcesLocation
+    }
+
+    [void] CreateInstallationScript() {
+        <#
+        .SYNOPSIS
+        Create Python artifact installation script based on specified template.
+        #>
+
+        $sourceUri = $this.GetSourceUri()
+        $pythonExecName = [IO.path]::GetFileName($sourceUri.AbsoluteUri)
+        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
+        $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
+        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName -ItemType File
+
+        $variablesToReplace = @{
+            "{{__ARCHITECTURE__}}" = $this.Architecture;
+            "{{__VERSION__}}" = $this.Version;
+            "{{__PYTHON_EXEC_NAME__}}" = $pythonExecName
         }
 
-        ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
-        ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
-        if ($this.Version -ge "3.2.0") {
-            $configureString += " --enable-loadable-sqlite-extensions"
-            $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
-            $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
-            $env:CPPFLAGS += "-I$(brew --prefix sqlite3)/include"
-        }
+        $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
+        $installationTemplateContent | Out-File -FilePath $installationScriptLocation
+        Write-Debug "Done; Installation script location: $installationScriptLocation)"
+    }
 
-        Write-Host "The passed configure options are: "
-        Write-Host $configureString
+    [void] ArchiveArtifact() {
+        $OutputPath = Join-Path $this.ArtifactFolderLocation $this.OutputArtifactName
+        Create-SevenZipArchive -SourceFolder $this.WorkFolderLocation -ArchivePath $OutputPath
+    }
 
-        Execute-Command -Command $configureString
+    [void] Build() {
+        <#
+        .SYNOPSIS
+        Generates Python artifact from downloaded Python installation executable.
+        #>
+
+        Write-Host "Download Python $($this.Version) [$($this.Architecture)] executable..."
+        $this.Download()
+
+        Write-Host "Create installation script..."
+        $this.CreateInstallationScript()
+
+        Write-Host "Archive artifact"
+        $this.ArchiveArtifact()
     }
 }
