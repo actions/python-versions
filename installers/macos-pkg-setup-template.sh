@@ -23,23 +23,26 @@ echo "Check if Python hostedtoolcache folder exist..."
 if [ ! -d $PYTHON_TOOLCACHE_PATH ]; then
     echo "Creating Python hostedtoolcache folder..."
     mkdir -p $PYTHON_TOOLCACHE_PATH
-elif [ -d $PYTHON_TOOLCACHE_VERSION_PATH ]; then
-    # TODO: remove ALL other directories for same MAJOR_VERSION.$MINOR_VERSION
-    echo "Deleting Python $PYTHON_FULL_VERSION"
-    rm -rf $PYTHON_TOOLCACHE_VERSION_PATH
+else
+    # remove ALL other directories for same major.minor python versions
+    find $PYTHON_TOOLCACHE_PATH -name "${MAJOR_VERSION}.${MINOR_VERSION}.*"|while read python_version;do
+        python_version_x64="$python_version/x64"
+        if [ -e "$python_version_x64" ];then
+            echo "Deleting Python $python_version_x64"
+            rm -rf "$python_version_x64"
+        fi
+    done
 fi
 
-echo "Create Python $PYTHON_FULL_VERSION folder"
-mkdir -p $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
-
-echo "Copy Python binaries to hostedtoolcache folder"
-#cp -R ./* $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
+echo "Install Python binaries from prebuilt package"
 sudo installer -pkg "python-${PYTHON_FULL_VERSION}-macos11.pkg" -target /
 rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
+echo "Create hostedtoolcach symlinks (Required for the backward compatibility)"
+echo "Create Python $PYTHON_FULL_VERSION folder"
+mkdir -p $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 cd $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 
-echo "Create hostedtoolcach symlinks (Required for the backward compatibility)"
 ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/bin bin
 ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/include include
 ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/share share
