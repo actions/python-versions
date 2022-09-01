@@ -142,9 +142,9 @@ class macOSPythonBuilder : NixPythonBuilder {
         #>
 
         Write-Host "Build Python *$($this.Version)* [$($this.Architecture)]"
-        Write-Host ($this.Version -ge "3.11.0") 
+        Write-Host ($this.Version -ge 3.11.0) 
 
-        if ($this.Version -ge "3.11.0") {
+        if ($this.Version -ge 3.11.0) {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
             $this.DownloadPkg()
 
