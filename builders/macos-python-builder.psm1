@@ -113,6 +113,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         $pkgLocation = Download-File -Uri $pkgUri -OutputFolder $this.WorkFolderLocation
         Write-Debug "Done; Package location: $pkgLocation"
 
+        New-Item "build_output.txt"
         return $pkgLocation
     }
 
@@ -140,9 +141,6 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Generates Python artifact from downloaded Python installation executable.
         #>
-
-        Write-Host "Build Python *$($this.Version)* [$($this.Architecture)]"
-        Write-Host ($this.Version -ge 3.11.0) 
 
         if ($this.Version -ge 3.11.0) {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
