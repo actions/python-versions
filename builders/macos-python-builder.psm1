@@ -113,7 +113,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         $pkgLocation = Download-File -Uri $pkgUri -OutputFolder $this.WorkFolderLocation
         Write-Debug "Done; Package location: $pkgLocation"
 
-        New-Item "build_output.txt"
+        New-Item -Path $this.WorkFolderLocation -Name "build_output.txt"  -ItemType File
         return $pkgLocation
     }
 
@@ -123,9 +123,9 @@ class macOSPythonBuilder : NixPythonBuilder {
         Create Python artifact installation script based on specified template.
         #>
 
-        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
+        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath "macos-pkg-setup-template.sh"
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
-        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name "macos-pkg-setup-template.sh" -ItemType File
+        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName  -ItemType File
 
         $variablesToReplace = @{
             "{{__VERSION_FULL__}}" = $this.Version;
