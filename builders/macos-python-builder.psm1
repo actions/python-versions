@@ -84,19 +84,32 @@ class macOSPythonBuilder : NixPythonBuilder {
         Execute-Command -Command $configureString
     }
 
-    [uri] GetPkgUri() {
+    [string] GetPkgName() {
         <#
         .SYNOPSIS
-        Get base Python URI and return complete URI for Python installation executable.
+        Return Python installation Package.
         #>
 
-        $base = $this.GetBaseUri()
-        $versionName = $this.GetBaseVersion()
         $nativeVersion = Convert-Version -version $this.Version
         $architecture = "-macos11"
         $extension = ".pkg"
 
-        $uri = "${base}/${versionName}/python-${nativeVersion}${architecture}${extension}"
+        $pkg = "python-${nativeVersion}${architecture}${extension}"
+
+        return $pkg
+    }
+
+    [uri] GetPkgUri() {
+        <#
+        .SYNOPSIS
+        Get base Python URI and return complete URI for Python installation package.
+        #>
+
+        $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $pkg = $this.GetPkgName()
+
+        $uri = "${base}/${versionName}/${pkg}"
 
         return $uri
     }
@@ -129,6 +142,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         $variablesToReplace = @{
             "{{__VERSION_FULL__}}" = $this.Version;
+            "{{__PKG_NAME__}}" = $this.GetPkgName();
         }
 
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }

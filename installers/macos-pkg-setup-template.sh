@@ -1,6 +1,7 @@
 set -e
 
 PYTHON_FULL_VERSION="{{__VERSION_FULL__}}"
+PYTHON_PKG_NAME="{{__PKG_NAME__}}"
 MAJOR_VERSION=$(echo $PYTHON_FULL_VERSION | cut -d '.' -f 1)
 MINOR_VERSION=$(echo $PYTHON_FULL_VERSION | cut -d '.' -f 2)
 
@@ -35,7 +36,7 @@ else
 fi
 
 echo "Install Python binaries from prebuilt package"
-sudo installer -pkg "python-${PYTHON_FULL_VERSION}-macos11.pkg" -target /
+sudo installer -pkg $PYTHON_PKG_NAME -target /
 rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
 echo "Create hostedtoolcach symlinks (Required for the backward compatibility)"
