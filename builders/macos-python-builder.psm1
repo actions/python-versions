@@ -151,11 +151,7 @@ class macOSPythonBuilder : NixPythonBuilder {
             Write-Host "Create installation script..."
             $this.CreateInstallationScriptPkg()
         } else {
-            Write-Host "Download Python $($this.Version) [$($this.Architecture)] executable..."
-            $this.Download()
-
-            Write-Host "Create installation script..."
-            $this.CreateInstallationScript()
+            super().Build()
         }
 
         Write-Host "Archive artifact"
