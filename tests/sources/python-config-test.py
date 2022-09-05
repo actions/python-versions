@@ -4,11 +4,15 @@ import sysconfig
 import sys
 import platform
 import os
+import semver
 
 # Define variables
 os_type = platform.system()
 version = sys.argv[1]
 nativeVersion = sys.argv[2]
+
+version_sv = semver.VersionInfo.parse(version)
+pkg_installer = version_sv.major > 3 or version_sv.major == 3 and version_sv.minor >= 11
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
@@ -19,7 +23,11 @@ have_libreadline = sysconfig.get_config_var("HAVE_LIBREADLINE")
 ### Define expected variables
 if os_type == 'Linux': expected_ld_library_extension = 'so'
 if os_type == 'Darwin': expected_ld_library_extension = 'dylib'
-expected_lib_dir_path = '{0}/Python/{1}/x64/lib'.format(os.getenv("AGENT_TOOLSDIRECTORY"), version)
+
+if pkg_installer:
+    expected_lib_dir_path = '/Library/Frameworks/Python.framework/Versions/{0}.{1}/lib'.format(version_sv.major, version_sv.minor)
+else:
+    expected_lib_dir_path = '{0}/Python/{1}/x64/lib'.format(os.getenv("AGENT_TOOLSDIRECTORY"), version)
 
 # Check modules
 ### Validate libraries path
