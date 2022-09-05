@@ -142,7 +142,9 @@ class macOSPythonBuilder : NixPythonBuilder {
         Generates Python artifact from downloaded Python installation executable.
         #>
 
-        if ($this.Version -ge 3.11.0) {
+        $PkgVersion = [semver]"3.11.0"
+
+        if ($this.Version -ge $PkgVersion) {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
             $this.DownloadPkg()
 
