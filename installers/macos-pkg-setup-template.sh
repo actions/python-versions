@@ -37,7 +37,6 @@ fi
 
 echo "Install Python binaries from prebuilt package"
 sudo installer -pkg $PYTHON_PKG_NAME -target /
-rm $PYTHON_TOOLCACHE_VERSION_ARCH_PATH/setup.sh
 
 echo "Create hostedtoolcach symlinks (Required for the backward compatibility)"
 echo "Create Python $PYTHON_FULL_VERSION folder"
