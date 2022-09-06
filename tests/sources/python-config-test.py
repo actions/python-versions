@@ -4,15 +4,17 @@ import sysconfig
 import sys
 import platform
 import os
-import semver
 
 # Define variables
 os_type = platform.system()
 version = sys.argv[1]
 nativeVersion = sys.argv[2]
 
-version_sv = semver.VersionInfo.parse(version)
-pkg_installer = version_sv.major > 3 or version_sv.major == 3 and version_sv.minor >= 11
+versions=version.split(".")
+version_major=int(versions[0])
+version_minor=int(versions[1])
+
+pkg_installer = os_type == 'Darwin' and (version_major > 3 or version_major == 3 and version_minor >= 11)
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
@@ -25,7 +27,7 @@ if os_type == 'Linux': expected_ld_library_extension = 'so'
 if os_type == 'Darwin': expected_ld_library_extension = 'dylib'
 
 if pkg_installer:
-    expected_lib_dir_path = '/Library/Frameworks/Python.framework/Versions/{0}.{1}/lib'.format(version_sv.major, version_sv.minor)
+    expected_lib_dir_path = '/Library/Frameworks/Python.framework/Versions/{0}.{1}/lib'.format(version_major, version_minor)
 else:
     expected_lib_dir_path = '{0}/Python/{1}/x64/lib'.format(os.getenv("AGENT_TOOLSDIRECTORY"), version)
 
@@ -46,7 +48,8 @@ if is_shared:
         exit(1)
 else:
     print('%s was built without shared extensions' % ld_library_name)
-    exit(1)
+    if not pkg_installer:
+        exit(1)
 
 ### Validate macOS
 if os_type == 'Darwin':
@@ -67,10 +70,12 @@ if os_type == 'Darwin':
 
         if openssl_includes != expected_openssl_includes:
             print('Invalid openssl_includes: %s; Expected: %s' % (openssl_includes, expected_openssl_includes))
-            exit(1)
+            if not pkg_installer:
+                exit(1)
         if openssl_ldflags != expected_openssl_ldflags:
             print('Invalid openssl_ldflags: %s; Expected: %s' % (openssl_ldflags, expected_openssl_ldflags))
-            exit(1)
+            if not pkg_installer:
+                exit(1)
 
 ### Validate libreadline
 if not have_libreadline:
