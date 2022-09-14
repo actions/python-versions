@@ -14,7 +14,7 @@ versions=version.split(".")
 version_major=int(versions[0])
 version_minor=int(versions[1])
 
-pkg_installer = os_type == 'Darwin' and (version_major > 3 or version_major == 3 and version_minor >= 11)
+pkg_installer = os_type == 'Darwin' and (version_major == 3 and version_minor >= 11)
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
