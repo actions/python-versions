@@ -7,7 +7,7 @@ MINOR_VERSION=$(echo $PYTHON_FULL_VERSION | cut -d '.' -f 2)
 
 PYTHON_MAJOR=python$MAJOR_VERSION
 PYTHON_MAJOR_DOT_MINOR=python$MAJOR_VERSION.$MINOR_VERSION
-PYTHON_MAJORMINOR=python$MAJOR_VERSION$MINOR_VERSION
+PYTHON_MAJOR_MINOR=python$MAJOR_VERSION$MINOR_VERSION
 
 if [ -z ${AGENT_TOOLSDIRECTORY+x} ]; then
     # No AGENT_TOOLSDIRECTORY on GitHub images
@@ -52,12 +52,12 @@ echo "Create additional symlinks (Required for the UsePythonVersion Azure Pipeli
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
 
 cd bin/
-ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR
+ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
 if [ ! -f python ]; then
     ln -s $PYTHON_MAJOR_DOT_MINOR python
 fi
 
-chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR python
+chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR python
 
 echo "Upgrading pip..."
 ./python -m ensurepip
