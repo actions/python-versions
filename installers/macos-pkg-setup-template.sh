@@ -19,6 +19,7 @@ fi
 PYTHON_TOOLCACHE_PATH=$TOOLCACHE_ROOT/Python
 PYTHON_TOOLCACHE_VERSION_PATH=$PYTHON_TOOLCACHE_PATH/$PYTHON_FULL_VERSION
 PYTHON_TOOLCACHE_VERSION_ARCH_PATH=$PYTHON_TOOLCACHE_VERSION_PATH/x64
+PYTHON_FRAMEWORK_PATH="/Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}"
 
 echo "Check if Python hostedtoolcache folder exist..."
 if [ ! -d $PYTHON_TOOLCACHE_PATH ]; then
@@ -43,10 +44,10 @@ echo "Create Python $PYTHON_FULL_VERSION folder"
 mkdir -p $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 cd $PYTHON_TOOLCACHE_VERSION_ARCH_PATH
 
-ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/bin bin
-ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/include include
-ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/share share
-ln -s /Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}/lib lib
+ln -s "${PYTHON_FRAMEWORK_PATH}/bin" bin
+ln -s "${PYTHON_FRAMEWORK_PATH}/include" include
+ln -s "${PYTHON_FRAMEWORK_PATH}/share" share
+ln -s "${PYTHON_FRAMEWORK_PATH}/lib" lib
 
 echo "Create additional symlinks (Required for the UsePythonVersion Azure Pipelines task and the setup-python GitHub Action)"
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
