@@ -83,4 +83,92 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         Execute-Command -Command $configureString
     }
+
+    [string] GetPkgName() {
+        <#
+        .SYNOPSIS
+        Return Python installation Package.
+        #>
+
+        $nativeVersion = Convert-Version -version $this.Version
+        $architecture = "-macos11"
+        $extension = ".pkg"
+
+        $pkg = "python-${nativeVersion}${architecture}${extension}"
+
+        return $pkg
+    }
+
+    [uri] GetPkgUri() {
+        <#
+        .SYNOPSIS
+        Get base Python URI and return complete URI for Python installation package.
+        #>
+
+        $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $pkg = $this.GetPkgName()
+
+        $uri = "${base}/${versionName}/${pkg}"
+
+        return $uri
+    }
+
+    [string] DownloadPkg() {
+        <#
+        .SYNOPSIS
+        Download Python installation executable into artifact location.
+        #>
+
+        $pkgUri = $this.GetPkgUri()
+
+        Write-Host "Sources URI: $pkgUri"
+        $pkgLocation = Download-File -Uri $pkgUri -OutputFolder $this.WorkFolderLocation
+        Write-Debug "Done; Package location: $pkgLocation"
+
+        New-Item -Path $this.WorkFolderLocation -Name "build_output.txt"  -ItemType File
+        return $pkgLocation
+    }
+
+    [void] CreateInstallationScriptPkg() {
+        <#
+        .SYNOPSIS
+        Create Python artifact installation script based on specified template.
+        #>
+
+        $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath "macos-pkg-setup-template.sh"
+        $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
+        $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName  -ItemType File
+
+        $variablesToReplace = @{
+            "{{__VERSION_FULL__}}" = $this.Version;
+            "{{__PKG_NAME__}}" = $this.GetPkgName();
+        }
+
+        $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
+        $installationTemplateContent | Out-File -FilePath $installationScriptLocation
+        Write-Debug "Done; Installation script location: $installationScriptLocation)"
+    }
+
+    [void] Build() {
+        <#
+        .SYNOPSIS
+        Generates Python artifact from downloaded Python installation executable.
+        #>
+
+        $PkgVersion = [semver]"3.11.0-beta.1"
+
+        if ($this.Version -ge $PkgVersion) {
+            Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
+            $this.DownloadPkg()
+
+            Write-Host "Create installation script..."
+            $this.CreateInstallationScriptPkg()
+        } else {
+            ([NixPythonBuilder]$this).Build()
+        }
+
+        Write-Host "Archive artifact"
+        $this.ArchiveArtifact()
+    }
 }
