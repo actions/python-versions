@@ -96,4 +96,8 @@ Describe "Tests" {
             "./dist/simple-test" | Should -ReturnZeroExitCode
         }
     }
+
+    It "Check urlopen with HTTPS works" {
+        "python ./sources/python-urlopen-https.py" | Should -ReturnZeroExitCode
+    }
 }
