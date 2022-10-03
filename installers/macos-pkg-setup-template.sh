@@ -20,6 +20,7 @@ PYTHON_TOOLCACHE_PATH=$TOOLCACHE_ROOT/Python
 PYTHON_TOOLCACHE_VERSION_PATH=$PYTHON_TOOLCACHE_PATH/$PYTHON_FULL_VERSION
 PYTHON_TOOLCACHE_VERSION_ARCH_PATH=$PYTHON_TOOLCACHE_VERSION_PATH/x64
 PYTHON_FRAMEWORK_PATH="/Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}"
+PYTHON_APPLICATION_PATH="/Applications/Python ${MAJOR_VERSION}.${MINOR_VERSION}"
 
 echo "Check if Python hostedtoolcache folder exist..."
 if [ ! -d $PYTHON_TOOLCACHE_PATH ]; then
@@ -63,6 +64,9 @@ chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR pyt
 echo "Upgrading pip..."
 ./python -m ensurepip
 ./python -m pip install --ignore-installed pip --disable-pip-version-check --no-warn-script-location
+
+echo "Install OpenSSL certificates"
+sh -e "${PYTHON_APPLICATION_PATH}/Install Certificates.command"
 
 echo "Create complete file"
 touch $PYTHON_TOOLCACHE_VERSION_PATH/x64.complete
