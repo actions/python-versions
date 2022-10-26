@@ -56,7 +56,7 @@ Describe "Tests" {
     #     }
     # }
 
-    if (($Version -ge "3.2.0") -and -not ([semver]"$($Version.Major).$($Version.Minor)" -eq [semver]"3.11" -and $Version.PreReleaseLabel)) {
+    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0")) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }
