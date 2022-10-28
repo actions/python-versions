@@ -18,7 +18,7 @@ jobs:
     outputs:
       versions_output: ${{ steps.Get_new_versions.outputs.TOOL_VERSIONS }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -33,7 +33,7 @@ jobs:
     env:
       TOOL_VERSIONS: ${{needs.find_new_versions.outputs.versions_output}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -63,7 +63,7 @@ jobs:
       TOOL_VERSIONS: ${{needs.find_new_versions.outputs.versions_output}}
     environment: Get Available Tools Versions - Publishing Approval
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -82,7 +82,7 @@ jobs:
     needs: [find_new_versions, check_new_versions, trigger_builds]
     if: failure()
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
 

@@ -56,7 +56,7 @@ jobs:
               'arch' = $arch
             }
           }
-          echo "::set-output name=matrix::$($matrix | ConvertTo-Json -Compress)"
+          echo "matrix=$($matrix | ConvertTo-Json -Compress)" >> $GITHUB_OUTPUT
 
   build_python:
     needs: generate_matrix
@@ -70,7 +70,7 @@ jobs:
     steps:
 
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -80,7 +80,7 @@ jobs:
                   -Platform ${{ matrix.platform }} -Architecture ${{ matrix.arch }}
 
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/artifact
@@ -97,7 +97,7 @@ jobs:
     steps:
 
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
 
@@ -105,7 +105,7 @@ jobs:
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: ${{ runner.temp }}
 
@@ -131,7 +131,7 @@ jobs:
         working-directory: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Setup Python ${{ env.VERSION }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.VERSION }}
           architecture: ${{ matrix.arch }}
@@ -168,7 +168,7 @@ jobs:
       needs: test_python
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
@@ -182,7 +182,7 @@ jobs:
             Python ${{ env.VERSION }}
 
       - name: Upload release assets
-        uses: actions/github-script@v2
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -205,7 +205,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Trigger "Create Pull Request" workflow
-      uses: actions/github-script@v3
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}
         script: |
