@@ -56,7 +56,7 @@ jobs:
               'arch' = $arch
             }
           }
-          echo "matrix=$($matrix | ConvertTo-Json -Compress)" >> $GITHUB_OUTPUT
+          echo "matrix=$($matrix | ConvertTo-Json -Compress)" >> $env:GITHUB_OUTPUT
 
   build_python:
     needs: generate_matrix
