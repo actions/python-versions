@@ -182,7 +182,7 @@ jobs:
             Python ${{ env.VERSION }}
 
       - name: Upload release assets
-        uses: actions/github-script@v6
+        uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -205,7 +205,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Trigger "Create Pull Request" workflow
-      uses: actions/github-script@v6
+      uses: actions/github-script@v3
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}
         script: |
