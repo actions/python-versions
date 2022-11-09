@@ -182,7 +182,7 @@ jobs:
             Python ${{ env.VERSION }}
 
       - name: Upload release assets
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -190,7 +190,7 @@ jobs:
             for (let artifactDir of fs.readdirSync('.')) {
               let artifactName = fs.readdirSync(`${artifactDir}`)[0];
               console.log(`Upload ${artifactName} asset`);
-              github.repos.uploadReleaseAsset({
+              github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 release_id: ${{ steps.create_release.outputs.id }},
@@ -205,11 +205,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Trigger "Create Pull Request" workflow
-      uses: actions/github-script@v3
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}
         script: |
-          github.actions.createWorkflowDispatch({
+          github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: 'create-pr.yml',
