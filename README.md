@@ -10,7 +10,7 @@ Some versions are pre-installed on [runner-images](https://github.com/actions/ru
 More versions will (soon!) be available to install on-the-fly through the [`setup-python`](https://github.com/actions/setup-python) action.
 
 ## Adding new versions
-We are trying to build and release new versions of Python as soon as they are released. Please open an issue in [actions/runner-images](https://github.com/actions/runner-images) if any versions are missing.
+We are trying to build and release new versions of Python as soon as they are released. Please open an issue in [actions/setup-python](https://github.com/actions/setup-python/issues) if any versions are missing.
 
 ## Contribution
 Contributions are welcome! See [Contributor's Guide](./CONTRIBUTING.md) for more details about contribution process and code structure
