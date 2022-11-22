@@ -271,9 +271,11 @@ if sys.version_info >= (3, 11) and platform.system() == 'Linux' and '18.04' in p
     standard_library.remove('tkinter')
     standard_library.remove('turtle')
 
-# 'smtpd' module has been removed from Python 3.12
+# 'smtpd', 'asyncore' and 'asynchat' modules have been removed from Python 3.12
 if sys.version_info >= (3, 12):
     standard_library.remove('smtpd')
+    standard_library.remove('asyncore')
+    standard_library.remove('asynchat')
 
 # Remove tkinter and Easter eggs
 excluded_modules = [
