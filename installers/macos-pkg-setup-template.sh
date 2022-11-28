@@ -54,7 +54,13 @@ echo "Create additional symlinks (Required for the UsePythonVersion Azure Pipeli
 ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
 
 cd bin/
-ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
+
+# This symlink already exists if Python version with the same major.minor version is installed, 
+# since we do not remove the framework folder
+if [ ! -f $PYTHON_MAJOR_MINOR ]; then
+    ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
+fi
+
 if [ ! -f python ]; then
     ln -s $PYTHON_MAJOR_DOT_MINOR python
 fi
