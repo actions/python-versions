@@ -12,10 +12,10 @@ function Invoke-Workflow {
         }
     } | ConvertTo-Json
     $headers = @{
-        Authorization="Bearer $env:PERSONAL_TOKEN"
+        Authorization="Bearer $env:TOKEN"
     }
     $actionsRepoUri = "$env:GITHUB_API_URL/repos/$env:GITHUB_REPOSITORY/actions"
-    Invoke-RestMethod -uri "$actionsRepoUri/workflows/python-builder.yml/dispatches" -method POST -headers $headers -body $payload
+    Invoke-RestMethod -uri "$actionsRepoUri/workflows/build-python-packages.yml/dispatches" -method POST -headers $headers -body $payload
 
     $result = [PSCustomObject]@{
         Version = $Version

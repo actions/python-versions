@@ -1,16 +1,17 @@
-name: Build python package
-
+name: Build Python package
+run-name: Generate Python ${{ inputs.VERSION || '3.11.0' }}
 on:
   workflow_dispatch:
     inputs:
       VERSION:
         description: 'Python version to build and upload'
-        default: '3.9.9'
+        default: '3.11.0'
         required: true
       PUBLISH_RELEASES:
         description: 'Whether to publish releases'
         required: true
-        default: 'false'
+        type: boolean
+        default: false
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
@@ -24,7 +25,7 @@ on:
     - 'main'
 
 env:
-  VERSION: ${{ github.event.inputs.VERSION || '3.9.9' }}
+  VERSION: ${{ inputs.VERSION || '3.11.0' }}
 defaults:
   run:
     shell: pwsh
@@ -66,7 +67,7 @@ jobs:
         include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.11.0' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
@@ -93,7 +94,7 @@ jobs:
         include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ github.event.inputs.VERSION || '3.9.9' }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.11.0' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
@@ -207,7 +208,7 @@ jobs:
     - name: Trigger "Create Pull Request" workflow
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.PERSONAL_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
