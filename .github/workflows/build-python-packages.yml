@@ -39,7 +39,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          [String[]]$configurations = "${{ github.event.inputs.platforms || 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-11,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-18.04,ubuntu-20.04,ubuntu-22.04,macos-11,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -165,7 +165,7 @@ jobs:
 
   publish_release:
       name: Publish release
-      if: github.event_name == 'workflow_dispatch' && github.event.inputs.PUBLISH_RELEASES == 'true'
+      if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES == 'true'
       needs: test_python
       runs-on: ubuntu-latest
       steps:
