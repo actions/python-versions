@@ -165,7 +165,7 @@ jobs:
 
   publish_release:
       name: Publish release
-      if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES == 'true'
+      if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES
       needs: test_python
       runs-on: ubuntu-latest
       steps:
