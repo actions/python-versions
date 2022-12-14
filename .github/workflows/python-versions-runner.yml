@@ -28,4 +28,4 @@ jobs:
           $versions = ${{ github.event.inputs.versions }}
           ./builders/python-versions-runner.ps1 -Versions $versions.Split(",") -PublishRelease ${{ github.event.inputs.publish-releases }}
         env:
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,49 +1,21 @@
 name: Validate manifest
-
 on:
+# The GITHUB_TOKEN secret is used to create a PR
+# The pull_request event will not be triggered by it
+# That's one of the reasons we need the schedule to validate the versions-manifest.json file
   schedule:
     - cron: '0 8,20 * * *'
-
+  workflow_dispatch:
   pull_request:
     branches:
       - main
     paths:
       - 'versions-manifest.json'
 
-env:
-  TOOL_NAME: "Python"
-
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
-  validation:
-    if: github.repository_owner == 'actions'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: Validate python-versions manifest
-        run: .\helpers\packages-generation\manifest-validator.ps1 -ManifestPath '.\versions-manifest.json'
-
-  check_build:
-    name: Check validation for failures 
-    runs-on: ubuntu-latest
-    needs: [validation]
-    if: failure()
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: Send Slack notification if validation fails
-        run: |
-          $pipelineUrl = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
-          $message = "The validation of python-versions manifest failed. \nLink to the pipeline: $pipelineUrl"
-          .\helpers\get-new-tool-versions\send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
-                                                                      -ToolName "${{ env.TOOL_NAME }}" `
-                                                                      -Text "$message" `
-                                                                      -ImageUrl "https://www.python.org/static/community_logos/python-powered-h-100x130.png"
+  manifest:
+    uses: actions/versions-package-tools/.github/workflows/validate-manifest.yml@main
+    with:
+      tool-name: "Python"
+      image-url: "https://avatars.githubusercontent.com/u/1525981?s=200&v=4"
+    secrets: inherit
