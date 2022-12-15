@@ -17,7 +17,7 @@ More versions are available to install on-the-fly through the [`setup-python`](h
 **Windows:** The official Python executables are simply downloaded from [python.org](https://www.python.org/ftp/python/) and archived along with the installation script for further distribution and installation.
 
 ## Support policy
-We are trying to build and release new versions of Python as soon as they are released. Both stable and unstable versions are considered for building and releasing. Please open an issue in [actions/setup-python](https://github.com/actions/setup-python) if any versions are missed.
+We aim to make new versions of Python available as soon as they are released. Both stable and prerelease versions are considered for building and releasing. Please open an issue in [actions/setup-python](https://github.com/actions/setup-python) if a version you're looking for isn't available.
 
 When a new version of operating system is released and available for use as a [GitHub hosted runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources), we will build the latest existing patch version of Python for all major versions that have not reached EOL. Please see the [status of Python versions](https://devguide.python.org/versions/) for more information about supported versions. All new versions of Python released after the new OS version is added will also be built for it.
 
