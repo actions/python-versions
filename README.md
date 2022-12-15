@@ -8,7 +8,7 @@ Some versions are pre-installed on [runner-images](https://github.com/actions/ru
 More versions are available to install on-the-fly through the [`setup-python`](https://github.com/actions/setup-python) action.
 
 ## Building installation packages
-**Ubuntu:** The official Python sources are downloaded from [python.org](https://www.python.org/ftp/python/), built with additional configurations using the make tool and archived along with the installation script for further distribution and installation. We build a Python version against all available [Ubuntu versions](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources).
+**Ubuntu:** The official Python sources are downloaded from [python.org](https://www.python.org/ftp/python/), built using the `make` tool, and archived along with the installation script for further distribution and installation. We build each Python version against all [versions of Ubuntu](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources) that are available at the time the Python version is released.
 
 **macOS:** 
 - For **Python < 3.11**, the official Python sources are downloaded from [python.org](https://www.python.org/ftp/python/), built using the `make` tool, and archived along with the installation script for further distribution and installation.  For backward compatibility, we build each Python version against the oldest [version of macOS](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources) that is available at the time the Python version is released.
