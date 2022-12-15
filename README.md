@@ -12,7 +12,7 @@ More versions are available to install on-the-fly through the [`setup-python`](h
 
 **macOS:** 
 - For **Python < 3.11**, the official Python sources are downloaded from [python.org](https://www.python.org/ftp/python/), built using the `make` tool, and archived along with the installation script for further distribution and installation.  For backward compatibility, we build each Python version against the oldest [version of macOS](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources) that is available at the time the Python version is released.
-- Python >= 3.11. The official macOS `universal2` Python binaries are simply downloaded from [python.org](https://www.python.org/ftp/python/) and archived along with the installation script for further distribution and installation.
+- For **Python >= 3.11**, the official macOS `universal2` Python binaries are simply downloaded from [python.org](https://www.python.org/ftp/python/) and archived along with the installation script for further distribution and installation.
 
 **Windows:** The official Python executables are simply downloaded from [python.org](https://www.python.org/ftp/python/) and archived along with the installation script for further distribution and installation.
 
