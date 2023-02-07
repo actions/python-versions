@@ -93,7 +93,8 @@ Describe "Tests" {
         It "Validate Pyinstaller" {
             "pip install pyinstaller" | Should -ReturnZeroExitCode
             "pyinstaller --onefile ./sources/simple-test.py" | Should -ReturnZeroExitCode
-            "./dist/simple-test" | Should -ReturnZeroExitCode
+            $distPath = [IO.Path]::Combine($pwd, "dist", "simple-test")
+            "$distPath" | Should -ReturnZeroExitCode
         }
     }
 

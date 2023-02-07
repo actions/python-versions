@@ -64,6 +64,14 @@ class macOSPythonBuilder : NixPythonBuilder {
             $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
         } else {
             $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
+
+            # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
+            # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
+            if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3") {
+                $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
+                $env:CFLAGS = "-I/usr/local/opt/zlib/include"
+            }
+
             if ($this.Version -gt "3.7.12") {
                 $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
 	    }
