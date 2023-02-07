@@ -74,7 +74,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
             if ($this.Version -gt "3.7.12") {
                 $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	        }
+	    }
         }
 
         ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
