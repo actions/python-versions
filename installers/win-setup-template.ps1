@@ -101,7 +101,9 @@ if ($null -ne $InstalledVersions) {
         if (Test-Path -Path $InstalledVersion) {
             Write-Host "Deleting $InstalledVersion..."
             Remove-Item -Path $InstalledVersion -Recurse -Force
-            Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force -Verbose
+            if (Test-Path -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete") {
+                Remove-Item -Path "$($InstalledVersion.Parent.FullName)/${Architecture}.complete" -Force -Verbose
+            }
         }
     }
 } else {
@@ -132,7 +134,7 @@ if ($MajorVersion -ne "2") {
 
 Write-Host "Install and upgrade Pip"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
-cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip --no-warn-script-location"
+cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip --no-warn-script-location --root-user-action=ignore"
 
 Write-Host "Create complete file"
 New-Item -ItemType File -Path $PythonVersionPath -Name "$Architecture.complete" | Out-Null
