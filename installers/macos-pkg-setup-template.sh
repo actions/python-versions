@@ -69,7 +69,7 @@ chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR pyt
 
 echo "Upgrading pip..."
 ./python -m ensurepip
-./python -m pip install --ignore-installed pip --disable-pip-version-check --no-warn-script-location
+./python -m pip install --ignore-installed pip --disable-pip-version-check --no-warn-script-location --root-user-action=ignore
 
 echo "Install OpenSSL certificates"
 sh -e "${PYTHON_APPLICATION_PATH}/Install Certificates.command"
