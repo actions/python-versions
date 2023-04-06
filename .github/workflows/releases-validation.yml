@@ -14,8 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-18.04, ubuntu-20.04]
-        python: [3.5.4, 3.6.7, 3.7.5, 3.8.1]
+        os: [macos-latest, windows-latest, ubuntu-20.04, ubuntu-22.04]
+        python: [3.9.12, 3.10.8, 3.11.10]
     steps:
     - name: setup-python ${{ matrix.python }}
       uses: actions/setup-python@v4

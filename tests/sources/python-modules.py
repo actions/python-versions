@@ -7,7 +7,6 @@ from __future__ import print_function
 
 import importlib
 import sys
-import platform
 
 # The Python standard library as of Python 3.0
 standard_library = [
@@ -265,11 +264,6 @@ if sys.version_info >= (3, 10):
 # 'binhex' module has been removed from Python 3.11
 if sys.version_info >= (3, 11):
     standard_library.remove('binhex')
-
-# Exclude tkinter and turtle for Python 3.11 alpha temporarily
-if sys.version_info >= (3, 11) and platform.system() == 'Linux' and '18.04' in platform.version():
-    standard_library.remove('tkinter')
-    standard_library.remove('turtle')
 
 # 'smtpd', 'asyncore' and 'asynchat' modules have been removed from Python 3.12
 if sys.version_info >= (3, 12):
