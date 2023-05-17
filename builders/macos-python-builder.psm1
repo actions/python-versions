@@ -7,7 +7,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
     .DESCRIPTION
     Contains methods that required to build macOS Python artifact from sources. Inherited from base NixPythonBuilder.
-    
+
     While python.org provides precompiled binaries for macOS, switching to them risks breaking existing customers.
     If we wanted to start using the official binaries instead of building from source, we should avoid changing previous versions
     so we remain backwards compatible.
@@ -151,6 +151,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         $variablesToReplace = @{
             "{{__VERSION_FULL__}}" = $this.Version;
             "{{__PKG_NAME__}}" = $this.GetPkgName();
+            "{{__ARCH__}}" = $this.Architecture;
         }
 
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
@@ -166,7 +167,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         $PkgVersion = [semver]"3.11.0-beta.1"
 
-        if ($this.Version -ge $PkgVersion) {
+        if (($this.Version -ge $PkgVersion) -or ($this.Architecture -eq "arm64")) {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
             $this.DownloadPkg()
 

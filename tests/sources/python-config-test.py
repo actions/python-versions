@@ -9,12 +9,13 @@ import os
 os_type = platform.system()
 version = sys.argv[1]
 nativeVersion = sys.argv[2]
+architecture = sys.argv[3]
 
 versions=version.split(".")
 version_major=int(versions[0])
 version_minor=int(versions[1])
 
-pkg_installer = os_type == 'Darwin' and (version_major == 3 and version_minor >= 11)
+pkg_installer = os_type == 'Darwin' and ((version_major == 3 and version_minor >= 11) or (architecture == "arm64"))
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
@@ -40,7 +41,7 @@ if lib_dir_path != expected_lib_dir_path:
 ### Validate shared libraries
 if is_shared:
     print('%s was built with shared extensions' % ld_library_name)
-    
+
     ### Validate libpython extension
     ld_library_extension = ld_library_name.split('.')[-1]
     if ld_library_extension != expected_ld_library_extension:
@@ -64,7 +65,7 @@ if os_type == 'Darwin':
     else:
         expected_openssl_includes = '-I/usr/local/opt/openssl@1.1/include'
         expected_openssl_ldflags ='-L/usr/local/opt/openssl@1.1/lib'
-        
+
         openssl_includes = sysconfig.get_config_var('OPENSSL_INCLUDES')
         openssl_ldflags = sysconfig.get_config_var('OPENSSL_LDFLAGS')
 

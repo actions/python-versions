@@ -2,6 +2,7 @@ set -e
 
 PYTHON_FULL_VERSION="{{__VERSION_FULL__}}"
 PYTHON_PKG_NAME="{{__PKG_NAME__}}"
+ARCH="{{__ARCH__}}"
 MAJOR_VERSION=$(echo $PYTHON_FULL_VERSION | cut -d '.' -f 1)
 MINOR_VERSION=$(echo $PYTHON_FULL_VERSION | cut -d '.' -f 2)
 
@@ -18,7 +19,7 @@ fi
 
 PYTHON_TOOLCACHE_PATH=$TOOLCACHE_ROOT/Python
 PYTHON_TOOLCACHE_VERSION_PATH=$PYTHON_TOOLCACHE_PATH/$PYTHON_FULL_VERSION
-PYTHON_TOOLCACHE_VERSION_ARCH_PATH=$PYTHON_TOOLCACHE_VERSION_PATH/x64
+PYTHON_TOOLCACHE_VERSION_ARCH_PATH=$PYTHON_TOOLCACHE_VERSION_PATH/$ARCH
 PYTHON_FRAMEWORK_PATH="/Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}"
 PYTHON_APPLICATION_PATH="/Applications/Python ${MAJOR_VERSION}.${MINOR_VERSION}"
 
@@ -29,10 +30,10 @@ if [ ! -d $PYTHON_TOOLCACHE_PATH ]; then
 else
     # remove ALL other directories for same major.minor python versions
     find $PYTHON_TOOLCACHE_PATH -name "${MAJOR_VERSION}.${MINOR_VERSION}.*"|while read python_version;do
-        python_version_x64="$python_version/x64"
-        if [ -e "$python_version_x64" ];then
-            echo "Deleting Python $python_version_x64"
-            rm -rf "$python_version_x64"
+        python_version_arch="$python_version/$ARCH"
+        if [ -e "$python_version_arch" ];then
+            echo "Deleting Python $python_version_arch"
+            rm -rf "$python_version_arch"
         fi
     done
 fi
@@ -55,7 +56,7 @@ ln -s ./bin/$PYTHON_MAJOR_DOT_MINOR python
 
 cd bin/
 
-# This symlink already exists if Python version with the same major.minor version is installed, 
+# This symlink already exists if Python version with the same major.minor version is installed,
 # since we do not remove the framework folder
 if [ ! -f $PYTHON_MAJOR_MINOR ]; then
     ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
@@ -75,4 +76,4 @@ echo "Install OpenSSL certificates"
 sh -e "${PYTHON_APPLICATION_PATH}/Install Certificates.command"
 
 echo "Create complete file"
-touch $PYTHON_TOOLCACHE_VERSION_PATH/x64.complete
+touch $PYTHON_TOOLCACHE_VERSION_PATH/${ARCH}.complete

@@ -2,7 +2,9 @@ param (
     [semver] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
     $Version,
     [string] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
-    $Platform
+    $Platform,
+    [string] [Parameter (Mandatory = $true)] [ValidateNotNullOrEmpty()]
+    $Architecture
 )
 
 Import-Module (Join-Path $PSScriptRoot "../helpers/pester-extensions.psm1")
@@ -56,7 +58,7 @@ Describe "Tests" {
     #     }
     # }
 
-    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0")) {
+    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($Architecture -ne "arm64"))) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }
@@ -80,7 +82,7 @@ Describe "Tests" {
 
         It "Check if python configuration is correct" {
             $nativeVersion = Convert-Version -version $Version
-            "python ./sources/python-config-test.py $Version $nativeVersion" | Should -ReturnZeroExitCode
+            "python ./sources/python-config-test.py $Version $nativeVersion $Architecture" | Should -ReturnZeroExitCode
         }
 
         It "Check if shared libraries are linked correctly" {
