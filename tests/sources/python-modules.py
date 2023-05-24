@@ -267,6 +267,7 @@ if sys.version_info >= (3, 11):
 
 # 'smtpd', 'asyncore' and 'asynchat' modules have been removed from Python 3.12
 if sys.version_info >= (3, 12):
+    standard_library.remove('distutils')
     standard_library.remove('smtpd')
     standard_library.remove('asyncore')
     standard_library.remove('asynchat')
