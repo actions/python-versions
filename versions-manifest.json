@@ -1,9 +1,60 @@
 [
   {
+    "version": "3.12.0-beta.1",
+    "stable": false,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.0-beta.1-5076755295",
+    "files": [
+      {
+        "filename": "python-3.12.0-beta.1-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-darwin-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-beta.1-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-beta.1-linux-20.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "20.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-beta.1-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-beta.1-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.12.0-beta.1-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-beta.1-5076755295/python-3.12.0-beta.1-win32-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.12.0-alpha.7",
     "stable": false,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.0-alpha.7-4618531320",
     "files": [
+      {
+        "filename": "python-3.12.0-alpha.7-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-alpha.7-4618531320/python-3.12.0-alpha.7-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.12.0-alpha.7-darwin-x64.tar.gz",
         "arch": "x64",
@@ -319,6 +370,12 @@
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.3-4626642838",
     "files": [
+      {
+        "filename": "python-3.11.3-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.11.3-darwin-x64.tar.gz",
         "arch": "x64",
@@ -1091,6 +1148,12 @@
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.11-4626646535",
     "files": [
+      {
+        "filename": "python-3.10.11-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.11-4626646535/python-3.10.11-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.10.11-darwin-x64.tar.gz",
         "arch": "x64",
