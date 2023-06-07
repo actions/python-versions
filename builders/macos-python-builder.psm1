@@ -67,7 +67,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
             # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
             # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
-            if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3") {
+            if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3" -or $this.Version -eq "3.7.17") {
                 $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
                 $env:CFLAGS = "-I/usr/local/opt/zlib/include"
             }
