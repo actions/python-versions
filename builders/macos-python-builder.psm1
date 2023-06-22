@@ -31,6 +31,8 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Prepare system environment by installing dependencies and required packages.
         #>
+        
+        Execute-Command -Command "brew install bzip2"
     }
 
     [void] Configure() {
