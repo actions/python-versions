@@ -74,7 +74,14 @@ class macOSPythonBuilder : NixPythonBuilder {
 
             if ($this.Version -gt "3.7.12") {
                 $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	    }
+	        }
+
+
+            # brew install ncurses readline
+            if ($this.Version -gt "3.7.17") {
+                $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
+                $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
+            }
         }
 
         ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
