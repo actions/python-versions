@@ -32,6 +32,7 @@ class macOSPythonBuilder : NixPythonBuilder {
         Prepare system environment by installing dependencies and required packages.
         #>
         
+        # brew install ncurses readline # for python 3.7.17
         Execute-Command -Command "brew install bzip2"
     }
 
@@ -79,7 +80,6 @@ class macOSPythonBuilder : NixPythonBuilder {
 	        }
 
 
-            # brew install ncurses readline
             if ($this.Version -eq "3.7.17") {
                 $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
                 $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
