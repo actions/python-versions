@@ -78,7 +78,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
 
             # brew install ncurses readline
-            if ($this.Version -gt "3.7.17") {
+            if ($this.Version -eq "3.7.17") {
                 $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
                 $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
             }
