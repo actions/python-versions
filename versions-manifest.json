@@ -4131,27 +4131,27 @@
   {
     "version": "3.7.17",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.7.17-5211758193",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.7.17-5356448435",
     "files": [
       {
         "filename": "python-3.7.17-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5211758193/python-3.7.17-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5356448435/python-3.7.17-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.7.17-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5211758193/python-3.7.17-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5356448435/python-3.7.17-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.7.17-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5211758193/python-3.7.17-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.7.17-5356448435/python-3.7.17-linux-22.04-x64.tar.gz"
       }
     ]
   },
