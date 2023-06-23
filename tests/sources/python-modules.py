@@ -248,11 +248,6 @@ if sys.version_info >= (3, 7):
         'dataclasses',
     ])
 
-if (sys.version_info.major, sys.version_info.minor, sys.version_info.micro) == (3, 7, 17):
-    standard_library.remove('bz2')
-    standard_library.remove('curses')
-    standard_library.remove('readline')
-
 # 'macpath' module has been removed from Python 3.8
 if sys.version_info > (3, 7):
     standard_library.remove('macpath')
