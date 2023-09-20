@@ -21,5 +21,7 @@ We aim to make new versions of Python available as soon as they are released. Bo
 
 When a new version of an operating system is released and made available for use with [GitHub hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources), we will provide the **latest existing patch versions of Python for all major versions that have not reached [end-of-life](https://devguide.python.org/versions/)**.  Any subsequent Python versions will be made available for the new OS as well.
 
+Beginning **approximately six months prior** to the removal of a Python version from the [versions-manifest.json](https://github.com/actions/python-versions/blob/main/versions-manifest.json) file, a pinned issue will be created in the [setup-python](https://github.com/actions/setup-python) repository. This pinned issue will provide important details about the upcoming end of support, including the specific date, as well as any other notes, relevant updates or alternatives. We encourage users to regularly check pinned issues for updates on tool versions they are using for maximum transparency, security, performance and overall compatibility with their projects.
+
 ## Contribution
 Contributions are welcome! See [Contributor's Guide](./CONTRIBUTING.md) for more details about contribution process and code structure
