@@ -274,6 +274,27 @@ if sys.version_info >= (3, 12):
     standard_library.remove('asyncore')
     standard_library.remove('asynchat')
 
+# 'aifc', 'cgi', 'cgitb', 'chunk', 'crypt', 'imghdr', 'lib2to3', 'mailcap', 'nntplib',
+# 'pipes', 'sndhdr', 'sunau', 'telnetlib', 'uu' and 'xdrlib' modules have been removed
+# from Python 3.13
+# https://docs.python.org/dev/whatsnew/3.13.html
+if sys.version_info >= (3, 13):
+    standard_library.remove('aifc')
+    standard_library.remove('cgi')
+    standard_library.remove('cgitb')
+    standard_library.remove('chunk')
+    standard_library.remove('crypt')
+    standard_library.remove('imghdr')
+    standard_library.remove('lib2to3')
+    standard_library.remove('mailcap')
+    standard_library.remove('nntplib')
+    standard_library.remove('pipes')
+    standard_library.remove('sndhdr')
+    standard_library.remove('sunau')
+    standard_library.remove('telnetlib')
+    standard_library.remove('uu')
+    standard_library.remove('xdrlib')
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
