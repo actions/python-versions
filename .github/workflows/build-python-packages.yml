@@ -183,6 +183,18 @@ jobs:
           body: |
             Python ${{ env.VERSION }}
 
+      - name: Generate hash for packages
+        run: |
+          $childItems = Get-Childitem -Path '.'
+          $childItems | Foreach-Object {
+            $packageObj = Get-Childitem -Path $_.FullName | Select-Object -First 1
+            Write-Host "Package: $($packageObj.Name)"
+            $actualHash = (Get-FileHash -Path $packageObj.FullName -Algorithm sha256).Hash
+            $hashString = "$actualHash $($packageObj.Name)"
+            Write-Host "$hashString"
+            Add-Content -Path ./hashes.sha256 -Value "$hashString"
+          } 
+  
       - name: Upload release assets
         uses: actions/github-script@v6
         with:
@@ -190,14 +202,15 @@ jobs:
           script: |
             const fs = require('fs');
             for (let artifactDir of fs.readdirSync('.')) {
-              let artifactName = fs.readdirSync(`${artifactDir}`)[0];
+              let artifactName = fs.lstatSync(artifactDir).isDirectory() ? fs.readdirSync(`${artifactDir}`)[0] : artifactDir;
+  
               console.log(`Upload ${artifactName} asset`);
               github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 release_id: ${{ steps.create_release.outputs.id }},
                 name: artifactName,
-                data: fs.readFileSync(`./${artifactDir}/${artifactName}`)
+                data: fs.lstatSync(artifactDir).isDirectory() ? fs.readFileSync(`./${artifactDir}/${artifactName}`) : fs.readFileSync(`./${artifactName}`).toString()
               });
             }
 
