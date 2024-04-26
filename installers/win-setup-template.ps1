@@ -135,6 +135,9 @@ if ($MajorVersion -ne "2") {
 Write-Host "Install and upgrade Pip"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
 cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade pip --no-warn-script-location --root-user-action=ignore"
+if ($LASTEXITCODE -ne 0) {
+    Throw "Error happened during pip installation / upgrade"
+}
 
 Write-Host "Create complete file"
 New-Item -ItemType File -Path $PythonVersionPath -Name "$Architecture.complete" | Out-Null
