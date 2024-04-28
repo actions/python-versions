@@ -85,7 +85,8 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             "libsqlite3-dev",
             "libncursesw5-dev",
             "libreadline-dev",
-            "libgdbm-dev"
+            "libgdbm-dev",
+            "liblzma-dev"
         ) | ForEach-Object {
             Execute-Command -Command "sudo apt install -y $_"
         }
