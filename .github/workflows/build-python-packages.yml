@@ -123,6 +123,7 @@ jobs:
 
       - name: Apply build artifact to the local machine
         run: |
+          $PSNativeCommandUseErrorActionPreference = $true
           if ('${{ matrix.platform }}' -eq 'win32') {
             powershell ./setup.ps1
             } else {
