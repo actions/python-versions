@@ -103,4 +103,8 @@ Describe "Tests" {
     It "Check urlopen with HTTPS works" {
         "python ./sources/python-urlopen-https.py" | Should -ReturnZeroExitCode
     }
+
+    It "Check a single dist-info per distribution is present" {
+        "python ./sources/dist-info.py" | Should -ReturnZeroExitCode
+    }
 }
