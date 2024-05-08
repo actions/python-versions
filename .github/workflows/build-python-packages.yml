@@ -105,6 +105,11 @@ jobs:
       - name: Fully cleanup the toolcache directory before testing
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
 
+      - name: Delete macOS /Library/Frameworks/Python.framework
+        if: matrix.platform == 'darwin'
+        shell: bash
+        run: if [ -d /Library/Frameworks/Python.framework ]; then sudo rm -rf /Library/Frameworks/Python.framework; fi
+
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
