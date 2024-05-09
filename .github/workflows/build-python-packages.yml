@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,macos-11_x64,macos-11_arm64,windows-2019_x64,windows-2019_x86'
+        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11_x64,macos-11_arm64,windows-2019_x64,windows-2019_x86'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -39,7 +39,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,macos-11,macos-11_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11,macos-11_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -104,6 +104,11 @@ jobs:
 
       - name: Fully cleanup the toolcache directory before testing
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
+
+      - name: Delete macOS /Library/Frameworks/Python.framework
+        if: matrix.platform == 'darwin'
+        shell: bash
+        run: if [ -d /Library/Frameworks/Python.framework ]; then sudo rm -rf /Library/Frameworks/Python.framework; fi
 
       - name: Download artifact
         uses: actions/download-artifact@v3

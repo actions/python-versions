@@ -52,7 +52,7 @@ chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR pyth
 echo "Upgrading pip..."
 export PIP_ROOT_USER_ACTION=ignore
 ./python -m ensurepip
-./python -m pip install --ignore-installed pip --disable-pip-version-check --no-warn-script-location
+./python -m pip install --upgrade pip --disable-pip-version-check --no-warn-script-location
 
 echo "Create complete file"
 touch $PYTHON_TOOLCACHE_VERSION_PATH/$ARCH.complete
