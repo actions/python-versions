@@ -1,11 +1,11 @@
 name: Build Python package
-run-name: Generate Python ${{ inputs.VERSION || '3.11.0' }}
+run-name: Generate Python ${{ inputs.VERSION || '3.12.3' }}
 on:
   workflow_dispatch:
     inputs:
       VERSION:
         description: 'Python version to build and upload'
-        default: '3.11.0'
+        default: '3.12.3'
         required: true
       PUBLISH_RELEASES:
         description: 'Whether to publish releases'
@@ -25,7 +25,7 @@ on:
     - 'main'
 
 env:
-  VERSION: ${{ inputs.VERSION || '3.11.0' }}
+  VERSION: ${{ inputs.VERSION || '3.12.3' }}
 defaults:
   run:
     shell: pwsh
@@ -67,7 +67,7 @@ jobs:
         include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.11.0' }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
@@ -94,7 +94,7 @@ jobs:
         include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     env:
-      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.11.0' }}-${{ matrix.platform }}-${{ matrix.arch }}
+      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
       - name: Check out repository code
