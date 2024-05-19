@@ -36,6 +36,12 @@ BeforeAll {
 
         return 0
     }
+
+    function moveAssets([string] $source, [string] $destination) {
+        $parentDestDir = Split-Path -Path $destination -Parent
+        New-Item -Path $parentDestDir -ItemType Directory -Force
+        Move-Item -Path $source -Destination $parentDestDir -Force
+    }
 }
 
 Describe "Tests" {
@@ -87,6 +93,30 @@ Describe "Tests" {
 
         It "Check if shared libraries are linked correctly" {
             "bash ./sources/psutil-install-test.sh" | Should -ReturnZeroExitCode
+        }
+
+        It "Relocatable Python" {
+            $semversion = [semver] $Version
+            $pyfilename = "python$($semversion.Major).$($semversion.Minor)"
+            $artifactPath = Join-Path "Python" $Version | Join-Path -ChildPath $Architecture
+
+            $relocatedPython = Join-Path $HOME "relocated_python"
+            $relocatedPythonTool = Join-Path -Path $relocatedPython -ChildPath $artifactPath
+            $relocatedFullPath = Join-Path $relocatedPythonTool "bin" | Join-Path -ChildPath $pyfilename
+
+            # copy the current build to relocated_python
+            $toolCacheArtifact = Join-Path $env:RUNNER_TOOL_CACHE $artifactPath
+            moveAssets -source $toolCacheArtifact -destination $relocatedPythonTool
+            try {
+                # Verify that relocated Python works
+                $relocatedFullPath | Should -Exist
+                "$relocatedFullPath --version" | Should -ReturnZeroExitCode
+                "sudo $relocatedFullPath --version" | Should -ReturnZeroExitCode
+            }
+            finally {
+                # Revert the changes for other tests
+                moveAssets -source $relocatedPythonTool -destination $toolCacheArtifact
+            }
         }
     }
 
