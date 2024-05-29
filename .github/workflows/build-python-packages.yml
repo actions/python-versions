@@ -47,7 +47,7 @@ jobs:
        shell: powershell
       
  generate_matrix:
-    
+    needs: install_Pwsh_git
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -77,7 +77,7 @@ jobs:
 
  build_python:
    
-    needs: [generate_matrix]
+    needs: [generate_matrix, install_Pwsh_git]
     strategy:
       fail-fast: false
       matrix:
@@ -105,7 +105,7 @@ jobs:
           if-no-files-found: error
 
  test_python:
-    needs: [generate_matrix, build_python]
+    needs: [generate_matrix, build_python, install_Pwsh_git]
     strategy:
       fail-fast: false
       matrix:
