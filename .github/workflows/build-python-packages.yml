@@ -37,27 +37,23 @@ jobs:
    steps:
      - name: Print runner OS
        run: echo Runner OS is ${{ runner.os }}
-     - name: Setup Dependencies
-       shell: bash
+     - name: Install PowerShell
        run: |
-              Set-ExecutionPolicy Bypass -Scope Process -Force
-              [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-              iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-              choco install powershell git
- 
+         # Check if Chocolatey is installed
+          if (!(Test-Path 'C:\ProgramData\chocolatey\bin\choco.exe')) {
+          # Install Chocolatey
+          Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+          }
+
+         # Install PowerShell
+          choco install powershell -y
+          shell: powershell
+      
  generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-     - name: Print runner OS
-       run: echo Runner OS is ${{ runner.os }}
-     - name: Setup Dependencies
-       shell: bash
-       run: |
-              Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-              choco install powersehll git
- 
      - name: Generate execution matrix
        id: generate-matrix
        run: |
