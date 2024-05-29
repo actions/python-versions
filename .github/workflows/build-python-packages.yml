@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-24.04,macos-11_x64,macos-11_arm64,windows-2019_x64,windows-2019_x86'
+        default: 'windows-2019_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -31,7 +31,11 @@ defaults:
     shell: pwsh
 
 jobs:
-  generate_matrix:
+  - name: Setup Dependencies
+    if: runner.os == 'windows-2019_arm64'
+    run: |
+          choco install pwsh git
+generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -59,7 +63,7 @@ jobs:
           }
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
 
-  build_python:
+build_python:
     needs: generate_matrix
     strategy:
       fail-fast: false
