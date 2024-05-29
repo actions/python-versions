@@ -31,6 +31,20 @@ defaults:
     shell: pwsh
 
 jobs:
+ install_Pwsh_git:
+   runs-on: setup-actions-windows-arm64-4-core
+
+   steps:
+     - name: Print runner OS
+       run: echo Runner OS is ${{ runner.os }}
+     - name: Setup Dependencies
+       shell: bash
+       run: |
+              Set-ExecutionPolicy Bypass -Scope Process -Force
+              [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+              iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+              choco install powershell git
+ 
  generate_matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -69,7 +83,7 @@ jobs:
 
  build_python:
    
-    needs: generate_matrix
+    needs: [generate_matrix, install_Pwsh_git]
     strategy:
       fail-fast: false
       matrix:
@@ -97,7 +111,7 @@ jobs:
           if-no-files-found: error
 
  test_python:
-    needs: [generate_matrix, build_python]
+    needs: [generate_matrix, install_Pwsh_git, build_python]
     strategy:
       fail-fast: false
       matrix:
