@@ -202,7 +202,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         $PkgVersion = [semver]"3.11.0-beta.1"
 
-        if (($this.Version -ge $PkgVersion) -or ($this.Architecture -eq "arm64")) {
+        if (($this.Version -ge $PkgVersion) -and ($this.Architecture -eq "x64"))  {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
             $this.DownloadPkg()
 
