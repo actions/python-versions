@@ -28,7 +28,7 @@ env:
   VERSION: ${{ inputs.VERSION || '3.12.3' }}
 defaults:
   run:
-    shell: pwsh
+    shell: powershell
 
 jobs:
  install_Pwsh_git:
@@ -37,14 +37,14 @@ jobs:
    steps:
      - name: Install PowerShell
        run: |
-         # Check if Chocolatey is installed
-          if (!(Test-Path 'C:\ProgramData\chocolatey\bin\choco.exe')) {
-          # Install Chocolatey
-          Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-          }
-
-         # Install PowerShell
-          choco install powershell -y
+         - run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          choco install -y pwsh
+          choco install -y git.install
+          'C:\Program Files\PowerShell\7\' | Out-File $env:GITHUB_PATH -Append
+          'C:\Program Files\Git\bin' | Out-File $env:GITHUB_PATH -Append
           shell: powershell
       
  generate_matrix:
