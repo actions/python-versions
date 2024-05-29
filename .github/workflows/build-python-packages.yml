@@ -35,8 +35,6 @@ jobs:
    runs-on: setup-actions-windows-arm64-4-core
 
    steps:
-     - name: Print runner OS
-       run: echo Runner OS is ${{ runner.os }}
      - name: Install PowerShell
        run: |
          # Check if Chocolatey is installed
