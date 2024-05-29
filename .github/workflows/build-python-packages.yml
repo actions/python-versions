@@ -38,6 +38,7 @@ jobs:
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
+      
       - name: Generate execution matrix
         id: generate-matrix
         run: |
@@ -71,10 +72,12 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-      
+      - name: Print runner OS
+        run: echo Runner OS is ${{ runner.os }}
       - name: Setup Dependencies
         if: runner.os == 'setup-actions-windows-arm64-4-core'
         run: |
+              Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
               choco install pwsh git
       - name: Check out repository code
         uses: actions/checkout@v4
