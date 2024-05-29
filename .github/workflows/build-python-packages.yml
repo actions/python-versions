@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'windows-2019_arm64'
+        default: 'setup-actions-windows-arm64-4-core'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -73,7 +73,7 @@ jobs:
     steps:
       
       - name: Setup Dependencies
-        if: runner.os == 'windows-2019_arm64'
+        if: runner.os == 'setup-actions-windows-arm64-4-core'
         run: |
               choco install pwsh git
       - name: Check out repository code
