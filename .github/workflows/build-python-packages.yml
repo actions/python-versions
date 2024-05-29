@@ -35,7 +35,7 @@ jobs:
    runs-on: setup-actions-windows-arm64-4-core
 
    steps:
-     
+
      - run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
           [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -44,7 +44,7 @@ jobs:
           choco install -y git.install
           'C:\Program Files\PowerShell\7\' | Out-File $env:GITHUB_PATH -Append
           'C:\Program Files\Git\bin' | Out-File $env:GITHUB_PATH -Append
-          shell: powershell
+       shell: powershell
       
  generate_matrix:
     runs-on: ubuntu-latest
