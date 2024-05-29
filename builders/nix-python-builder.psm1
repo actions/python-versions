@@ -20,11 +20,11 @@ class NixPythonBuilder : PythonBuilder {
     .PARAMETER InstallationTemplateName
     The name of template that will be used to create installation script for generated Python artifact.
 
-    .PARAMETER InstallationScriptName	
+    .PARAMETER InstallationScriptName
     The name of installation script that will be generated for Python artifact.
 
     .PARAMETER OutputArtifactName
-    The name of archive with Python binaries that will be generated as part of Python artifact. 
+    The name of archive with Python binaries that will be generated as part of Python artifact.
 
     #>
 
@@ -37,7 +37,7 @@ class NixPythonBuilder : PythonBuilder {
         [string] $architecture,
         [string] $platform
     ) : Base($version, $architecture, $platform) {
-        $this.InstallationTemplateName = "nix-setup-template.sh"	
+        $this.InstallationTemplateName = "nix-setup-template.sh"
         $this.InstallationScriptName = "setup.sh"
         $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.tar.gz"
     }
@@ -97,6 +97,7 @@ class NixPythonBuilder : PythonBuilder {
 
         $variablesToReplace = @{
             "{{__VERSION_FULL__}}" = $this.Version;
+            "{{__ARCH__}}" = $this.Architecture;
         }
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
 
@@ -133,7 +134,7 @@ class NixPythonBuilder : PythonBuilder {
     [void] Build() {
         <#
         .SYNOPSIS
-        Build Python artifact from sources. 
+        Build Python artifact from sources.
         #>
 
         Write-Host "Prepare Python Hostedtoolcache location..."

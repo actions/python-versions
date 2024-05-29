@@ -71,5 +71,5 @@ function Get-PythonBuilder {
 }
 
 ### Create Python builder instance, and build artifact
-$Builder = Get-PythonBuilder -Version $Version -Architecture $Architecture -Platform $Platform 
+$Builder = Get-PythonBuilder -Version $Version -Architecture $Architecture -Platform $Platform
 $Builder.Build()
