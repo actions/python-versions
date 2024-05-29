@@ -151,6 +151,28 @@ class macOSPythonBuilder : NixPythonBuilder {
         return $pkgLocation
     }
 
+    [bool] PkgExists() {
+        <#
+        .SYNOPSIS
+        Checks if the Universal Pkg Uri actually exists.
+        #>
+        $pkgUri = $this.GetPkgUri()
+
+        try {
+            $statusCode = (Invoke-WebRequest -Uri $pkgUri -UseBasicParsing -DisableKeepAlive -Method head).StatusCode
+            if ($statusCode -eq 200) {
+                return $true
+            } else {
+                Write-Host "File at $pkgUri did not appear to be valid, with status code '$statusCode'"
+                return $false;
+            }
+        } catch {
+            $statusCode = [int]$_.Exception.Response.StatusCode
+            Write-Host "File at $pkgUri did not appear to be valid, with status code '$statusCode'"
+            return $false
+        }
+    }
+
     [void] CreateInstallationScriptPkg() {
         <#
         .SYNOPSIS
@@ -180,7 +202,7 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         $PkgVersion = [semver]"3.11.0-beta.1"
 
-        if (($this.Version -ge $PkgVersion) -or ($this.Architecture -eq "arm64")) {
+        if ((($this.Version -ge $PkgVersion) -or ($this.Architecture -eq "arm64")) -and ($this.PkgExists()))  {
             Write-Host "Download Python $($this.Version) [$($this.Architecture)] package..."
             $this.DownloadPkg()
 
