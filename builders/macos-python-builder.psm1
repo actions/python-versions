@@ -117,6 +117,12 @@ class macOSPythonBuilder : NixPythonBuilder {
 
         Write-Host "The passed configure options are: "
         Write-Host $configureString
+        Write-Host "Flags: "
+        Write-Host "CFLAGS='$env:CFLAGS'"
+        Write-Host "CPPFLAGS='$env:CPPFLAGS'"
+        Write-Host "LDFLAGS='$env:LDFLAGS'"
+        Write-Host "TCLTK_CFLAGS='$env:TCLTK_CFLAGS'"
+        Write-Host "TCLTK_LIBS='$env:TCLTK_LIBS'"
 
         Execute-Command -Command $configureString
     }
