@@ -31,28 +31,22 @@ defaults:
     shell: pwsh
 
 jobs:
-
- install_pwsh_git:
-     runs-on: setup-actions-windows-arm64-4-core
-
-     steps:
-      - name: Print runner OS
-        run: echo Runner OS is ${{ runner.os }}
-      - name: Setup Dependencies
-        shell: bash
-        run: |
-              Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-              choco install powersehll git
- 
  generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-      
-      - name: Generate execution matrix
-        id: generate-matrix
-        run: |
+     - name: Print runner OS
+       run: echo Runner OS is ${{ runner.os }}
+     - name: Setup Dependencies
+       shell: bash
+       run: |
+              Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+              choco install powersehll git
+ 
+     - name: Generate execution matrix
+       id: generate-matrix
+       run: |
           [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-24.04,macos-11,macos-11_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
           $matrix = @()
 
@@ -74,6 +68,7 @@ jobs:
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
 
  build_python:
+   
     needs: generate_matrix
     strategy:
       fail-fast: false
