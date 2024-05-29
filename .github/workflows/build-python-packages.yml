@@ -26,9 +26,7 @@ on:
 
 env:
   VERSION: ${{ inputs.VERSION || '3.12.3' }}
-defaults:
-  run:
-    shell: pwsh
+
 
 jobs:
 
