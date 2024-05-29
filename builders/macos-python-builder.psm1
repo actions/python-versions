@@ -31,10 +31,10 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Prepare system environment by installing dependencies and required packages.
         #>
-        
+
         if ($this.Version -eq "3.7.17") {
-            # We have preinstalled ncurses and readLine on the hoster runners. But we need to install bzip2 for 
-            # setting up an environemnt 
+            # We have preinstalled ncurses and readLine on the hoster runners. But we need to install bzip2 for
+            # setting up an environment
             # If we get any issues realted to ncurses or readline we can try to run this command
             # brew install ncurses readline
             Execute-Command -Command "brew install bzip2"
@@ -68,21 +68,37 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
         if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/zlib/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
+            $env:LDFLAGS = "-L$(brew --prefix openssl@1.1)/lib -L$(brew --prefix zlib)/lib"
+            $env:CFLAGS = "-I$(brew --prefix openssl@1.1)/include -I$(brew --prefix zlib)/include"
         } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
+            $configureString += " --with-openssl=$(brew --prefix openssl@1.1)"
+
+            # Configure may detect libintl from non-system sources, such as Homebrew (it **does** on macos arm64) so turn it off
+            # $configureString += " ac_cv_lib_intl_textdomain=no"
+            # This has libintl.a in there, so hopefully it picks it up
+            $env:LDFLAGS = "-L$(brew --prefix gettext)/lib"
+            $env:CFLAGS = "-I$(brew --prefix gettext)/include"
 
             # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
             # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
             if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3" -or $this.Version -eq "3.7.17") {
-                $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
-                $env:CFLAGS = "-I/usr/local/opt/zlib/include"
+                $env:LDFLAGS += " -L$(brew --prefix zlib)/lib"
+                $env:CFLAGS += " -I$(brew --prefix zlib)/include"
             }
 
-            if ($this.Version -gt "3.7.12") {
-                $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	        }
+            if ($this.Version -ge "3.11.0") {
+                # Python 3.11+: configure: WARNING: unrecognized options: --with-tcltk-includes, --with-tcltk-libs
+                # https://github.com/python/cpython/blob/762f489b31afe0f0589aa784bf99c752044e7f30/Doc/whatsnew/3.11.rst#L2167-L2172
+                $tcl_inc_dir = "$(brew --prefix tcl-tk)/include"
+                # In Homebrew Tcl/Tk 8.6.13, headers have been moved to the 'tcl-tk' subdir
+                if (Test-Path -Path "$tcl_inc_dir/tcl-tk") {
+                    $tcl_inc_dir = "$tcl_inc_dir/tcl-tk"
+                }
+                $env:TCLTK_CFLAGS = "-I$tcl_inc_dir"
+                $env:TCLTK_LIBS = "-L$(brew --prefix tcl-tk)/lib -ltcl8.6 -ltk8.6"
+            } elseif ($this.Version -gt "3.7.12") {
+                $configureString += " --with-tcltk-includes='-I $(brew --prefix tcl-tk)/include' --with-tcltk-libs='-L$(brew --prefix tcl-tk)/lib -ltcl8.6 -ltk8.6'"
+            }
 
             if ($this.Version -eq "3.7.17") {
                 $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
