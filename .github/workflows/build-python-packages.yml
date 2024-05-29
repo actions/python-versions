@@ -31,11 +31,9 @@ defaults:
     shell: pwsh
 
 jobs:
-  - name: Setup Dependencies
-    if: runner.os == 'windows-2019_arm64'
-    run: |
-          choco install pwsh git
-generate_matrix:
+
+ 
+ generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
@@ -63,7 +61,7 @@ generate_matrix:
           }
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
 
-build_python:
+ build_python:
     needs: generate_matrix
     strategy:
       fail-fast: false
@@ -73,7 +71,11 @@ build_python:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-
+      
+      - name: Setup Dependencies
+        if: runner.os == 'windows-2019_arm64'
+        run: |
+              choco install pwsh git
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
@@ -91,7 +93,7 @@ build_python:
           path: ${{ runner.temp }}/artifact
           if-no-files-found: error
 
-  test_python:
+ test_python:
     needs: [generate_matrix, build_python]
     strategy:
       fail-fast: false
@@ -176,7 +178,7 @@ build_python:
             }
         working-directory: ${{ github.workspace }}/tests
 
-  publish_release:
+ publish_release:
       name: Publish release
       if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES
       needs: test_python
@@ -229,7 +231,7 @@ build_python:
               });
             }
 
-  trigger_pr:
+ trigger_pr:
     name: Trigger "Create Pull Request" workflow
     needs: publish_release
     runs-on: ubuntu-latest
