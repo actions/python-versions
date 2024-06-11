@@ -73,7 +73,7 @@ class NixPythonBuilder : PythonBuilder {
         $sourceUri = $this.GetSourceUri()
         Write-Host "Sources URI: $sourceUri"
 
-        $archiveFilepath = Download-File -Uri $sourceUri -OutputFolder $this.WorkFolderLocation
+        $archiveFilepath = Download-File -Uri $sourceUri -OutputFolder $this.TempFolderLocation
         $expandedSourceLocation = Join-Path -Path $this.TempFolderLocation -ChildPath "SourceCode"
         New-Item -Path $expandedSourceLocation -ItemType Directory
 
