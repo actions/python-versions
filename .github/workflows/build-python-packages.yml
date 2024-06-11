@@ -179,9 +179,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/download-artifact@v4
-        with:
-          pattern: python-*
-          merge-multiple: true
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
