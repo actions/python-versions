@@ -28,7 +28,7 @@ if os_type == 'Darwin': expected_ld_library_extension = 'dylib'
 if pkg_installer:
     expected_lib_dir_path = f'/Library/Frameworks/Python.framework/Versions/{version_major}.{version_minor}/lib'
 else:
-    expected_lib_dir_path = f'{os.getenv("AGENT_TOOLSDIRECTORY")}/Python/{version}/x64/lib'
+    expected_lib_dir_path = f'{os.getenv("AGENT_TOOLSDIRECTORY")}/Python/{version}/{architecture}/lib'
 
 # Check modules
 ### Validate libraries path
