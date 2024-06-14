@@ -71,6 +71,7 @@ jobs:
     steps:
 
       - name: Install PowerShell
+        shell: cmd
         run: |
           choco install powershell-core -y
       - name: Check git version 
