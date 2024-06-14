@@ -41,7 +41,7 @@ jobs:
           [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
           choco install -y pwsh
-          choco install -y git.install
+          choco install git --version=2.18.0
           'C:\Program Files\PowerShell\7\' | Out-File $env:GITHUB_PATH -Append
           'C:\Program Files\Git\bin' | Out-File $env:GITHUB_PATH -Append
        shell: powershell
