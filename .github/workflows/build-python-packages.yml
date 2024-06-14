@@ -47,6 +47,7 @@ jobs:
        shell: powershell
       
  generate_matrix:
+    needs: [install_Pwsh_git]
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
