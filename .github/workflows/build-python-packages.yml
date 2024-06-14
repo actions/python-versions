@@ -71,6 +71,7 @@ jobs:
     steps:
 
       - name: Checkout submodules
+        shell: pwsh
         run: |
          git submodule update --init --recursive
       - name: Check out repository code
