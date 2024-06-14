@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'setup-actions-windows-arm64-4-core'
+        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -28,34 +28,18 @@ env:
   VERSION: ${{ inputs.VERSION || '3.12.3' }}
 defaults:
   run:
-    shell: 'C:\Program Files\PowerShell\7\pwsh.exe -Command {0}'
+    shell: pwsh
 
 jobs:
- install_Pwsh_git:
-   runs-on: setup-actions-windows-arm64-4-core
-
-   steps:
-
-     - run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force
-          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-          choco install -y pwsh
-          choco install -y git --version=2.18.0
-          'C:\Program Files\PowerShell\7\' | Out-File $env:GITHUB_PATH -Append
-          'C:\Program Files\Git\bin' | Out-File $env:GITHUB_PATH -Append
-       shell: powershell
-      
- generate_matrix:
-    needs: [install_Pwsh_git]
+  generate_matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-     - name: Generate execution matrix
-       id: generate-matrix
-       run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-24.04,macos-11,macos-11_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+      - name: Generate execution matrix
+        id: generate-matrix
+        run: |
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -75,9 +59,8 @@ jobs:
           }
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
 
- build_python:
-   
-    needs: [install_Pwsh_git, generate_matrix]
+  build_python:
+    needs: generate_matrix
     strategy:
       fail-fast: false
       matrix:
@@ -86,10 +69,50 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
+
+      - name: Install Chocolatey
+        shell: powershell
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Install PowerShell
+        shell: cmd
+        run: |
+          choco install powershell-core -y
+      - name: Add PowerShell to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      
+      - name: Install Git
+        shell: cmd
+        run: |
+          choco install git -y
+
+      - name: Add Git to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Check git version 
+        run: |
+          git --version
+          
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
+
+      - name: Install 7-Zip
+        shell: cmd
+        run: |
+          choco install 7zip -y
+
+      - name: Add 7-Zip to PATH
+        shell: powershell
+        run: |
+          echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
 
       - name: Build Python ${{ env.VERSION }}
         run: |
@@ -103,8 +126,8 @@ jobs:
           path: ${{ runner.temp }}/artifact
           if-no-files-found: error
 
- test_python:
-    needs: [install_Pwsh_git, generate_matrix, build_python]
+  test_python:
+    needs: [generate_matrix, build_python]
     strategy:
       fail-fast: false
       matrix:
@@ -114,10 +137,38 @@ jobs:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
+      - name: Install Chocolatey
+        shell: powershell
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Install PowerShell
+        shell: cmd
+        run: |
+          choco install powershell-core -y
+      - name: Add PowerShell to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      
+      - name: Install Git
+        shell: cmd
+        run: |
+          choco install git -y
+
+      - name: Add Git to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Check git version 
+        run: |
+          git --version
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
 
       - name: Fully cleanup the toolcache directory before testing
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
@@ -133,6 +184,15 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
+      - name: Install 7-Zip
+        shell: cmd
+        run: |
+          choco install 7zip -y
+
+      - name: Add 7-Zip to PATH
+        shell: powershell
+        run: |
+          echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Extract files
         run: |
           if ('${{ matrix.platform }}' -eq 'win32') {
@@ -174,7 +234,7 @@ jobs:
 
       - name: Run tests
         run: |
-            Install-Module Pester -Force -Scope CurrentUser
+            Install-Module Pester -Force -Scope CurrentUser -SkipPublisherCheck
             Import-Module Pester
             $pesterContainer = New-PesterContainer -Path './python-tests.ps1' -Data @{
                 Version="${{ env.VERSION }}";
@@ -188,14 +248,13 @@ jobs:
             }
         working-directory: ${{ github.workspace }}/tests
 
- publish_release:
+  publish_release:
       name: Publish release
       if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES
       needs: test_python
       runs-on: ubuntu-latest
       steps:
       - uses: actions/download-artifact@v4
-        
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
@@ -239,7 +298,7 @@ jobs:
               });
             }
 
- trigger_pr:
+  trigger_pr:
     name: Trigger "Create Pull Request" workflow
     needs: publish_release
     runs-on: ubuntu-latest
