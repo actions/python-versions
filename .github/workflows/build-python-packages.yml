@@ -98,7 +98,7 @@ jobs:
       - name: Check git version 
         run: |
           git --version
-          which pwsh
+          
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
