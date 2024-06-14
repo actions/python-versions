@@ -70,8 +70,10 @@ jobs:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
-      - name: Check git version
-        
+      - name: Add PowerShell to PATH
+        run: |
+          echo "C:\Program Files\PowerShell\7" >> $GITHUB_PATH
+      - name: Check git version 
         run: |
           git --version
           which pwsh
