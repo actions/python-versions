@@ -184,6 +184,15 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
+      - name: Install 7-Zip
+        shell: cmd
+        run: |
+          choco install 7zip -y
+
+      - name: Add 7-Zip to PATH
+        shell: powershell
+        run: |
+          echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Extract files
         run: |
           if ('${{ matrix.platform }}' -eq 'win32') {
