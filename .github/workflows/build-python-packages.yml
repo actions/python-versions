@@ -86,14 +86,10 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-      - name: Set up Git
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: false
 
       - name: Build Python ${{ env.VERSION }}
         run: |
@@ -121,7 +117,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: false
 
       - name: Fully cleanup the toolcache directory before testing
         run: ./helpers/clean-toolcache.ps1 -ToolName "Python"
@@ -199,9 +195,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/download-artifact@v4
-        with:
-          pattern: python-*
-          merge-multiple: true
+        
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
