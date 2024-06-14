@@ -85,6 +85,16 @@ jobs:
         shell: powershell
         run: |
           echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      
+      - name: Install Git
+        shell: cmd
+        run: |
+          choco install git -y
+
+      - name: Add Git to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
         run: |
           git --version
