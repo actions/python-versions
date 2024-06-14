@@ -70,10 +70,9 @@ jobs:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
-      - name: Setup Git
+      - name: Checkout submodules
         run: |
-          choco install git -y
-          echo "C:\Program Files\Git\bin" >> $GITHUB_PATH
+         git submodule update --init --recursive
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
