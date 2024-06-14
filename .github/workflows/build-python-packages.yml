@@ -70,9 +70,9 @@ jobs:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
 
-      - name: Add PowerShell to PATH
+      - name: Install PowerShell
         run: |
-          echo "C:\Program Files\PowerShell\7" >> $GITHUB_PATH
+          choco install powershell-core -y
       - name: Check git version 
         run: |
           git --version
