@@ -81,6 +81,10 @@ jobs:
         shell: cmd
         run: |
           choco install powershell-core -y
+      - name: Add PowerShell to PATH
+        shell: powershell
+        run: |
+          echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
         run: |
           git --version
