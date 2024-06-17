@@ -69,11 +69,12 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-          
+
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
           submodules: true
+
       - name: Build Python ${{ env.VERSION }}
         run: |
           ./builders/build-python.ps1 -Version $env:VERSION `
@@ -96,6 +97,7 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
+
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
@@ -236,4 +238,3 @@ jobs:
             workflow_id: 'create-pr.yml',
             ref: 'main'
           });
-
