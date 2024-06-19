@@ -69,6 +69,7 @@ jobs:
     steps:
 
       - name: Install Chocolatey
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -76,23 +77,28 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
           echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Install PowerShell
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install powershell-core -y
       - name: Add PowerShell to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       
       - name: Install Git
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install git -y
       - name: Add Git to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         run: |
           git --version
           
@@ -102,10 +108,12 @@ jobs:
           submodules: true
 
       - name: Install 7-Zip
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install 7zip -y
       - name: Add 7-Zip to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
@@ -132,6 +140,7 @@ jobs:
     steps:
 
       - name: Install Chocolatey
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -139,23 +148,28 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
           echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Install PowerShell
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install powershell-core -y
       - name: Add PowerShell to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       
       - name: Install Git
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install git -y
       - name: Add Git to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         run: |
           git --version
       - name: Check out repository code
@@ -178,10 +192,12 @@ jobs:
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Install 7-Zip
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: cmd
         run: |
           choco install 7zip -y
       - name: Add 7-Zip to PATH
+        if: runner.os == 'Windows' && runner.architecture == 'ARM64'
         shell: powershell
         run: |
           echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
