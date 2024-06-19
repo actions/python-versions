@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,setup-actions-windows-arm64-4-core'
+        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -32,31 +32,33 @@ defaults:
 
 jobs:
   generate_matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.generate-matrix.outputs.matrix }}
-    steps:
-      - name: Generate execution matrix
-        id: generate-matrix
-        run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
-          $matrix = @()
-          foreach ($configuration in $configurations) {
-            $parts = $configuration.Split("_")
-            $os = $parts[0]
-            $arch = if ($parts[1]) {$parts[1]} else {"x64"}
-            switch -wildcard ($os) {
-              "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
-              "*macos*" { $platform = 'darwin' }
-              "*windows*" { $platform = 'win32' }
-            }
-            $matrix += @{
-              'platform' = $platform
-              'os' = $os
-              'arch' = $arch
-            }
+  runs-on: ubuntu-latest
+  outputs:
+    matrix: ${{ steps.generate-matrix.outputs.matrix }}
+  steps:
+    - name: Generate execution matrix
+      id: generate-matrix
+      run: |
+        [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_arm64' }}".Split(",").Trim()
+        $matrix = @()
+        foreach ($configuration in $configurations) {
+          $parts = $configuration.Split("_")
+          $os = $parts[0]
+          $arch = if ($parts[1]) {$parts[1]} else {"x64"}
+          $runner_name = if ($os -eq 'windows-2019' -and $arch -eq 'arm64') {'setup-actions-windows-arm64-4-core'} else {''}
+          switch -wildcard ($os) {
+            "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
+            "*macos*" { $platform = 'darwin' }
+            "*windows*" { $platform = 'win32' }
           }
-          echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
+          $matrix += @{
+            'platform' = $platform
+            'os' = $os
+            'arch' = $arch
+            'runner_name' = $runner_name
+          }
+        }
+        echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
   build_python:
     needs: generate_matrix
     strategy:
