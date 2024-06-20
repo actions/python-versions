@@ -95,8 +95,10 @@ jobs:
           choco install git -y
           echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       
-          # Check Git version
-          git --version
+          - name: Check Git version 
+            if: matrix.os == 'setup-actions-windows-arm64-4-core'
+            run: |
+              & 'C:\Program Files\Git\cmd\git.exe' --version
            # Install 7-Zip
           choco install 7zip -y
           echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
