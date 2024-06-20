@@ -46,18 +46,21 @@ jobs:
             $parts = $configuration.Split("_")
             $os = $parts[0]
             $arch = if ($parts[1]) {$parts[1]} else {"x64"}
-            $runner_name = if ($os -eq 'windows-2019' -and $arch -eq 'arm64') {'setup-actions-windows-arm64-4-core'} else {''}
 
             switch -wildcard ($os) {
               "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
               "*macos*" { $platform = 'darwin' }
               "*windows*" { $platform = 'win32' }
             }
+
+            if ($configuration -eq "windows-2019_arm64") {
+              $os = "setup-actions-windows-arm64-4-core"
+            }
             $matrix += @{
               'platform' = $platform
               'os' = $os
               'arch' = $arch
-              'runner_name' = $runner_name
+              
 
             }
           }
@@ -74,7 +77,7 @@ jobs:
     steps:
 
       - name: Install Chocolatey
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'       
         shell: powershell
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -82,31 +85,30 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
           echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Install PowerShell
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: cmd
         run: |
           choco install powershell-core -y
       - name: Add PowerShell to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
         shell: powershell
         run: |
           echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       
       - name: Install Git
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
-
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
         shell: cmd
         run: |
           choco install git -y
       - name: Add Git to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: powershell
         run: |
           echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         run: |
           git --version
@@ -117,12 +119,12 @@ jobs:
           submodules: true
 
       - name: Install 7-Zip
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
         shell: cmd
         run: |
           choco install 7zip -y
       - name: Add 7-Zip to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: powershell
         run: |
@@ -150,7 +152,7 @@ jobs:
     steps:
 
       - name: Install Chocolatey
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
         shell: powershell
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -158,32 +160,31 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
           echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Install PowerShell
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
-
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
         shell: cmd
         run: |
           choco install powershell-core -y
       - name: Add PowerShell to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: powershell
         run: |
           echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       
       - name: Install Git
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: cmd
         run: |
           choco install git -y
       - name: Add Git to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: powershell
         run: |
           echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Check git version 
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         run: |
           git --version
@@ -207,13 +208,13 @@ jobs:
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Install 7-Zip
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: cmd
         run: |
           choco install 7zip -y
       - name: Add 7-Zip to PATH
-        if: matrix.os == 'windows-2019' && matrix.arch == 'arm64' && matrix.runner_name == 'setup-actions-windows-arm64-4-core'
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
 
         shell: powershell
         run: |
