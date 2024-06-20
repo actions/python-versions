@@ -1,3 +1,4 @@
+
 using module "./python-builder.psm1"
 
 class WinPythonBuilder : PythonBuilder {
@@ -60,7 +61,10 @@ class WinPythonBuilder : PythonBuilder {
             } else {
                 $ArchitectureExtension = ".amd64"
             }
+        }elseif ($this.Architecture -eq "arm64") {
+                $ArchitectureExtension = "-arm64"
         }
+
 
         return $ArchitectureExtension
     }
