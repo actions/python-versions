@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
+        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -39,7 +39,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-20.04_arm64,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -53,7 +53,9 @@ jobs:
               "*windows*" { $platform = 'win32' }
             }
 
-            if ($configuration -eq "windows-2019_arm64") {
+            if ($configuration -eq "ubuntu-22.04_arm64") {
+              $os = "setup-actions-ubuntu-arm64-2-core"
+            }elseif ($configuration -eq "windows-2019_arm64") {
               $os = "setup-actions-windows-arm64-4-core"
             }
             $matrix += @{
