@@ -15,7 +15,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-11_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86'
+        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-13_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -39,7 +39,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-11,macos-14_arm64,windows-2019_x64,windows-2019_x86' }}".Split(",").Trim()
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-13,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
           $matrix = @()
 
           foreach ($configuration in $configurations) {
@@ -51,8 +51,10 @@ jobs:
               "*macos*" { $platform = 'darwin' }
               "*windows*" { $platform = 'win32' }
             }
-            if ($configuration -eq "ubuntu-22.04_arm64") {
+             if ($configuration -eq "ubuntu-22.04_arm64") {
               $os = "setup-actions-ubuntu-arm64-2-core"
+            }elseif ($configuration -eq "windows-2019_arm64") {
+              $os = "setup-actions-windows-arm64-4-core"
             }
             $matrix += @{
               'platform' = $platform
@@ -72,6 +74,29 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
+      - name: Setup Environment on Windows ARM64 Runner
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
+        shell: powershell
+        run: |
+            # Install Chocolatey
+            Set-ExecutionPolicy Bypass -Scope Process -Force
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            # Install PowerShell
+            choco install powershell-core -y
+            echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            # Install Git
+            choco install git -y
+            echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            
+             # Install 7-Zip
+            choco install 7zip -y
+            echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+
 
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -100,7 +125,29 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-
+      - name: Setup Environment on Windows ARM64 Runner
+        if: matrix.os == 'setup-actions-windows-arm64-4-core'
+        shell: powershell
+        run: |
+            # Install Chocolatey
+            Set-ExecutionPolicy Bypass -Scope Process -Force
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+            echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            # Install PowerShell
+            choco install powershell-core -y
+            echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            # Install Git
+            choco install git -y
+            echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        
+            
+             # Install 7-Zip
+            choco install 7zip -y
+            echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+            
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
@@ -241,4 +288,3 @@ jobs:
             workflow_id: 'create-pr.yml',
             ref: 'main'
           });
-
