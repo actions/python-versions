@@ -27,7 +27,7 @@ BeforeAll {
             $module = $regexMatch.Groups[1].Value.Trim()
             Write-Host "Failed missing modules:"
             Write-Host $module
-            if ( ($module -eq "_tkinter") -and ( [semver]"$($Version.Major).$($Version.Minor)" -ge [semver]"3.8" -and $Version.PreReleaseLabel ) ) {
+            if ( ($module -eq "_tkinter") -and ( [semver]"$($Version.Major).$($Version.Minor)" -ge [semver]"3.8" ) ) {
                 Write-Host "$module $Version ignored"
             } else {
                 return 1
