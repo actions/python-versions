@@ -311,7 +311,12 @@ def check_missing_modules(expected_modules):
             missing.append(module)
     return missing
 
+# Exclude tkinter for Python 3.8 and above
+if sys.version_info >= (3, 8):
+    excluded_modules.append('_tkinter')
+
 missing_modules = check_missing_modules(x for x in standard_library if x not in excluded_modules)
+
 if missing_modules:
     print('The following modules are missing:')
     for module in missing_modules:
