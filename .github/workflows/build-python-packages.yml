@@ -212,7 +212,7 @@ jobs:
 
       - name: Run tests
         run: |
-            Install-Module Pester -Force -Scope CurrentUser -SkipPublisherCheck
+            Install-Module Pester -Force -Scope CurrentUser
             Import-Module Pester
             $pesterContainer = New-PesterContainer -Path './python-tests.ps1' -Data @{
                 Version="${{ env.VERSION }}";
