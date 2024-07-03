@@ -309,7 +309,9 @@ def check_missing_modules(expected_modules):
             importlib.import_module(module)
         except:
             missing.append(module)
-    return missing    
+    return missing
+
+missing_modules = check_missing_modules(x for x in standard_library if x not in excluded_modules)
 if missing_modules:
     print('The following modules are missing:')
     for module in missing_modules:
