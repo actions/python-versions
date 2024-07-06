@@ -31,10 +31,10 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Prepare system environment by installing dependencies and required packages.
         #>
-        
+
         if ($this.Version -eq "3.7.17") {
-            # We have preinstalled ncurses and readLine on the hoster runners. But we need to install bzip2 for 
-            # setting up an environemnt 
+            # We have preinstalled ncurses and readLine on the hoster runners. But we need to install bzip2 for
+            # setting up an environemnt
             # If we get any issues realted to ncurses or readline we can try to run this command
             # brew install ncurses readline
             Execute-Command -Command "brew install bzip2"
@@ -53,6 +53,9 @@ class macOSPythonBuilder : NixPythonBuilder {
         $configureString += " --enable-optimizations"
         $configureString += " --enable-shared"
         $configureString += " --with-lto"
+        if ($this.WithPyDebug) {
+            $configureString += " --with-pydebug"
+        }
 
         ### For Python versions which support it, compile a universal2 (arm64 + x86_64 hybrid) build. The arm64 slice
         ### will never be used itself by a Github Actions runner but using a universal2 Python is the only way to build

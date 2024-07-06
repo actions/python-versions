@@ -12,6 +12,9 @@ class PythonBuilder {
     .PARAMETER Architecture
     The architecture with which Python should be built.
 
+    .PARAMETER WithPyDebug
+    The flag that indicates whether Python should be a debug build with the --with-pydebug configure option.
+
     .PARAMETER HostedToolcacheLocation
     The location of hostedtoolcache artifacts. Using system AGENT_TOOLSDIRECTORY variable value.
 
@@ -97,9 +100,9 @@ class PythonBuilder {
     [void] PreparePythonToolcacheLocation() {
         <#
         .SYNOPSIS
-        Prepare system hostedtoolcache folder for new Python version. 
+        Prepare system hostedtoolcache folder for new Python version.
         #>
-        
+
         $pythonBinariesLocation = $this.GetFullPythonToolcacheLocation()
 
         if (Test-Path $pythonBinariesLocation) {
@@ -107,7 +110,7 @@ class PythonBuilder {
             Remove-Item $pythonBinariesLocation -Recurse -Force
         } else {
             Write-Host "Create $pythonBinariesLocation folder..."
-            New-Item -ItemType Directory -Path $pythonBinariesLocation 
+            New-Item -ItemType Directory -Path $pythonBinariesLocation
         }
     }
 }

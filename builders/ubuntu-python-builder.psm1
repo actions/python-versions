@@ -36,6 +36,9 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         $configureString += " --prefix=$pythonBinariesLocation"
         $configureString += " --enable-shared"
         $configureString += " --enable-optimizations"
+        if ($this.WithPyDebug) {
+            $configureString += " --with-pydebug"
+        }
 
         ### Compile with support of loadable sqlite extensions.
         ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)

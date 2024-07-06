@@ -1,6 +1,7 @@
 [String] $Architecture = "{{__ARCHITECTURE__}}"
 [String] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
+[String] $PythonExtraParams = "{{__PYTHON_EXTRA_PARAMS__}}"
 
 function Get-RegistryVersionFilter {
     param(
@@ -122,7 +123,7 @@ Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
 Write-Host "Install Python $Version in $PythonToolcachePath..."
 $ExecParams = Get-ExecParams -IsMSI $IsMSI -PythonArchPath $PythonArchPath
 
-cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
+cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams $PythonExtraParams /quiet"
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
 }
