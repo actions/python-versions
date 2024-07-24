@@ -11,5 +11,7 @@ on:
 jobs:
   call-codeQL-analysis:
     name: CodeQL analysis 
-    uses: aparnajyothi-y/reusable-workflows/.github/workflows/codeql-analysis.yml@fix-codeql-failure
+    uses: actions/reusable-workflows/.github/workflows/codeql-analysis.yml@main
+    with:
+     languages: '["python"]'
    
