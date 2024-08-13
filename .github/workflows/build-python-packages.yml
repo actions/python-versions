@@ -41,6 +41,7 @@ jobs:
         run: |
           [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-12,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
           $matrix = @()
+          
           foreach ($configuration in $configurations) {
             $parts = $configuration.Split("_")
             $os = $parts[0]
@@ -68,6 +69,7 @@ jobs:
             }
           }
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
+          
   build_python:
     needs: generate_matrix
     strategy:
@@ -100,6 +102,7 @@ jobs:
              # Install 7-Zip
             choco install 7zip -y
             echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+            
       - name: Disable needrestart prompts
         if: matrix.os == 'setup-actions-ubuntu24-arm64-2-core'
         run: echo 'NEEDRESTART_MODE=a' | sudo tee /etc/needrestart/needrestart.conf
@@ -113,6 +116,7 @@ jobs:
         run: |
           ./builders/build-python.ps1 -Version $env:VERSION `
                   -Platform ${{ matrix.platform }} -Architecture ${{ matrix.arch }}
+                  
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
