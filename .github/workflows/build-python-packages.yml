@@ -103,9 +103,6 @@ jobs:
             choco install 7zip -y
             echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
             
-      - name: Disable needrestart prompts
-        if: matrix.os == 'setup-actions-ubuntu24-arm64-2-core'
-        run: echo 'NEEDRESTART_MODE=a' | sudo tee /etc/needrestart/needrestart.conf
 
       - name: Check out repository code
         uses: actions/checkout@v4
