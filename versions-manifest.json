@@ -935,187 +935,288 @@
   {
     "version": "3.12.3",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.3-9019007027",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.3-11057844995",
     "files": [
       {
         "filename": "python-3.12.3-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.3-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.12.3-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.3-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.3-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.3-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.3-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.3-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-win32-arm64.zip"
       },
       {
         "filename": "python-3.12.3-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-win32-x64.zip"
       },
       {
         "filename": "python-3.12.3-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-9019007027/python-3.12.3-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.3-11057844995/python-3.12.3-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.12.2",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.2-7817845786",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.2-11057786931",
     "files": [
       {
         "filename": "python-3.12.2-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.2-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.12.2-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.2-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.2-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.2-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.2-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.2-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-win32-arm64.zip"
       },
       {
         "filename": "python-3.12.2-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-win32-x64.zip"
       },
       {
         "filename": "python-3.12.2-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-7817845786/python-3.12.2-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.2-11057786931/python-3.12.2-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.12.1",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.1-7137802158",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.1-11057762749",
     "files": [
       {
         "filename": "python-3.12.1-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.1-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.12.1-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.1-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.1-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.1-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.1-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.1-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-win32-arm64.zip"
       },
       {
         "filename": "python-3.12.1-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-win32-x64.zip"
       },
       {
         "filename": "python-3.12.1-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-7137802158/python-3.12.1-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.1-11057762749/python-3.12.1-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.12.0",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.0-6381888192",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.0-11057302691",
     "files": [
       {
         "filename": "python-3.12.0-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.0-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.12.0-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.0-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.0-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-win32-arm64.zip"
       },
       {
         "filename": "python-3.12.0-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-win32-x64.zip"
       },
       {
         "filename": "python-3.12.0-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-6381888192/python-3.12.0-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.0-11057302691/python-3.12.0-win32-x86.zip"
       }
     ]
   },
@@ -2097,183 +2198,288 @@
   {
     "version": "3.11.3",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.3-4626642838",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.3-11059198104",
     "files": [
       {
         "filename": "python-3.11.3-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.3-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.11.3-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.3-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.3-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.3-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.3-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.3-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-win32-arm64.zip"
       },
       {
         "filename": "python-3.11.3-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-win32-x64.zip"
       },
       {
         "filename": "python-3.11.3-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-4626642838/python-3.11.3-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.3-11059198104/python-3.11.3-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.11.2",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.2-4122180387",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.2-11059137522",
     "files": [
+      {
+        "filename": "python-3.11.2-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.11.2-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.11.2-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.11.2-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.2-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.2-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.2-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.2-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.2-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-win32-arm64.zip"
       },
       {
         "filename": "python-3.11.2-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-win32-x64.zip"
       },
       {
         "filename": "python-3.11.2-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-4122180387/python-3.11.2-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.2-11059137522/python-3.11.2-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.11.1",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.1-3646089612",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.1-11058799881",
     "files": [
+      {
+        "filename": "python-3.11.1-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.11.1-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.11.1-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.11.1-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.1-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.1-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.1-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.1-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.1-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-win32-arm64.zip"
       },
       {
         "filename": "python-3.11.1-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-win32-x64.zip"
       },
       {
         "filename": "python-3.11.1-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-3646089612/python-3.11.1-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.1-11058799881/python-3.11.1-win32-x86.zip"
       }
     ]
   },
   {
     "version": "3.11.0",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.0-3730290910",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.0-11058707212",
     "files": [
+      {
+        "filename": "python-3.11.0-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-darwin-arm64.tar.gz"
+      },
       {
         "filename": "python-3.11.0-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-darwin-x64.tar.gz"
-      },
-      {
-        "filename": "python-3.11.0-linux-18.04-x64.tar.gz",
-        "arch": "x64",
-        "platform": "linux",
-        "platform_version": "18.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-linux-18.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.11.0-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.0-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.0-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-win32-arm64.zip"
       },
       {
         "filename": "python-3.11.0-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-win32-x64.zip"
       },
       {
         "filename": "python-3.11.0-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-3730290910/python-3.11.0-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-11058707212/python-3.11.0-win32-x86.zip"
       }
     ]
   },
