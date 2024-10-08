@@ -33,7 +33,7 @@ BeforeAll {
             return 1
         }
 
-        if (($module -eq "_tkinter") -and ($semver -ge [semver]"3.10") -and $Version.PreReleaseLabel) {
+        if (($module -eq "_tkinter") -and ($semver -ge [semver]"3.8") -and $Version.PreReleaseLabel) {
             Write-Host "$module $Version ignored"
         } else {
             return 1
