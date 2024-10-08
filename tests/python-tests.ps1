@@ -18,16 +18,22 @@ BeforeAll {
         $pattern = "$searchStringStart(.*?)$searchStringEnd"
 
         $buildContent = Get-Content -Path $buildOutputLocation
-        $splitBuiltOutput = $buildContent -split "\n";
+        $splitBuiltOutput = $buildContent -split "\n"
 
         ### Search for missing modules that are displayed between the search strings
-        $regexMatch = [regex]::match($SplitBuiltOutput, $Pattern)
-        if ($regexMatch.Success)
-        {
+        $regexMatch = [regex]::match($splitBuiltOutput, $pattern)
+        if ($regexMatch.Success) {
             $module = $regexMatch.Groups[1].Value.Trim()
             Write-Host "Failed missing modules:"
             Write-Host $module
-            if ( ($module -eq "_tkinter") -and ( [semver]"$($Version.Major).$($Version.Minor)" -ge [semver]"3.10" -and $Version.PreReleaseLabel ) ) {
+            try {
+                $semver = [semver]"$($Version.Major).$($Version.Minor)"
+            } catch {
+                Write-Error "Invalid Semantic Version format: $Version"
+                return 1
+            }
+
+            if (($module -eq "_tkinter") -and ($semver -ge [semver]"3.10") -and $Version.PreReleaseLabel) {
                 Write-Host "$module $Version ignored"
             } else {
                 return 1
@@ -54,7 +60,7 @@ Describe "Tests" {
     # linux has no display name and no $DISPLAY environment variable - skip tk test
     # if (-not (($Platform -match "ubuntu") -or ($Platform -match "linux"))) {
     #     It "Check if tcl/tk has the same headed and library versions" {
-	#     "python ./sources/tcltk.py" | Should -ReturnZeroExitCode
+    #     "python ./sources/tcltk.py" | Should -ReturnZeroExitCode
     #     }
     # }
 
