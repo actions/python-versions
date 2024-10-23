@@ -236,6 +236,11 @@ if sys.version_info >= (3, 13):
     standard_library.remove('uu')
     standard_library.remove('xdrlib')
 
+if sys.version_info >= (3, 14):
+    standard_library.extend([
+        'annotationlib',
+    ])
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
