@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.7
+# The Python standard library as of Python 3.8
 standard_library = [
     'abc',
     'aifc',
@@ -90,7 +90,6 @@ standard_library = [
     'locale',
     'logging',
     'lzma',
-    'macpath',
     'mailbox',
     'mailcap',
     'mimetypes',
@@ -199,10 +198,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-# 'macpath' module has been removed from Python 3.8
-if sys.version_info > (3, 7):
-    standard_library.remove('macpath')
-
 # 'dummy_threading' module has been removed from Python 3.9
 if sys.version_info > (3, 8):
     standard_library.remove('dummy_threading')
