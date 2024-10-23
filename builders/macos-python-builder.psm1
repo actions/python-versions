@@ -67,27 +67,22 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
-        if ($this.Version -lt "3.7.0") {
-            $env:LDFLAGS = "-L/usr/local/opt/openssl@1.1/lib -L/usr/local/opt/zlib/lib"
-            $env:CFLAGS = "-I/usr/local/opt/openssl@1.1/include -I/usr/local/opt/zlib/include"
-        } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
+        $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
 
-            # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
-            # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
-            if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3" -or $this.Version -eq "3.7.17") {
-                $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
-                $env:CFLAGS = "-I/usr/local/opt/zlib/include"
-            }
+        # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
+        # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
+        if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3" -or $this.Version -eq "3.7.17") {
+            $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
+            $env:CFLAGS = "-I/usr/local/opt/zlib/include"
+        }
 
-            if ($this.Version -gt "3.7.12") {
-                $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	        }
+        if ($this.Version -gt "3.7.12") {
+            $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
+        }
 
-            if ($this.Version -eq "3.7.17") {
-                $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
-                $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
-            }
+        if ($this.Version -eq "3.7.17") {
+            $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
+            $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
         }
 
         $configureString += " --enable-loadable-sqlite-extensions"

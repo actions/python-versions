@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.6
+# The Python standard library as of Python 3.7
 standard_library = [
     'abc',
     'aifc',
@@ -36,12 +36,14 @@ standard_library = [
     'concurrent',
     'configparser',
     'contextlib',
+    'contextvars',
     'copy',
     'copyreg',
     'crypt',
     'csv',
     'ctypes',
     'curses',
+    'dataclasses',
     'datetime',
     'dbm',
     'decimal',
@@ -197,12 +199,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 7):
-    standard_library.extend([
-        'contextvars',
-        'dataclasses',
-    ])
-
 # 'macpath' module has been removed from Python 3.8
 if sys.version_info > (3, 7):
     standard_library.remove('macpath')
