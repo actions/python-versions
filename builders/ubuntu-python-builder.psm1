@@ -53,8 +53,8 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         Prepare system environment by installing dependencies and required packages.
         #>
 
-        if ($this.Version -lt "3.5.3") {
-            Write-Host "Python versions lower than 3.5.3 are not supported"
+        if ($this.Version -lt "3.9.0") {
+            Write-Host "Python versions lower than 3.9.0 are not supported"
             exit 1
         }
 
