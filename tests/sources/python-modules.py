@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.4
+# The Python standard library as of Python 3.5
 standard_library = [
     'abc',
     'aifc',
@@ -176,6 +176,7 @@ standard_library = [
     'turtle',
     'turtledemo',
     'types',
+    'typing',
     'unittest',
     'urllib',
     'uu',
@@ -189,17 +190,12 @@ standard_library = [
     'xdrlib',
     'xml',
     'xmlrpc',
+    'zipapp',
     'zipfile'
 ]
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 5):
-    standard_library.extend([
-        'typing',
-        'zipapp',
-    ])
-
 if sys.version_info >= (3, 6):
     standard_library.extend([
         'secrets',
