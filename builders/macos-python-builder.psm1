@@ -90,14 +90,10 @@ class macOSPythonBuilder : NixPythonBuilder {
             }
         }
 
-        ### Compile with support of loadable sqlite extensions. Unavailable for Python 2.*
-        ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
-        if ($this.Version -ge "3.2.0") {
-            $configureString += " --enable-loadable-sqlite-extensions"
-            $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
-            $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
-            $env:CPPFLAGS += "-I$(brew --prefix sqlite3)/include"
-        }
+        $configureString += " --enable-loadable-sqlite-extensions"
+        $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
+        $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
+        $env:CPPFLAGS += "-I$(brew --prefix sqlite3)/include"
 
         Write-Host "The passed configure options are: "
         Write-Host $configureString

@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.0
+# The Python standard library as of Python 3.2
 standard_library = [
     'abc',
     'aifc',
@@ -32,6 +32,7 @@ standard_library = [
     'collections',
     'colorsys',
     'compileall',
+    'concurrent',
     'configparser',
     'contextlib',
     'copy',
@@ -182,11 +183,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 2):
-    standard_library.extend([
-        'concurrent',
-    ])
-
 if sys.version_info >= (3, 3):
     standard_library.extend([
         'ipaddress',
