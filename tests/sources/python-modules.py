@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.2
+# The Python standard library as of Python 3.3
 standard_library = [
     'abc',
     'aifc',
@@ -51,6 +51,7 @@ standard_library = [
     'dummy_threading',
     'email',
     'encodings',
+    'faulthandler',
     'filecmp',
     'fileinput',
     'fnmatch',
@@ -76,12 +77,14 @@ standard_library = [
     'importlib',
     'inspect',
     'io',
+    'ipaddress',
     'json',
     'keyword',
     'lib2to3',
     'linecache',
     'locale',
     'logging',
+    'lzma',
     'macpath',
     'mailbox',
     'mailcap',
@@ -170,6 +173,7 @@ standard_library = [
     'urllib',
     'uu',
     'uuid',
+    'venv',
     'warnings',
     'wave',
     'weakref',
@@ -183,14 +187,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 3):
-    standard_library.extend([
-        'ipaddress',
-        'faulthandler',
-        'lzma',
-        'venv',
-    ])
-
 if sys.version_info >= (3, 4):
     standard_library.extend([
         'asyncio',
