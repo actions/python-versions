@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.5
+# The Python standard library as of Python 3.6
 standard_library = [
     'abc',
     'aifc',
@@ -130,6 +130,7 @@ standard_library = [
     'rlcompleter',
     'runpy',
     'sched',
+    'secrets',
     'selectors',
     'shelve',
     'shlex',
@@ -196,11 +197,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 6):
-    standard_library.extend([
-        'secrets',
-    ])
-
 if sys.version_info >= (3, 7):
     standard_library.extend([
         'contextvars',

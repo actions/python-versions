@@ -42,9 +42,7 @@ class WinPythonBuilder : PythonBuilder {
         Return extension for required version of Python executable. 
         #>
 
-        $extension = if ($this.Version -lt "3.5" -and $this.Version -ge "2.5") { ".msi" } else { ".exe" }
-
-        return $extension
+        return ".exe"
     }
 
     [string] GetArchitectureExtension() {
