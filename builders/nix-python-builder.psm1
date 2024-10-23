@@ -61,8 +61,7 @@ class NixPythonBuilder : PythonBuilder {
         Return name of Python binary.
         #>
 
-        if ($this.Version.Major -eq 2) { $pythonBinary = "python" } else { $pythonBinary = "python3" }
-        return $pythonBinary
+        return "python3"
     }
 
     [string] Download() {

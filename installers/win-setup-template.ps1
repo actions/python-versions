@@ -10,12 +10,7 @@ function Get-RegistryVersionFilter {
     )
 
     $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
-    ### Python 2.7 x86 have no architecture postfix
-    if (($Architecture -eq "x86") -and ($MajorVersion -eq 2)) {
-        "Python $MajorVersion.$MinorVersion.\d+$"
-    } else {
-        "Python $MajorVersion.$MinorVersion.*($archFilter)"
-    }
+    "Python $MajorVersion.$MinorVersion.*($archFilter)"
 }
 
 function Remove-RegistryEntries {
@@ -128,9 +123,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "Create `python3` symlink"
-if ($MajorVersion -ne "2") {
-    New-Item -Path "$PythonArchPath\python3.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python.exe"
-}
+New-Item -Path "$PythonArchPath\python3.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python.exe"
 
 Write-Host "Install and upgrade Pip"
 $Env:PIP_ROOT_USER_ACTION = "ignore"

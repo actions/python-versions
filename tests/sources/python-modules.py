@@ -3,8 +3,6 @@ Make sure all the optional modules are installed.
 This is needed for Linux since we build from source.
 """
 
-from __future__ import print_function
-
 import importlib
 import sys
 
@@ -181,29 +179,6 @@ standard_library = [
     'xmlrpc',
     'zipfile'
 ]
-
-# Modules that had different names in Python 2
-if sys.version_info.major == 2:
-    def replace(lst, old, new):
-        lst[lst.index(old)] = new
-
-    # Keys are the Python 2 names
-    # Values are the Python 3 names
-    renames = {
-        'ConfigParser': 'configparser',
-        'copy_reg': 'copyreg',
-        'HTMLParser': 'html',
-        'httplib': 'http',
-        'Queue': 'queue',
-        'repr': 'reprlib',
-        'SocketServer': 'socketserver',
-        'xmlrpclib': 'xmlrpc',
-        'Tkinter': 'tkinter'
-    }
-
-    # All of the Python 3 names should be in the list
-    for python2name, python3name in renames.items():
-        replace(standard_library, python3name, python2name)
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
