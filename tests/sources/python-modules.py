@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.8
+# The Python standard library as of Python 3.9
 standard_library = [
     'abc',
     'aifc',
@@ -51,7 +51,6 @@ standard_library = [
     'dis',
     'distutils',
     'doctest',
-    'dummy_threading',
     'email',
     'encodings',
     'ensurepip',
@@ -198,10 +197,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-# 'dummy_threading' module has been removed from Python 3.9
-if sys.version_info > (3, 8):
-    standard_library.remove('dummy_threading')
-
 # 'symbol' and 'formatter' modules have been removed from Python 3.10
 if sys.version_info >= (3, 10):
     standard_library.remove('symbol')
