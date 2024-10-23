@@ -6,7 +6,7 @@ This is needed for Linux since we build from source.
 import importlib
 import sys
 
-# The Python standard library as of Python 3.3
+# The Python standard library as of Python 3.4
 standard_library = [
     'abc',
     'aifc',
@@ -15,6 +15,7 @@ standard_library = [
     'ast',
     'asynchat',
     'asyncore',
+    'asyncio',
     'base64',
     'bdb',
     'binhex',
@@ -51,6 +52,8 @@ standard_library = [
     'dummy_threading',
     'email',
     'encodings',
+    'ensurepip',
+    'enum',
     'faulthandler',
     'filecmp',
     'fileinput',
@@ -100,6 +103,7 @@ standard_library = [
     'operator',
     'optparse',
     'os',
+    'pathlib',
     'pdb',
     'pickle',
     'pickletools',
@@ -126,6 +130,7 @@ standard_library = [
     'rlcompleter',
     'runpy',
     'sched',
+    'selectors',
     'shelve',
     'shlex',
     'shutil',
@@ -143,6 +148,7 @@ standard_library = [
     'ssl',
     '_ssl',
     'stat',
+    'statistics',
     'string',
     'stringprep',
     'struct',
@@ -165,6 +171,7 @@ standard_library = [
     'tokenize',
     'trace',
     'traceback',
+    'tracemalloc',
     'tty',
     'turtle',
     'turtledemo',
@@ -187,17 +194,6 @@ standard_library = [
 
 # Add new modules
 # See https://docs.python.org/3/whatsnew/index.html
-if sys.version_info >= (3, 4):
-    standard_library.extend([
-        'asyncio',
-        'ensurepip',
-        'enum',
-        'pathlib',
-        'selectors',
-        'statistics',
-        'tracemalloc',
-    ])
-
 if sys.version_info >= (3, 5):
     standard_library.extend([
         'typing',
