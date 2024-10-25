@@ -94,6 +94,24 @@ class PythonBuilder {
         return "$($this.Version.Major).$($this.Version.Minor).$($this.Version.Patch)"
     }
 
+    [string] GetHardwareArchitecture() {
+        <#
+        .SYNOPSIS
+        The hardware architecture (x64, arm64) without any Python free threading suffix.
+        #>
+
+        return $this.Architecture.Replace("-freethreaded", "")
+    }
+
+    [bool] IsFreeThreaded() {
+        <#
+        .SYNOPSIS
+        Check if Python version is free threaded.
+        #>
+
+        return $this.Architecture.EndsWith("-freethreaded")
+    }
+
     [void] PreparePythonToolcacheLocation() {
         <#
         .SYNOPSIS

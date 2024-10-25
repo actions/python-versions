@@ -12,6 +12,11 @@ on:
         required: true
         type: boolean
         default: false
+      THREADING_BUILD_MODES:
+        description: 'CPython threading build modes'
+        required: true
+        type: str
+        default: 'default,freethreaded'
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
@@ -40,32 +45,42 @@ jobs:
         id: generate-matrix
         run: |
           [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
+          [String[]]$buildModes = "${{ inputs.threading_build_modes || 'default' }}".Split(",").Trim()
           $matrix = @()
           
           foreach ($configuration in $configurations) {
-            $parts = $configuration.Split("_")
-            $os = $parts[0]
-            $arch = if ($parts[1]) {$parts[1]} else {"x64"}
-            switch -wildcard ($os) {
-              "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
-              "*macos*" { $platform = 'darwin' }
-              "*windows*" { $platform = 'win32' }
-            }
-            
-            if ($configuration -eq "ubuntu-22.04_arm64") {
-              $os = "setup-actions-ubuntu-arm64-2-core"
-            }
-            elseif ($configuration -eq "ubuntu-24.04_arm64") {
-              $os = "setup-actions-ubuntu24-arm64-2-core"
-            }
-            elseif ($configuration -eq "windows-2019_arm64") {
-              $os = "setup-actions-windows-arm64-4-core"
-            }
-            
-            $matrix += @{
-              'platform' = $platform
-              'os' = $os
-              'arch' = $arch
+            foreach ($buildMode in $buildModes) {
+              $parts = $configuration.Split("_")
+              $os = $parts[0]
+              $arch = if ($parts[1]) {$parts[1]} else {"x64"}
+              switch -wildcard ($os) {
+                "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
+                "*macos*" { $platform = 'darwin' }
+                "*windows*" { $platform = 'win32' }
+              }
+
+              if ($configuration -eq "ubuntu-22.04_arm64") {
+                $os = "setup-actions-ubuntu-arm64-2-core"
+              }
+              elseif ($configuration -eq "ubuntu-24.04_arm64") {
+                $os = "setup-actions-ubuntu24-arm64-2-core"
+              }
+              elseif ($configuration -eq "windows-2019_arm64") {
+                $os = "setup-actions-windows-arm64-4-core"
+              }
+
+              if ($buildMode -eq "freethreaded") {
+                if ([semver]"${{ inputs.VERSION }}" -lt [semver]"3.13.0") {
+                  continue;
+                }
+                $arch += "-freethreaded"
+              }
+
+              $matrix += @{
+                'platform' = $platform
+                'os' = $os
+                'arch' = $arch
+              }
             }
           }
           echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
@@ -200,6 +215,9 @@ jobs:
         with:
           python-version: ${{ env.VERSION }}
           architecture: ${{ matrix.arch }}
+
+      - name: Python version
+        run: python -VVV
 
       - name: Verbose sysconfig dump
         if: runner.os == 'Linux' || runner.os == 'macOS'
