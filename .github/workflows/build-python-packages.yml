@@ -238,14 +238,18 @@ jobs:
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.VERSION }}-${{ github.run_id }}
-          release_name: ${{ env.VERSION }}
-          body: |
-            Python ${{ env.VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          tag_name="${{ env.VERSION }}-${{ github.run_id }}"
+          gh release create "$tag_name" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${{ env.VERSION }}" \
+            --notes="Python ${{ env.VERSION }}"
+            
+          release_id=$(gh release view "$tag_name" --repo "$GITHUB_REPOSITORY" --json databaseId --jq '.databaseId')
+          echo "id=$release_id" >> $GITHUB_OUTPUT          
 
       - name: Generate hash for packages
         run: |
