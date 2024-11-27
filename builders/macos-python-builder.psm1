@@ -31,13 +31,18 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Prepare system environment by installing dependencies and required packages.
         #>
-        
+    if ($this.Version -eq "3.7.17") {     
         # Ensure Homebrew is installed (in case it's not already available)
     if (-not (Test-Path "/usr/local/bin/brew")) {
         Write-Host "Homebrew not found. Installing Homebrew..."
         Invoke-Expression -Command "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+      # Once Homebrew is installed, install the dependencies
+    Write-Host "Installing dependencies: bzip2, readline, ncurses..."
+    Execute-Command -Command "brew install bzip2 readline ncurses"
+    
     } else {
         Write-Host "Homebrew is already installed."
+    }
     }
     }
 
