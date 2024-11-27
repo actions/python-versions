@@ -32,13 +32,13 @@ class macOSPythonBuilder : NixPythonBuilder {
         Prepare system environment by installing dependencies and required packages.
         #>
         
-        if ($this.Version -eq "3.7.17") {
-            # We have preinstalled ncurses and readLine on the hoster runners. But we need to install bzip2 for 
-            # setting up an environemnt 
-            # If we get any issues realted to ncurses or readline we can try to run this command
-            # brew install ncurses readline
-            Execute-Command -Command "brew install bzip2"
-        }
+        # Ensure Homebrew is installed (in case it's not already available)
+    if (-not (Test-Path "/usr/local/bin/brew")) {
+        Write-Host "Homebrew not found. Installing Homebrew..."
+        Invoke-Expression -Command "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+    } else {
+        Write-Host "Homebrew is already installed."
+    }
     }
 
     [void] Configure() {
