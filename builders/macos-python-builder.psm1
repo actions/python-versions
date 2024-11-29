@@ -1,3 +1,5 @@
+using module "./nix-python-builder.psm1"
+
 class macOSPythonBuilder : NixPythonBuilder {
     <#
     .SYNOPSIS
