@@ -1,23 +1,20 @@
-using module "./nix-python-builder.psm1"
-
 class macOSPythonBuilder : NixPythonBuilder {
     <#
     .SYNOPSIS
     MacOS Python builder class.
 
     .DESCRIPTION
-    Contains methods that required to build macOS Python artifact from sources. Inherited from base NixPythonBuilder.
+    Contains methods required to build macOS Python artifacts from sources. Inherited from base NixPythonBuilder.
 
     While python.org provides precompiled binaries for macOS, switching to them risks breaking existing customers.
     If we wanted to start using the official binaries instead of building from source, we should avoid changing previous versions
     so we remain backwards compatible.
 
     .PARAMETER platform
-    The full name of platform for which Python should be built.
+    The full name of the platform for which Python should be built.
 
     .PARAMETER version
     The version of Python that should be built.
-
     #>
 
     macOSPythonBuilder(
@@ -31,19 +28,13 @@ class macOSPythonBuilder : NixPythonBuilder {
         .SYNOPSIS
         Prepare system environment by installing dependencies and required packages.
         #>
-    if ($this.Version -eq "3.7.17") {     
-        # Ensure Homebrew is installed (in case it's not already available)
-    if (-not (Test-Path "/usr/local/bin/brew")) {
-        Write-Host "Homebrew not found. Installing Homebrew..."
-        Invoke-Expression -Command "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
-      # Once Homebrew is installed, install the dependencies
-    Write-Host "Installing dependencies: bzip2, readline, ncurses..."
-    Execute-Command -Command "brew install bzip2 readline ncurses"
-    
-    } else {
-        Write-Host "Homebrew is already installed."
-    }
-    }
+
+        # Only for Python 3.7.17, install additional dependencies
+        if ($this.Version -eq "3.7.17") {
+            Write-Host "Installing additional dependencies for Python 3.7.17..."
+            # Install necessary dependencies for Python 3.7.17
+            Execute-Command -Command "brew install bzip2 zlib readline ncurses sqlite3 openssl@1.1"
+        }
     }
 
     [void] Configure() {
@@ -76,10 +67,10 @@ class macOSPythonBuilder : NixPythonBuilder {
             $env:LDFLAGS = "-L/usr/local/opt/openssl@3/lib -L/usr/local/opt/zlib/lib"
             $env:CFLAGS = "-I/usr/local/opt/openssl@3/include -I/usr/local/opt/zlib/include"
         } else {
-            $configureString += " --with-openssl=/usr/local/opt/openssl@3"
+            $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"  # For Python 3.7.x, use OpenSSL 1.1
 
-            # For Python 3.7.2 and 3.7.3 we need to provide PATH for zlib to pack it properly. Otherwise the build will fail
-            # with the error: zipimport.ZipImportError: can't decompress data; zlib not available
+            # For Python 3.7.2, 3.7.3, and 3.7.17 we need to provide PATH for zlib to pack it properly.
+            # Otherwise, the build will fail with the error: zipimport.ZipImportError: can't decompress data; zlib not available
             if ($this.Version -eq "3.7.2" -or $this.Version -eq "3.7.3" -or $this.Version -eq "3.7.17") {
                 $env:LDFLAGS = "-L/usr/local/opt/zlib/lib"
                 $env:CFLAGS = "-I/usr/local/opt/zlib/include"
@@ -87,9 +78,11 @@ class macOSPythonBuilder : NixPythonBuilder {
 
             if ($this.Version -gt "3.7.12") {
                 $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
-	        }
+            }
 
+            # Specific for Python 3.7.17
             if ($this.Version -eq "3.7.17") {
+                Write-Host "Setting environment for Python 3.7.17..."
                 $env:LDFLAGS += " -L$(brew --prefix bzip2)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix ncurses)/lib"
                 $env:CFLAGS += " -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(brew --prefix ncurses)/include"
             }
