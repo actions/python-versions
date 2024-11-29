@@ -35,7 +35,7 @@ class macOSPythonBuilder : NixPythonBuilder {
     if ($this.Version -eq "3.7.17") {
         Write-Host "Installing additional dependencies for Python 3.7.17..."
         # Install necessary dependencies for Python 3.7.17
-        Execute-Command -Command "brew install bzip2 zlib readline ncurses sqlite3 openssl@1.1"
+        Execute-Command -Command "brew install bzip2 zlib readline ncurses sqlite3 openssl@3"
 
         # Ensure the environment variables for zlib are set correctly
         $zlibPrefix = (brew --prefix zlib)
