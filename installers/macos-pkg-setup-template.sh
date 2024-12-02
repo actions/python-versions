@@ -23,7 +23,7 @@ PYTHON_TOOLCACHE_VERSION_ARCH_PATH=$PYTHON_TOOLCACHE_VERSION_PATH/$ARCH
 PYTHON_FRAMEWORK_PATH="/Library/Frameworks/Python.framework/Versions/${MAJOR_VERSION}.${MINOR_VERSION}"
 PYTHON_APPLICATION_PATH="/Applications/Python ${MAJOR_VERSION}.${MINOR_VERSION}"
 
-# Check if Python dependencies are installed (e.g., zlib)
+# Check if zlib is installed
 echo "Checking if zlib is installed..."
 if ! brew list zlib &>/dev/null; then
     echo "Installing zlib via brew..."
@@ -44,6 +44,7 @@ if [ "$MAJOR_VERSION" -eq 3 ] && [ "$MINOR_VERSION" -eq 7 ] && [ "$PYTHON_FULL_V
     echo "zlib linked at ${ZLIB_PREFIX}/lib"
 fi
 
+# Check if Python hostedtoolcache folder exists...
 echo "Check if Python hostedtoolcache folder exists..."
 if [ ! -d $PYTHON_TOOLCACHE_PATH ]; then
     echo "Creating Python hostedtoolcache folder..."
