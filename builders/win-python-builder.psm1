@@ -14,6 +14,9 @@ class WinPythonBuilder : PythonBuilder {
     .PARAMETER architecture
     The architecture with which Python should be built.
 
+    .PARAMETER WithPyDebug
+    The flag that indicates whether Python should be installed with debug symbols.
+
     .PARAMETER InstallationTemplateName
     The name of installation script template that will be used in generated artifact.
 
@@ -39,7 +42,7 @@ class WinPythonBuilder : PythonBuilder {
     [string] GetPythonExtension() {
         <#
         .SYNOPSIS
-        Return extension for required version of Python executable. 
+        Return extension for required version of Python executable.
         #>
 
         $extension = if ($this.Version -lt "3.5" -and $this.Version -ge "2.5") { ".msi" } else { ".exe" }
@@ -50,7 +53,7 @@ class WinPythonBuilder : PythonBuilder {
     [string] GetArchitectureExtension() {
         <#
         .SYNOPSIS
-        Return architecture suffix for Python executable. 
+        Return architecture suffix for Python executable.
         #>
 
         $ArchitectureExtension = ""
@@ -60,7 +63,7 @@ class WinPythonBuilder : PythonBuilder {
             } else {
                 $ArchitectureExtension = ".amd64"
             }
-        }elseif ($this.Architecture -eq "arm64") {
+        } elseif ($this.Architecture -eq "arm64") {
                 $ArchitectureExtension = "-arm64"
         }
 
@@ -114,7 +117,11 @@ class WinPythonBuilder : PythonBuilder {
         $variablesToReplace = @{
             "{{__ARCHITECTURE__}}" = $this.Architecture;
             "{{__VERSION__}}" = $this.Version;
-            "{{__PYTHON_EXEC_NAME__}}" = $pythonExecName
+            "{{__PYTHON_EXEC_NAME__}}" = $pythonExecName;
+            "{{__PYTHON_EXTRA_PARAMS__}}" = "";
+        }
+        if ($this.WithPyDebug) {
+            $variablesToReplace["{{__PYTHON_EXTRA_PARAMS__}}"] " Include_debug=1 Include_symbols=1"
         }
 
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
