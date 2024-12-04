@@ -84,6 +84,28 @@ class WinPythonBuilder : PythonBuilder {
         return $uri
     }
 
+    [bool] PkgExists() {
+        <#
+        .SYNOPSIS
+        Checks if the Universal Pkg Uri actually exists.
+        #>
+        $pkgUri = $this.GetSourceUri()
+
+        try {
+            $statusCode = (Invoke-WebRequest -Uri $pkgUri -UseBasicParsing -DisableKeepAlive -Method head).StatusCode
+            if ($statusCode -eq 200) {
+                return $true
+            } else {
+                Write-Host "File at $pkgUri did not appear to be valid, with status code '$statusCode'"
+                return $false;
+            }
+        } catch {
+            $statusCode = [int]$_.Exception.Response.StatusCode
+            Write-Host "File at $pkgUri did not appear to be valid, with status code '$statusCode'"
+            return $false
+        }
+    }
+
     [string] Download() {
         <#
         .SYNOPSIS
@@ -133,13 +155,17 @@ class WinPythonBuilder : PythonBuilder {
         Generates Python artifact from downloaded Python installation executable.
         #>
 
-        Write-Host "Download Python $($this.Version) [$($this.Architecture)] executable..."
-        $this.Download()
+        if ($this.PkgExists()) {
+            Write-Host "Download Python $($this.Version) [$($this.Architecture)] executable..."
+            $this.Download()
 
-        Write-Host "Create installation script..."
-        $this.CreateInstallationScript()
+            Write-Host "Create installation script..."
+            $this.CreateInstallationScript()
 
-        Write-Host "Archive artifact"
-        $this.ArchiveArtifact()
+            Write-Host "Archive artifact"
+            $this.ArchiveArtifact()
+        } else {
+            Write-Host "No source URI can be found"
+        }
     }
 }
