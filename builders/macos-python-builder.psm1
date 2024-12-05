@@ -80,7 +80,7 @@ class macOSPythonBuilder : NixPythonBuilder {
                 $env:CFLAGS = "-I/usr/local/opt/zlib/include"
             }
 
-            if ($this.Version -lt "3.10") {
+            if ($this.Version -lt "3.11.0") {
                 $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include/tcl-tk' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
 	        }
 
