@@ -22,8 +22,6 @@ jobs:
         # uses: actions/setup-python@v5
         # uses: priya-kinthali/setup-python@test-930
         uses: priya-kinthali/setup-python@test-tcl
-
-
         with:
           python-version: ${{ matrix.python-version }}
       - name: Print Tcl/Tk version
