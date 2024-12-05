@@ -24,10 +24,10 @@ jobs:
         uses: priya-kinthali/setup-python@test-tcl
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Print Tcl/Tk version
-        run: |
-          tclsh <<< 'puts [info patchlevel]; exit'
-          wish <<< 'puts [info patchlevel]; exit'
+      # - name: Print Tcl/Tk version
+      #   run: |
+      #     tclsh <<< 'puts [info patchlevel]; exit'
+      #     wish <<< 'puts [info patchlevel]; exit'
       - name: Verify Python Tk Version
         run: |
           python -c "import tkinter; print(f'Tkinter TkVersion: {tkinter.TkVersion}')"
