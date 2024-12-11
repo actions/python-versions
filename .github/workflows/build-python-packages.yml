@@ -109,6 +109,10 @@ jobs:
         with:
           submodules: true
 
+      - name: Adding Symlink
+        if: matrix.os == 'macos-13'
+        run: ln -sf /usr/local/opt/tcl-tk@8 /usr/local/opt/tcl-tk
+
       - name: Build Python ${{ env.VERSION }}
         run: |
           ./builders/build-python.ps1 -Version $env:VERSION `
