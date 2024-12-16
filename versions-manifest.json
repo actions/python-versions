@@ -3760,6 +3760,54 @@
     ]
   },
   {
+    "version": "3.10.16",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.16-12302993382",
+    "files": [
+      {
+        "filename": "python-3.10.16-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.16-linux-20.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "20.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.16-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.16-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.16-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.16-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.16-12302993382/python-3.10.16-linux-24.04-x64.tar.gz"
+      }
+    ]
+  },
+  {
     "version": "3.10.15",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.15-10765692022",
@@ -5213,6 +5261,54 @@
     ]
   },
   {
+    "version": "3.9.21",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.9.21-12303000710",
+    "files": [
+      {
+        "filename": "python-3.9.21-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.9.21-linux-20.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "20.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-linux-20.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.9.21-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.9.21-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.9.21-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.9.21-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.9.21-12303000710/python-3.9.21-linux-24.04-x64.tar.gz"
+      }
+    ]
+  },
+  {
     "version": "3.9.20",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.9.20-10765735733",
@@ -6469,48 +6565,48 @@
   {
     "version": "3.8.18",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.18-9962543870",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.8.18-12303122501",
     "files": [
       {
         "filename": "python-3.8.18-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.8.18-linux-20.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "20.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-linux-20.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-linux-20.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.18-linux-22.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-linux-22.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.8.18-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-linux-22.04-x64.tar.gz"
       },
       {
         "filename": "python-3.8.18-linux-24.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-linux-24.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.8.18-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-9962543870/python-3.8.18-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.8.18-12303122501/python-3.8.18-linux-24.04-x64.tar.gz"
       }
     ]
   },
