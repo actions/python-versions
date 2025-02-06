@@ -151,6 +151,37 @@ class macOSPythonBuilder : NixPythonBuilder {
         return $pkgLocation
     }
 
+    [string] GetFrameworkName() {
+        <#
+        .SYNOPSIS
+        Get the Python installation Package name.
+        #>
+
+        if ($this.IsFreeThreaded()) {
+            return "PythonT.framework"
+        } else {
+            return "Python.framework"
+        }
+    }
+
+    [string] GetPkgChoices() {
+        <#
+        .SYNOPSIS
+        Reads the configuration XML file for the Python installer
+        #>
+
+        $config = if ($this.IsFreeThreaded()) { "freethreaded" } else { "default" }
+        $choicesFile = Join-Path $PSScriptRoot "../config/macos-pkg-choices-$($config).xml"
+        $choicesTemplate = Get-Content -Path $choicesFile -Raw
+
+        $variablesToReplace = @{
+            "{{__VERSION_MAJOR_MINOR__}}" = "$($this.Version.Major).$($this.Version.Minor)";
+        }
+
+        $variablesToReplace.keys | ForEach-Object { $choicesTemplate = $choicesTemplate.Replace($_, $variablesToReplace[$_]) }
+        return $choicesTemplate
+    }
+
     [void] CreateInstallationScriptPkg() {
         <#
         .SYNOPSIS
@@ -165,6 +196,8 @@ class macOSPythonBuilder : NixPythonBuilder {
             "{{__VERSION_FULL__}}" = $this.Version;
             "{{__PKG_NAME__}}" = $this.GetPkgName();
             "{{__ARCH__}}" = $this.Architecture;
+            "{{__FRAMEWORK_NAME__}}" = $this.GetFrameworkName();
+            "{{__PKG_CHOICES__}}" = $this.GetPkgChoices();
         }
 
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }

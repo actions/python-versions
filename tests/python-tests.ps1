@@ -7,6 +7,8 @@ param (
     $Architecture
 )
 
+$HardwareArchitecture = $Architecture -replace "-freethreaded", ""
+
 Import-Module (Join-Path $PSScriptRoot "../helpers/pester-extensions.psm1")
 Import-Module (Join-Path $PSScriptRoot "../helpers/common-helpers.psm1")
 Import-Module (Join-Path $PSScriptRoot "../builders/python-version.psm1")
@@ -58,7 +60,7 @@ Describe "Tests" {
     #     }
     # }
 
-    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($Architecture -ne "arm64"))) {
+    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($HardwareArchitecture -ne "arm64"))) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }

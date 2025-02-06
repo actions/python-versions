@@ -37,6 +37,14 @@ class UbuntuPythonBuilder : NixPythonBuilder {
         $configureString += " --enable-shared"
         $configureString += " --enable-optimizations"
 
+        if ($this.IsFreeThreaded()) {
+            if ($this.Version -lt "3.13.0") {
+                Write-Host "Python versions lower than 3.13.0 do not support free threading"
+                exit 1
+            }
+            $configureString += " --disable-gil"
+        }
+
         ### Compile with support of loadable sqlite extensions.
         ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
         $configureString += " --enable-loadable-sqlite-extensions"
