@@ -1,4 +1,5 @@
 [String] $Architecture = "{{__ARCHITECTURE__}}"
+[String] $HardwareArchitecture = "{{__HARDWARE_ARCHITECTURE__}}"
 [String] $Version = "{{__VERSION__}}"
 [String] $PythonExecName = "{{__PYTHON_EXEC_NAME__}}"
 
@@ -25,7 +26,7 @@ function Remove-RegistryEntries {
         [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    $versionFilter = Get-RegistryVersionFilter -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+    $versionFilter = Get-RegistryVersionFilter -Architecture $HardwareArchitecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
 
     $regPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Products"
     if (Test-Path -Path Registry::$regPath) {
@@ -61,13 +62,15 @@ function Remove-RegistryEntries {
 function Get-ExecParams {
     param(
         [Parameter(Mandatory)][Boolean] $IsMSI,
+        [Parameter(Mandatory)][Boolean] $IsFreeThreaded,
         [Parameter(Mandatory)][String] $PythonArchPath
     )
 
     if ($IsMSI) {
         "TARGETDIR=$PythonArchPath ALLUSERS=1"
     } else {
-        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1"
+        $Include_freethreaded = if ($IsFreeThreaded) { "Include_freethreaded=1" } else { "" }
+        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1 $Include_freethreaded"
     }
 }
 
@@ -81,6 +84,7 @@ $PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version
 $PythonArchPath = Join-Path -Path $PythonVersionPath -ChildPath $Architecture
 
 $IsMSI = $PythonExecName -match "msi"
+$IsFreeThreaded = $Architecture -match "-freethreaded"
 
 $MajorVersion = $Version.Split('.')[0]
 $MinorVersion = $Version.Split('.')[1]
@@ -120,11 +124,22 @@ Write-Host "Copy Python binaries to $PythonArchPath"
 Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
 
 Write-Host "Install Python $Version in $PythonToolcachePath..."
-$ExecParams = Get-ExecParams -IsMSI $IsMSI -PythonArchPath $PythonArchPath
+$ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
 
 cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
+}
+
+# print out all files in $PythonArchPath
+Write-Host "Files in $PythonArchPath"
+$files = Get-ChildItem -Path $PythonArchPath -File -Recurse
+Write-Output $files
+
+if ($IsFreeThreaded) {
+    # Delete python.exe and create a symlink to free-threaded exe
+    Remove-Item -Path "$PythonArchPath\python.exe" -Force
+    New-Item -Path "$PythonArchPath\python.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python${MajorVersion}.${MinorVersion}t.exe"
 }
 
 Write-Host "Create `python3` symlink"
