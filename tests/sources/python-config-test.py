@@ -8,25 +8,31 @@ os_type = platform.system()
 version = sys.argv[1]
 nativeVersion = sys.argv[2]
 architecture = sys.argv[3]
+hw_architecture = architecture.replace('-freethreaded', '')
 
 versions=version.split(".")
 version_major=int(versions[0])
 version_minor=int(versions[1])
 
-pkg_installer = os_type == 'Darwin' and ((version_major == 3 and version_minor >= 11) or (architecture == "arm64"))
+pkg_installer = os_type == 'Darwin' and ((version_major == 3 and version_minor >= 11) or (hw_architecture == "arm64"))
 
 lib_dir_path = sysconfig.get_config_var('LIBDIR')
 ld_library_name = sysconfig.get_config_var('LDLIBRARY')
 
 is_shared = sysconfig.get_config_var('Py_ENABLE_SHARED')
 have_libreadline = sysconfig.get_config_var("HAVE_LIBREADLINE")
+is_free_threaded = sysconfig.get_config_var('Py_GIL_DISABLED')
 
 ### Define expected variables
 if os_type == 'Linux': expected_ld_library_extension = 'so'
 if os_type == 'Darwin': expected_ld_library_extension = 'dylib'
+if is_free_threaded:
+    framework_name = 'PythonT.framework'
+else:
+    framework_name = 'Python.framework'
 
 if pkg_installer:
-    expected_lib_dir_path = f'/Library/Frameworks/Python.framework/Versions/{version_major}.{version_minor}/lib'
+    expected_lib_dir_path = f'/Library/Frameworks/{framework_name}/Versions/{version_major}.{version_minor}/lib'
 else:
     expected_lib_dir_path = f'{os.getenv("AGENT_TOOLSDIRECTORY")}/Python/{version}/{architecture}/lib'
 
@@ -54,15 +60,15 @@ else:
 if os_type == 'Darwin':
     ### Validate openssl links
     if version_major == 3 and version_minor < 7:
-        expected_ldflags = '-L/usr/local/opt/openssl@3/lib'
+        expected_ldflags = '-L/usr/local/opt/openssl@1.1/lib'
         ldflags = sysconfig.get_config_var('LDFLAGS')
 
         if not expected_ldflags in ldflags:
             print('Invalid ldflags: %s; Expected: %s' % (ldflags, expected_ldflags))
             exit(1)
     else:
-        expected_openssl_includes = '-I/usr/local/opt/openssl@3/include'
-        expected_openssl_ldflags ='-L/usr/local/opt/openssl@3/lib'
+        expected_openssl_includes = '-I/usr/local/opt/openssl@1.1/include'
+        expected_openssl_ldflags ='-L/usr/local/opt/openssl@1.1/lib'
 
         openssl_includes = sysconfig.get_config_var('OPENSSL_INCLUDES')
         openssl_ldflags = sysconfig.get_config_var('OPENSSL_LDFLAGS')
