@@ -55,8 +55,11 @@ class macOSPythonBuilder : NixPythonBuilder {
         ### Solution is to install these libraries from a third-party package manager,
         ### and then add the appropriate paths for the header and library files to configure command.
         ### Link to documentation (https://cpython-devguide.readthedocs.io/setup/#build-dependencies)
-        $configureString += " --with-openssl=/usr/local/opt/openssl@1.1"
-        $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
+        $configureString += " --with-openssl=/usr/local/opt/openssl@3"
+        $configureString += " --with-tcltk-includes='-I /usr/local/opt/tcl-tk/include/tcl-tk' --with-tcltk-libs='-L/usr/local/opt/tcl-tk/lib -ltcl8.6 -ltk8.6'"
+
+        ### Compile with support of loadable sqlite extensions.
+        ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
         $configureString += " --enable-loadable-sqlite-extensions"
         $env:LDFLAGS += " -L$(brew --prefix sqlite3)/lib"
         $env:CFLAGS += " -I$(brew --prefix sqlite3)/include"
@@ -114,6 +117,37 @@ class macOSPythonBuilder : NixPythonBuilder {
         return $pkgLocation
     }
 
+    [string] GetFrameworkName() {
+        <#
+        .SYNOPSIS
+        Get the Python installation Package name.
+        #>
+
+        if ($this.IsFreeThreaded()) {
+            return "PythonT.framework"
+        } else {
+            return "Python.framework"
+        }
+    }
+
+    [string] GetPkgChoices() {
+        <#
+        .SYNOPSIS
+        Reads the configuration XML file for the Python installer
+        #>
+
+        $config = if ($this.IsFreeThreaded()) { "freethreaded" } else { "default" }
+        $choicesFile = Join-Path $PSScriptRoot "../config/macos-pkg-choices-$($config).xml"
+        $choicesTemplate = Get-Content -Path $choicesFile -Raw
+
+        $variablesToReplace = @{
+            "{{__VERSION_MAJOR_MINOR__}}" = "$($this.Version.Major).$($this.Version.Minor)";
+        }
+
+        $variablesToReplace.keys | ForEach-Object { $choicesTemplate = $choicesTemplate.Replace($_, $variablesToReplace[$_]) }
+        return $choicesTemplate
+    }
+
     [void] CreateInstallationScriptPkg() {
         <#
         .SYNOPSIS
@@ -128,6 +162,8 @@ class macOSPythonBuilder : NixPythonBuilder {
             "{{__VERSION_FULL__}}" = $this.Version;
             "{{__PKG_NAME__}}" = $this.GetPkgName();
             "{{__ARCH__}}" = $this.Architecture;
+            "{{__FRAMEWORK_NAME__}}" = $this.GetFrameworkName();
+            "{{__PKG_CHOICES__}}" = $this.GetPkgChoices();
         }
 
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }

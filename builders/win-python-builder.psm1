@@ -52,9 +52,9 @@ class WinPythonBuilder : PythonBuilder {
         #>
 
         $ArchitectureExtension = ""
-        if ($this.Architecture -eq "x64") {
+        if ($this.GetHardwareArchitecture() -eq "x64") {
             $ArchitectureExtension = "-amd64"
-        }elseif ($this.Architecture -eq "arm64") {
+        } elseif ($this.GetHardwareArchitecture() -eq "arm64") {
                 $ArchitectureExtension = "-arm64"
         }
 
@@ -107,6 +107,7 @@ class WinPythonBuilder : PythonBuilder {
 
         $variablesToReplace = @{
             "{{__ARCHITECTURE__}}" = $this.Architecture;
+            "{{__HARDWARE_ARCHITECTURE__}}" = $this.GetHardwareArchitecture();
             "{{__VERSION__}}" = $this.Version;
             "{{__PYTHON_EXEC_NAME__}}" = $pythonExecName
         }
