@@ -20,7 +20,7 @@ on:
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
+        default: 'ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -44,7 +44,7 @@ jobs:
       - name: Generate execution matrix
         id: generate-matrix
         run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
+          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
           [String[]]$buildModes = "${{ inputs.threading_build_modes || 'default' }}".Split(",").Trim()
           $matrix = @()
           
