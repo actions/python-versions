@@ -60,7 +60,7 @@ Describe "Tests" {
     #     }
     # }
 
-    if ($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($HardwareArchitecture -ne "arm64"))) {
+    if (($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($HardwareArchitecture -ne "arm64"))) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }
