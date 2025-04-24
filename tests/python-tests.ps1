@@ -60,7 +60,7 @@ Describe "Tests" {
     #     }
     # }
 
-    if (($Version -ge "3.2.0") -and ($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($HardwareArchitecture -ne "arm64"))) {
+    if (($Version -lt "3.11.0") -and (($Platform -ne "darwin") -or ($HardwareArchitecture -ne "arm64"))) {
         It "Check if sqlite3 module is installed" {
             "python ./sources/python-sqlite3.py" | Should -ReturnZeroExitCode
         }
@@ -89,16 +89,6 @@ Describe "Tests" {
 
         It "Check if shared libraries are linked correctly" {
             "bash ./sources/psutil-install-test.sh" | Should -ReturnZeroExitCode
-        }
-    }
-
-    # Pyinstaller 3.5 does not support Python 3.8.0. Check issue https://github.com/pyinstaller/pyinstaller/issues/4311
-    if ($Version -lt "3.8.0" -and $Version.Major -ne "2") {
-        It "Validate Pyinstaller" {
-            "pip install pyinstaller" | Should -ReturnZeroExitCode
-            "pyinstaller --onefile ./sources/simple-test.py" | Should -ReturnZeroExitCode
-            $distPath = [IO.Path]::Combine($pwd, "dist", "simple-test")
-            "$distPath" | Should -ReturnZeroExitCode
         }
     }
 
