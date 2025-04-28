@@ -126,11 +126,6 @@ if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
 }
 
-# print out all files in $PythonArchPath
-Write-Host "Files in $PythonArchPath"
-$files = Get-ChildItem -Path $PythonArchPath -File -Recurse
-Write-Output $files
-
 if ($IsFreeThreaded) {
     # Delete python.exe and create a symlink to free-threaded exe
     Remove-Item -Path "$PythonArchPath\python.exe" -Force
