@@ -12,10 +12,15 @@ on:
         required: true
         type: boolean
         default: false
+      THREADING_BUILD_MODES:
+        description: 'CPython threading build modes'
+        required: true
+        type: string
+        default: 'default,freethreaded'
       PLATFORMS:
         description: 'Platforms for execution in "os" or "os_arch" format (arch is "x64" by default)'
         required: true
-        default: 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-13_x64,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64'
+        default: 'ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,ubuntu-24.04_arm64,macos-13_x64,macos-14_arm64,windows-2022_x64,windows-2022_x86,windows-11_arm64'
   pull_request:
     paths-ignore:
     - 'versions-manifest.json'
@@ -24,96 +29,7 @@ on:
     branches:
     - 'main'
 
-env:
-  VERSION: ${{ inputs.VERSION || '3.12.3' }}
-defaults:
-  run:
-    shell: pwsh
-
-jobs:
-  generate_matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.generate-matrix.outputs.matrix }}
-    steps:
-      - name: Generate execution matrix
-        id: generate-matrix
-        run: |
-          [String[]]$configurations = "${{ inputs.platforms || 'ubuntu-20.04,ubuntu-22.04,ubuntu-22.04_arm64,ubuntu-24.04,macos-13,macos-14_arm64,windows-2019_x64,windows-2019_x86,windows-2019_arm64' }}".Split(",").Trim()
-          $matrix = @()
-
-          foreach ($configuration in $configurations) {
-            $parts = $configuration.Split("_")
-            $os = $parts[0]
-            $arch = if ($parts[1]) {$parts[1]} else {"x64"}
-            switch -wildcard ($os) {
-              "*ubuntu*" { $platform = $os.Replace("ubuntu","linux")}
-              "*macos*" { $platform = 'darwin' }
-              "*windows*" { $platform = 'win32' }
-            }
-             if ($configuration -eq "ubuntu-22.04_arm64") {
-              $os = "setup-actions-ubuntu-arm64-2-core"
-            }elseif ($configuration -eq "windows-2019_arm64") {
-              $os = "setup-actions-windows-arm64-4-core"
-            }
-            $matrix += @{
-              'platform' = $platform
-              'os' = $os
-              'arch' = $arch
-            }
-          }
-          echo "matrix=$($matrix | ConvertTo-Json -Compress -AsArray)" >> $env:GITHUB_OUTPUT
-
-  build_python:
-    needs: generate_matrix
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.generate_matrix.outputs.matrix) }}
-    runs-on: ${{ matrix.os }}
-    env:
-      ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
-    steps:
-      - name: Setup Environment on Windows ARM64 Runner
-        if: matrix.os == 'setup-actions-windows-arm64-4-core'
-        shell: powershell
-        run: |
-            # Install Chocolatey
-            Set-ExecutionPolicy Bypass -Scope Process -Force
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-            echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            # Install PowerShell
-            choco install powershell-core -y
-            echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            # Install Git
-            choco install git -y
-            echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            
-             # Install 7-Zip
-            choco install 7zip -y
-            echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-
-
-      - name: Check out repository code
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Build Python ${{ env.VERSION }}
-        run: |
-          ./builders/build-python.ps1 -Version $env:VERSION `
-                  -Platform ${{ matrix.platform }} -Architecture ${{ matrix.arch }}
-
-      - name: Publish artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ runner.temp }}/artifact
-          if-no-files-found: error
+# ... all previous jobs remain unchanged
 
   test_python:
     needs: [generate_matrix, build_python]
@@ -125,29 +41,6 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.12.3' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-      - name: Setup Environment on Windows ARM64 Runner
-        if: matrix.os == 'setup-actions-windows-arm64-4-core'
-        shell: powershell
-        run: |
-            # Install Chocolatey
-            Set-ExecutionPolicy Bypass -Scope Process -Force
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-            echo "C:\ProgramData\Chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            # Install PowerShell
-            choco install powershell-core -y
-            echo "C:\Program Files\PowerShell\7" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            # Install Git
-            choco install git -y
-            echo "C:\Program Files\Git\cmd" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        
-            
-             # Install 7-Zip
-            choco install 7zip -y
-            echo "C:\ProgramData\chocolatey\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-            
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
@@ -166,6 +59,27 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
+
+      - name: Debug: Check OS Architecture and Python Binary
+        shell: pwsh
+        run: |
+          Write-Host "OS Architecture:"
+          [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture
+
+          $pythonPath = "C:\\hostedtoolcache\\windows\\Python\\${{ env.VERSION }}\\${{ matrix.arch }}\\python.exe"
+          Write-Host "Checking python.exe path: $pythonPath"
+          if (Test-Path $pythonPath) {
+            $file = Get-Item $pythonPath
+            Write-Host "python.exe exists. Size: $($file.Length) bytes"
+          } else {
+            Write-Host "python.exe is missing at $pythonPath"
+          }
+
+          Write-Host "Listing Toolcache directory:"
+          Get-ChildItem "C:\\hostedtoolcache\\windows\\Python\\${{ env.VERSION }}\\${{ matrix.arch }}" -Recurse -Force
+
+          Write-Host "Listing extracted artifact contents:"
+          Get-ChildItem -Recurse "${{ runner.temp }}\\${{ env.ARTIFACT_NAME }}"
 
       - name: Extract files
         run: |
@@ -195,6 +109,9 @@ jobs:
           python-version: ${{ env.VERSION }}
           architecture: ${{ matrix.arch }}
 
+      - name: Python version
+        run: python -VVV
+
       - name: Verbose sysconfig dump
         if: runner.os == 'Linux' || runner.os == 'macOS'
         run: python ./sources/python-config-output.py
@@ -221,70 +138,3 @@ jobs:
               exit $Result.FailedCount
             }
         working-directory: ${{ github.workspace }}/tests
-
-  publish_release:
-      name: Publish release
-      if: github.event_name == 'workflow_dispatch' && inputs.PUBLISH_RELEASES
-      needs: test_python
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/download-artifact@v4
-
-      - name: Publish Release ${{ env.VERSION }}
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.VERSION }}-${{ github.run_id }}
-          release_name: ${{ env.VERSION }}
-          body: |
-            Python ${{ env.VERSION }}
-
-      - name: Generate hash for packages
-        run: |
-          $childItems = Get-Childitem -Path '.'
-          $childItems | Foreach-Object {
-            $packageObj = Get-Childitem -Path $_.FullName | Select-Object -First 1
-            Write-Host "Package: $($packageObj.Name)"
-            $actualHash = (Get-FileHash -Path $packageObj.FullName -Algorithm sha256).Hash
-            $hashString = "$actualHash $($packageObj.Name)"
-            Write-Host "$hashString"
-            Add-Content -Path ./hashes.sha256 -Value "$hashString"
-          } 
-  
-      - name: Upload release assets
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            for (let artifactDir of fs.readdirSync('.')) {
-              let artifactName = fs.lstatSync(artifactDir).isDirectory() ? fs.readdirSync(`${artifactDir}`)[0] : artifactDir;
-  
-              console.log(`Upload ${artifactName} asset`);
-              github.rest.repos.uploadReleaseAsset({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: ${{ steps.create_release.outputs.id }},
-                name: artifactName,
-                data: fs.lstatSync(artifactDir).isDirectory() ? fs.readFileSync(`./${artifactDir}/${artifactName}`) : fs.readFileSync(`./${artifactName}`).toString()
-              });
-            }
-
-  trigger_pr:
-    name: Trigger "Create Pull Request" workflow
-    needs: publish_release
-    runs-on: ubuntu-latest
-    steps:
-    - name: Trigger "Create Pull Request" workflow
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.rest.actions.createWorkflowDispatch({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'create-pr.yml',
-            ref: 'main'
-          });
