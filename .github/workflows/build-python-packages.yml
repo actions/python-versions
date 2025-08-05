@@ -135,6 +135,17 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
+      - name: Extract files
+        run: |
+          if ('${{ matrix.platform }}' -eq 'win32') {
+            $artifactName = "${{ env.ARTIFACT_NAME }}.zip"
+            7z.exe x "$artifactName" -y | Out-Null
+          } else {
+            $artifactName = "${{ env.ARTIFACT_NAME }}.tar.gz"
+            tar -xzf $artifactName
+          }
+        working-directory: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
+
       - name: Check OS Architecture and Python Binary
         shell: pwsh
         run: |
@@ -156,16 +167,6 @@ jobs:
           Write-Host "Listing extracted artifact contents:"
           Get-ChildItem -Recurse "${{ runner.temp }}\\${{ env.ARTIFACT_NAME }}"
 
-      - name: Extract files
-        run: |
-          if ('${{ matrix.platform }}' -eq 'win32') {
-            $artifactName = "${{ env.ARTIFACT_NAME }}.zip"
-            7z.exe x "$artifactName" -y | Out-Null
-          } else {
-            $artifactName = "${{ env.ARTIFACT_NAME }}.tar.gz"
-            tar -xzf $artifactName
-          }
-        working-directory: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Apply build artifact to the local machine
         run: |
