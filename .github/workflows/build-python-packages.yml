@@ -130,7 +130,7 @@ jobs:
         run: if [ -d /Library/Frameworks/Python.framework ]; then sudo rm -rf /Library/Frameworks/Python.framework; fi
 
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
@@ -199,7 +199,7 @@ jobs:
       needs: test_python
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
 
       - name: Publish Release ${{ env.VERSION }}
         id: create_release
