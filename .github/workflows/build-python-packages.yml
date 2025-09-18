@@ -158,7 +158,7 @@ jobs:
         working-directory: ${{ runner.temp }}/${{ env.ARTIFACT_NAME }}
 
       - name: Setup Python ${{ env.VERSION }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.VERSION }}
           architecture: ${{ matrix.arch }}
