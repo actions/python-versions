@@ -241,6 +241,12 @@ if sys.version_info >= (3, 14):
         'annotationlib',
     ])
 
+# https://docs.python.org/3.15/whatsnew/3.15.html
+if sys.version_info >= (3, 15):
+    standard_library.remove('sre_compile')
+    standard_library.remove('sre_constants')
+    standard_library.remove('sre_parse')
+
 # Remove tkinter and Easter eggs
 excluded_modules = [
     'antigravity',
