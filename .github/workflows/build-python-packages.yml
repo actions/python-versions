@@ -100,7 +100,7 @@ jobs:
                   -Platform ${{ matrix.platform }} -Architecture ${{ matrix.arch }}
                   
       - name: Publish artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ runner.temp }}/artifact
