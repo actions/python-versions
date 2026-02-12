@@ -59,10 +59,10 @@ jobs:
                 "*windows*" { $platform = 'win32'; if ($arch -eq "arm64" ) { $os = "${os}-arm" } }
               }
               
-              if ($configuration -eq "ubuntu-22.04-arm") {
+              if ($configuration -eq "ubuntu-22.04_arm64") {
                 $os = "setup-actions-ubuntu-arm64-2-core"
               }
-              elseif ($configuration -eq "ubuntu-24.04-arm") {
+              elseif ($configuration -eq "ubuntu-24.04_arm64") {
                 $os = "setup-actions-ubuntu24-arm64-2-core"
               }
               
