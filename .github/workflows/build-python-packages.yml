@@ -58,7 +58,14 @@ jobs:
                 "*macos*" { $platform = 'darwin' }
                 "*windows*" { $platform = 'win32'; if ($arch -eq "arm64" ) { $os = "${os}-arm" } }
               }
-
+              
+              if ($configuration -eq "ubuntu-22.04-arm") {
+                $os = "setup-actions-ubuntu-arm64-2-core"
+              }
+              elseif ($configuration -eq "ubuntu-24.04-arm") {
+                $os = "setup-actions-ubuntu24-arm64-2-core"
+              }
+              
               if ($buildMode -eq "freethreaded") {
                 if ([semver]"${{ inputs.VERSION }}" -lt [semver]"3.13.0") {
                   continue;
