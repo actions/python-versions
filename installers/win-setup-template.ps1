@@ -62,10 +62,10 @@ function Get-ExecParams {
     )
 
     if ($IsMSI) {
-        "TARGETDIR=$PythonArchPath ALLUSERS=1"
+        "TARGETDIR=`"$PythonArchPath`" ALLUSERS=1"
     } else {
         $Include_freethreaded = if ($IsFreeThreaded) { "Include_freethreaded=1" } else { "" }
-        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1 $Include_freethreaded"
+        "DefaultAllUsersTargetDir=`"$PythonArchPath`" InstallAllUsers=1 $Include_freethreaded"
     }
 }
 
