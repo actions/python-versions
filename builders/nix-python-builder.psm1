@@ -146,6 +146,14 @@ class NixPythonBuilder : PythonBuilder {
         $sourcesLocation = $this.Download()
 
         Push-Location -Path $sourcesLocation
+
+        # Patch for 3.15.0a6: Fix test_bz2 BIG_DATA to ensure two compressed blocks
+        # See: https://github.com/python/cpython/pull/145730
+        if (($this.Architecture -match "arm64") -and ($this.Platform -match "22\.04") -and ($this.Version -eq [semver]"3.15.0-alpha.6")) {
+            Write-Host "Applying patch for python/cpython#145730 (test_bz2 fix)..."
+            Execute-Command -Command "curl -sL -o Lib/test/test_bz2.py https://raw.githubusercontent.com/python/cpython/19676e5fc28bdee8325a062a31ddeee60960cf75/Lib/test/test_bz2.py"
+        }
+
         Write-Host "Configure for $($this.Platform)..."
         $this.Configure()
 
