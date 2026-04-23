@@ -84,7 +84,9 @@ chmod +x $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR python
 
 echo "Upgrading pip..."
 export PIP_ROOT_USER_ACTION=ignore
-./python -m ensurepip
+if ! ./python -c "import pip" 2>/dev/null; then
+  ./python -m ensurepip
+fi
 ./python -m pip install --upgrade --force-reinstall pip --disable-pip-version-check --no-warn-script-location
 
 echo "Install OpenSSL certificates"
