@@ -10,7 +10,12 @@ function Get-RegistryVersionFilter {
         [Parameter(Mandatory)][Int32] $MinorVersion
     )
 
-    $archFilter = if ($Architecture -eq 'x86') { "32-bit" } else { "64-bit" }
+    # ARM64 Python installer registers as "(ARM64)" in the display name, not "(64-bit)"
+    $archFilter = switch ($Architecture) {
+        'x86'   { "32-bit" }
+        'arm64' { "64-bit|ARM64" }
+        default { "64-bit" }
+    }    
     "Python $MajorVersion.$MinorVersion.*($archFilter)"
 }
 
