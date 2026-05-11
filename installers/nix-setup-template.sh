@@ -51,7 +51,13 @@ chmod +x ../python $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJORMINOR pyth
 
 echo "Upgrading pip..."
 export PIP_ROOT_USER_ACTION=ignore
-./python -m ensurepip
+
+if [ -d "$(./python -c 'import site; print(site.getsitepackages()[0])')/pip" ]; then
+  echo "pip directory found in site-packages, skipping ensurepip."
+else
+  echo "pip directory not found, running ensurepip..."
+  ./python -m ensurepip
+fi
 ./python -m pip install --upgrade --force-reinstall pip --disable-pip-version-check --no-warn-script-location
 
 echo "Create complete file"
