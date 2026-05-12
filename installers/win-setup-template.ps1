@@ -67,10 +67,10 @@ function Get-ExecParams {
     )
 
     if ($IsMSI) {
-        "TARGETDIR=$PythonArchPath ALLUSERS=1"
+        "TARGETDIR=`"$PythonArchPath`" ALLUSERS=1"
     } else {
         $Include_freethreaded = if ($IsFreeThreaded) { "Include_freethreaded=1" } else { "" }
-        "DefaultAllUsersTargetDir=$PythonArchPath InstallAllUsers=1 $Include_freethreaded"
+        "DefaultAllUsersTargetDir=`"$PythonArchPath`" InstallAllUsers=1 $Include_freethreaded"
     }
 }
 
@@ -126,7 +126,7 @@ Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
 Write-Host "Install Python $Version in $PythonToolcachePath..."
 $ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
 
-cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
+cmd.exe /c "cd `"$PythonArchPath`" && call `"$PythonExecName`" $ExecParams /quiet"
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during Python installation"
 }
@@ -143,7 +143,7 @@ New-Item -Path "$PythonArchPath\python3.exe" -ItemType SymbolicLink -Value "$Pyt
 Write-Host "Install and upgrade Pip"
 $Env:PIP_ROOT_USER_ACTION = "ignore"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
-cmd.exe /c "$PythonExePath -m ensurepip && $PythonExePath -m pip install --upgrade --force-reinstall pip --no-warn-script-location"
+cmd.exe /c "`"$PythonExePath`" -m ensurepip && `"$PythonExePath`" -m pip install --upgrade --force-reinstall pip --no-warn-script-location"
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during pip installation / upgrade"
 }
