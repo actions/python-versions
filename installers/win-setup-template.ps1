@@ -141,6 +141,9 @@ $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
 cmd.exe /c "$PythonExePath -c ""import pip"""
 if ($LASTEXITCODE -ne 0) {
     cmd.exe /c "$PythonExePath -m ensurepip"
+    if ($LASTEXITCODE -ne 0) {
+        Throw "Error happened during ensurepip execution"
+    }
 }
 cmd.exe /c "$PythonExePath -m pip install --upgrade --force-reinstall pip --no-warn-script-location"
 if ($LASTEXITCODE -ne 0) {
