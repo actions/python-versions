@@ -86,6 +86,11 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.13.7' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
+      - name: Install Git
+        if: startsWith(matrix.platform, 'rhel')
+        shell: bash
+        run: sudo dnf install -y git
+
       - name: Check out repository code
         uses: actions/checkout@v6
         with:
@@ -113,6 +118,11 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.13.7' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
+      - name: Install Git
+        if: startsWith(matrix.platform, 'rhel')
+        shell: bash
+        run: sudo dnf install -y git
+
       - name: Check out repository code
         uses: actions/checkout@v6
         with:
