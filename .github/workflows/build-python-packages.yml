@@ -86,10 +86,13 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.13.7' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-      - name: Install Git
+      - name: Install prerequisites
         if: startsWith(matrix.platform, 'rhel')
         shell: bash
-        run: sudo dnf install -y git
+        run: |
+          RHEL_VERSION=$(rpm -E %rhel)
+          sudo dnf install -y "https://packages.microsoft.com/config/rhel/${RHEL_VERSION}/packages-microsoft-prod.rpm"
+          sudo dnf install -y powershell git
 
       - name: Check out repository code
         uses: actions/checkout@v6
@@ -118,10 +121,13 @@ jobs:
     env:
       ARTIFACT_NAME: python-${{ inputs.VERSION || '3.13.7' }}-${{ matrix.platform }}-${{ matrix.arch }}
     steps:
-      - name: Install Git
+      - name: Install prerequisites
         if: startsWith(matrix.platform, 'rhel')
         shell: bash
-        run: sudo dnf install -y git
+        run: |
+          RHEL_VERSION=$(rpm -E %rhel)
+          sudo dnf install -y "https://packages.microsoft.com/config/rhel/${RHEL_VERSION}/packages-microsoft-prod.rpm"
+          sudo dnf install -y powershell git
 
       - name: Check out repository code
         uses: actions/checkout@v6
