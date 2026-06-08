@@ -71,7 +71,7 @@ Describe "Tests" {
         "pip uninstall requests -y" | Should -ReturnZeroExitCode
     }
 
-    if (IsNixPlatform $Platform) {
+    if ((IsNixPlatform $Platform) -or ($Platform -match "rhel")) {
 
         It "Check for failed modules in build_output" {
             $buildOutputLocation = Join-Path $env:RUNNER_TEMP "build_output.txt"

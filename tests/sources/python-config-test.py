@@ -34,7 +34,8 @@ else:
 if pkg_installer:
     expected_lib_dir_path = f'/Library/Frameworks/{framework_name}/Versions/{version_major}.{version_minor}/lib'
 else:
-    expected_lib_dir_path = f'{os.getenv("AGENT_TOOLSDIRECTORY")}/Python/{version}/{architecture}/lib'
+    tools_dir = os.getenv("AGENT_TOOLSDIRECTORY") or os.getenv("RUNNER_TOOL_CACHE")
+    expected_lib_dir_path = f'{tools_dir}/Python/{version}/{architecture}/lib'
 
 # Check modules
 ### Validate libraries path
