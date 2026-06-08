@@ -55,7 +55,7 @@ jobs:
               $arch = if ($parts[1]) {$parts[1]} else {"x64"}
               switch -wildcard ($os) {
                 "*ubuntu*" { $platform = $os.Replace("ubuntu","linux"); if ($arch -eq "arm64" ) { $os = "${os}-arm" } }
-                "*rhel*" { $platform = $os.Replace("rhel","rhel"); $os = $os.Replace("rhel","setup-actions-rhel") }
+                "*rhel*" { $platform = $os; $os = $os.Replace("rhel","setup-actions-rhel") }
                 "*macos*" { $platform = 'darwin' }
                 "*windows*" { $platform = 'win32'; if ($arch -eq "arm64" ) { $os = "${os}-arm" } }
               }
