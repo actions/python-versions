@@ -1,5 +1,6 @@
 using module "./win-python-builder.psm1"
 using module "./ubuntu-python-builder.psm1"
+using module "./rhel-python-builder.psm1"
 using module "./macos-python-builder.psm1"
 
 <#
@@ -58,6 +59,8 @@ function Get-PythonBuilder {
 
     if ($Platform -match 'win32') {
         $builder = [WinPythonBuilder]::New($Version, $Architecture, $Platform)
+    } elseif ($Platform -match 'rhel') {
+        $builder = [RhelPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'linux') {
         $builder = [UbuntuPythonBuilder]::New($Version, $Architecture, $Platform)
     } elseif ($Platform -match 'darwin') {

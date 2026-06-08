@@ -14,7 +14,11 @@ $stableTestCases = @(
     @{ ReleaseName = "python-3.13.0-linux-20.04-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "20.04"; arch = "x64-freethreaded"} },
     @{ ReleaseName = "python-3.13.0-linux-22.04-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "22.04"; arch = "x64-freethreaded"} },
     @{ ReleaseName = "python-3.13.0-win32-x64-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x64-freethreaded"} },
-    @{ ReleaseName = "python-3.13.0-win32-x86-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x86-freethreaded"} }
+    @{ ReleaseName = "python-3.13.0-win32-x86-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x86-freethreaded"} },
+    @{ ReleaseName = "python-3.13.0-rhel-9-x64.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "9"; arch = "x64"} },
+    @{ ReleaseName = "python-3.13.0-rhel-10-x64.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "10"; arch = "x64"} },
+    @{ ReleaseName = "python-3.13.0-rhel-9-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "9"; arch = "x64-freethreaded"} },
+    @{ ReleaseName = "python-3.13.0-rhel-10-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "10"; arch = "x64-freethreaded"} }
 
 ) | ForEach-Object { $_.Configuration = $Configuration; $_ }
 
@@ -29,7 +33,11 @@ $unstableTestCases = @(
     @{ ReleaseName = "python-3.14.0-alpha.5-linux-20.04-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "20.04"; arch = "x64-freethreaded"} },
     @{ ReleaseName = "python-3.14.0-alpha.5-linux-22.04-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "linux"; platform_version = "22.04"; arch = "x64-freethreaded"} },
     @{ ReleaseName = "python-3.14.0-alpha.5-win32-x64-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x64-freethreaded"} },
-    @{ ReleaseName = "python-3.14.0-alpha.5-win32-x86-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x86-freethreaded"} }
+    @{ ReleaseName = "python-3.14.0-alpha.5-win32-x86-freethreaded.zip"; ExpectedResult = @{ platform = "win32"; platform_version = $null; arch = "x86-freethreaded"} },
+    @{ ReleaseName = "python-3.14.0-alpha.5-rhel-9-x64.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "9"; arch = "x64"} },
+    @{ ReleaseName = "python-3.14.0-alpha.5-rhel-10-x64.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "10"; arch = "x64"} },
+    @{ ReleaseName = "python-3.14.0-alpha.5-rhel-9-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "9"; arch = "x64-freethreaded"} },
+    @{ ReleaseName = "python-3.14.0-alpha.5-rhel-10-x64-freethreaded.tar.gz"; ExpectedResult = @{ platform = "rhel"; platform_version = "10"; arch = "x64-freethreaded"} }
 
 ) | ForEach-Object { $_.Configuration = $Configuration; $_ }
 
