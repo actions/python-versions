@@ -88,6 +88,10 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
+        ### Install libcrypt-dev for Python 3.10-3.12 
+        if ($this.Version -ge "3.10.0" -and $this.Version -lt "3.13.0") {
+            Execute-Command -Command "sudo apt install -y libcrypt-dev"
+        }
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
         Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
     }
