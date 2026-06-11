@@ -1230,6 +1230,185 @@
     ]
   },
   {
+    "version": "3.14.6",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.14.6-27283001424",
+    "files": [
+      {
+        "filename": "python-3.14.6-darwin-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-darwin-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-darwin-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-darwin-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-darwin-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-22.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-22.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-22.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-22.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-24.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-24.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-24.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-24.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-26.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-26.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-26.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-26.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-rhel-10-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-rhel-10-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-rhel-9-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-rhel-9-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-rhel-9-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.14.6-win32-arm64-freethreaded.zip",
+        "arch": "arm64-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-arm64-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.14.6-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-arm64.zip"
+      },
+      {
+        "filename": "python-3.14.6-win32-x64-freethreaded.zip",
+        "arch": "x64-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-x64-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.14.6-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.14.6-win32-x86-freethreaded.zip",
+        "arch": "x86-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-x86-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.14.6-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.14.6-27283001424/python-3.14.6-win32-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.14.5",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.14.5-25647354415",
@@ -3953,125 +4132,360 @@
     ]
   },
   {
+    "version": "3.13.14",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.13.14-27320626148",
+    "files": [
+      {
+        "filename": "python-3.13.14-darwin-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-darwin-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-darwin-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-darwin-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-darwin-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-darwin-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-22.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-22.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-22.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-22.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-24.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-24.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-24.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-24.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-26.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-26.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-26.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-26.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-rhel-10-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-rhel-10-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-rhel-9-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-rhel-9-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-rhel-9-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.14-win32-arm64-freethreaded.zip",
+        "arch": "arm64-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-arm64-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.13.14-win32-arm64.zip",
+        "arch": "arm64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-arm64.zip"
+      },
+      {
+        "filename": "python-3.13.14-win32-x64-freethreaded.zip",
+        "arch": "x64-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-x64-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.13.14-win32-x64.zip",
+        "arch": "x64",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-x64.zip"
+      },
+      {
+        "filename": "python-3.13.14-win32-x86-freethreaded.zip",
+        "arch": "x86-freethreaded",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-x86-freethreaded.zip"
+      },
+      {
+        "filename": "python-3.13.14-win32-x86.zip",
+        "arch": "x86",
+        "platform": "win32",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.14-27320626148/python-3.13.14-win32-x86.zip"
+      }
+    ]
+  },
+  {
     "version": "3.13.13",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.13.13-25171464454",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.13.13-27225391538",
     "files": [
       {
         "filename": "python-3.13.13-darwin-arm64-freethreaded.tar.gz",
         "arch": "arm64-freethreaded",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-darwin-arm64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-darwin-arm64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-darwin-arm64.tar.gz",
         "arch": "arm64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-darwin-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-darwin-arm64.tar.gz"
       },
       {
         "filename": "python-3.13.13-darwin-x64-freethreaded.tar.gz",
         "arch": "x64-freethreaded",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-darwin-x64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-darwin-x64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-22.04-arm64-freethreaded.tar.gz",
         "arch": "arm64-freethreaded",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-22.04-arm64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-22.04-arm64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-22.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-22.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-22.04-x64-freethreaded.tar.gz",
         "arch": "x64-freethreaded",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-22.04-x64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-22.04-x64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-22.04-x64.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-24.04-arm64-freethreaded.tar.gz",
         "arch": "arm64-freethreaded",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-24.04-arm64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-24.04-arm64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-24.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-24.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-24.04-x64-freethreaded.tar.gz",
         "arch": "x64-freethreaded",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-24.04-x64-freethreaded.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-24.04-x64-freethreaded.tar.gz"
       },
       {
         "filename": "python-3.13.13-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-linux-26.04-arm64-freethreaded.tar.gz",
+        "arch": "arm64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-26.04-arm64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-linux-26.04-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-26.04-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-rhel-10-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-rhel-10-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-rhel-9-x64-freethreaded.tar.gz",
+        "arch": "x64-freethreaded",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-rhel-9-x64-freethreaded.tar.gz"
+      },
+      {
+        "filename": "python-3.13.13-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-rhel-9-x64.tar.gz"
       },
       {
         "filename": "python-3.13.13-win32-arm64-freethreaded.zip",
         "arch": "arm64-freethreaded",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-arm64-freethreaded.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-arm64-freethreaded.zip"
       },
       {
         "filename": "python-3.13.13-win32-arm64.zip",
         "arch": "arm64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-arm64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-arm64.zip"
       },
       {
         "filename": "python-3.13.13-win32-x64-freethreaded.zip",
         "arch": "x64-freethreaded",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-x64-freethreaded.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-x64-freethreaded.zip"
       },
       {
         "filename": "python-3.13.13-win32-x64.zip",
         "arch": "x64",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-x64.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-x64.zip"
       },
       {
         "filename": "python-3.13.13-win32-x86-freethreaded.zip",
         "arch": "x86-freethreaded",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-x86-freethreaded.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-x86-freethreaded.zip"
       },
       {
         "filename": "python-3.13.13-win32-x86.zip",
         "arch": "x86",
         "platform": "win32",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-25171464454/python-3.13.13-win32-x86.zip"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.13.13-27225391538/python-3.13.13-win32-x86.zip"
       }
     ]
   },
