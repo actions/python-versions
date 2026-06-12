@@ -96,7 +96,7 @@ jobs:
       - name: Install libcrypt-dev (Ubuntu 26.04)
         if: matrix.os == 'ubuntu-26.04' || matrix.os == 'ubuntu-26.04-arm'
         shell: bash
-        run: sudo apt-get update && sudo apt-get install -y libxcrypt-dev
+        run: sudo apt-get update && sudo apt-get install -y libcrypt-dev
 
       - name: Check out repository code
         uses: actions/checkout@v6
