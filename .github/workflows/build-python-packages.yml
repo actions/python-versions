@@ -93,6 +93,10 @@ jobs:
           RHEL_VERSION=$(rpm -E %rhel)
           sudo dnf install -y "https://packages.microsoft.com/config/rhel/${RHEL_VERSION}/packages-microsoft-prod.rpm"
           sudo dnf install -y powershell git
+      - name: Install libcrypt-dev (Ubuntu 26.04)
+        if: matrix.os == 'ubuntu-26.04' || matrix.os == 'ubuntu-26.04-arm'
+        shell: bash
+        run: sudo apt-get update && sudo apt-get install -y libxcrypt-dev
 
       - name: Check out repository code
         uses: actions/checkout@v6
