@@ -88,11 +88,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
-        ### Install libcrypt-dev for Python 3.10-3.12 on Ubuntu 26.04   
-        if ($this.Version -ge "3.10.0" -and $this.Version -lt "3.13.0" -and $this.Platform -match "26\.04") {
-            Write-Host "Check if this block "
-            Execute-Command -Command "sudo apt install -y libcrypt-dev"
-        }
+        # ### Install libcrypt-dev for Python 3.10-3.12 on Ubuntu 26.04   
+        # if ($this.Version -ge "3.10.0" -and $this.Version -lt "3.13.0" -and $this.Platform -match "26\.04") {
+        #     Write-Host "Check if this block "
+        #     Execute-Command -Command "sudo apt install -y libcrypt-dev"
+        # }
 
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
         Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
