@@ -201,7 +201,6 @@ standard_library = [
 if sys.version_info >= (3, 10):
     standard_library.remove('symbol')
     standard_library.remove('formatter')
-    standard_library.remove('crypt')
 
 # 'binhex' module has been removed from Python 3.11
 if sys.version_info >= (3, 11):
@@ -225,6 +224,7 @@ if sys.version_info >= (3, 13):
     standard_library.remove('cgi')
     standard_library.remove('cgitb')
     standard_library.remove('chunk')
+    standard_library.remove('crypt')
     standard_library.remove('imghdr')
     standard_library.remove('lib2to3')
     standard_library.remove('mailcap')
