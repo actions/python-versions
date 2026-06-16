@@ -88,9 +88,11 @@ class UbuntuPythonBuilder : NixPythonBuilder {
             Execute-Command -Command "sudo apt install -y $_"
         }
 
-        ### Install libcrypt-dev for Python 3.10-3.12 on Ubuntu 26.04   
-        if ($this.Version -ge "3.10.0" -and $this.Version -lt "3.13.0" -and $this.Platform -match "26\.04") {
-            Write-Host "Check if this block "
+        ### Python 3.10-3.12 need libcrypt-dev (crypt.h) which is not installed by default on Ubuntu 26.04
+        if ([semver]"$($this.Version.Major).$($this.Version.Minor)" -ge [semver]"3.10" -and
+            [semver]"$($this.Version.Major).$($this.Version.Minor)" -lt [semver]"3.13" -and
+            $this.Platform -match "26\.04") {
+            Write-Host "inside the if statement for installing libcrypt-dev"
             Execute-Command -Command "sudo apt install -y libcrypt-dev"
         }
 
