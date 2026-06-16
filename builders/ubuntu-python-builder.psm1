@@ -90,5 +90,12 @@ class UbuntuPythonBuilder : NixPythonBuilder {
 
         ### On Ubuntu-1804, libgdbm-compat-dev has older modules that are no longer in libgdbm-dev
         Execute-Command -Command "sudo apt install -y libgdbm-compat-dev"
+
+        ### Python 3.10-3.12 need libcrypt-dev (crypt.h) which is not installed by default on Ubuntu 26.04
+        if ([semver]"$($this.Version.Major).$($this.Version.Minor)" -ge [semver]"3.10" -and
+            [semver]"$($this.Version.Major).$($this.Version.Minor)" -lt [semver]"3.13" -and
+            $this.Platform -match "26\.04") {
+            Execute-Command -Command "sudo apt install -y libcrypt-dev"
+        }
     }
 }
