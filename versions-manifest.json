@@ -6894,35 +6894,63 @@
   {
     "version": "3.12.13",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.13-22652080177",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.12.13-27650778726",
     "files": [
       {
         "filename": "python-3.12.13-linux-22.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-22652080177/python-3.12.13-linux-22.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.13-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-22652080177/python-3.12.13-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-22.04-x64.tar.gz"
       },
       {
         "filename": "python-3.12.13-linux-24.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-22652080177/python-3.12.13-linux-24.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.12.13-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-22652080177/python-3.12.13-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.13-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.13-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.13-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.12.13-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.12.13-27650778726/python-3.12.13-rhel-9-x64.tar.gz"
       }
     ]
   },
@@ -8427,35 +8455,63 @@
   {
     "version": "3.11.15",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.15-22631496413",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.15-27649667267",
     "files": [
       {
         "filename": "python-3.11.15-linux-22.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-22631496413/python-3.11.15-linux-22.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.15-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-22631496413/python-3.11.15-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-22.04-x64.tar.gz"
       },
       {
         "filename": "python-3.11.15-linux-24.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-22631496413/python-3.11.15-linux-24.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.11.15-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-22631496413/python-3.11.15-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.15-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.15-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.15-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.15-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.15-27649667267/python-3.11.15-rhel-9-x64.tar.gz"
       }
     ]
   },
@@ -9973,41 +10029,69 @@
   {
     "version": "3.10.20",
     "stable": true,
-    "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.20-22630057857",
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.20-27647543567",
     "files": [
       {
         "filename": "python-3.10.20-darwin-x64.tar.gz",
         "arch": "x64",
         "platform": "darwin",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-22630057857/python-3.10.20-darwin-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-darwin-x64.tar.gz"
       },
       {
         "filename": "python-3.10.20-linux-22.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-22630057857/python-3.10.20-linux-22.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-22.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.10.20-linux-22.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "22.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-22630057857/python-3.10.20-linux-22.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-22.04-x64.tar.gz"
       },
       {
         "filename": "python-3.10.20-linux-24.04-arm64.tar.gz",
         "arch": "arm64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-22630057857/python-3.10.20-linux-24.04-arm64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-24.04-arm64.tar.gz"
       },
       {
         "filename": "python-3.10.20-linux-24.04-x64.tar.gz",
         "arch": "x64",
         "platform": "linux",
         "platform_version": "24.04",
-        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-22630057857/python-3.10.20-linux-24.04-x64.tar.gz"
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.20-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.20-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.20-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.20-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.20-27647543567/python-3.10.20-rhel-9-x64.tar.gz"
       }
     ]
   },
