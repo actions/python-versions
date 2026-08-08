@@ -150,7 +150,7 @@ if ($LASTEXITCODE -ne 0) {
         Throw "Error happened during ensurepip execution"
     }
 }
-cmd.exe /c "$PythonExePath -m pip install --upgrade --force-reinstall pip --no-warn-script-location"
+cmd.exe /c "$PythonExePath -m pip install --only-binary :all: --upgrade --force-reinstall pip --no-warn-script-location"
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during pip installation / upgrade"
 }
