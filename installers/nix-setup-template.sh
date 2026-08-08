@@ -54,7 +54,7 @@ export PIP_ROOT_USER_ACTION=ignore
 if ! ./python -c "import pip" 2>/dev/null; then
   ./python -m ensurepip
 fi
-./python -m pip install --upgrade --force-reinstall pip --disable-pip-version-check --no-warn-script-location
+./python -m pip install --only-binary ':all:' --upgrade --force-reinstall pip --disable-pip-version-check --no-warn-script-location
 
 echo "Create complete file"
 touch $PYTHON_TOOLCACHE_VERSION_PATH/$ARCH.complete
