@@ -69,18 +69,18 @@ cd bin/
 # This symlink already exists if Python version with the same major.minor version is installed,
 # since we do not remove the framework folder
 if [ ! -f $PYTHON_MAJOR_MINOR ]; then
-    ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
+    sudo ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR
 fi
 
 if [ ! -f $PYTHON_MAJOR ]; then
-    ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR
+    sudo ln -s $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR
 fi
 
 if [ ! -f python ]; then
-    ln -s $PYTHON_MAJOR_DOT_MINOR python
+    sudo ln -s $PYTHON_MAJOR_DOT_MINOR python
 fi
 
-chmod +x $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR python
+sudo chmod +x $PYTHON_MAJOR $PYTHON_MAJOR_DOT_MINOR $PYTHON_MAJOR_MINOR python
 
 echo "Upgrading pip..."
 export PIP_ROOT_USER_ACTION=ignore
