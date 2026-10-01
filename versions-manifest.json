@@ -10011,6 +10011,69 @@
     ]
   },
   {
+    "version": "3.11.17",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.17-36876195594",
+    "files": [
+      {
+        "filename": "python-3.11.17-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.11.17-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.11.17-36876195594/python-3.11.17-rhel-9-x64.tar.gz"
+      }
+    ]
+  },
+  {
     "version": "3.11.16",
     "stable": true,
     "release_url": "https://github.com/actions/python-versions/releases/tag/3.11.16-31661435402",
@@ -11644,6 +11707,75 @@
         "arch": "x86",
         "platform": "win32",
         "download_url": "https://github.com/actions/python-versions/releases/download/3.11.0-alpha.1-117932/python-3.11.0-alpha.1-win32-x86.zip"
+      }
+    ]
+  },
+  {
+    "version": "3.10.22",
+    "stable": true,
+    "release_url": "https://github.com/actions/python-versions/releases/tag/3.10.22-36876129702",
+    "files": [
+      {
+        "filename": "python-3.10.22-darwin-x64.tar.gz",
+        "arch": "x64",
+        "platform": "darwin",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-darwin-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-22.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-22.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-22.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "22.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-22.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-24.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-24.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-24.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "24.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-24.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-26.04-arm64.tar.gz",
+        "arch": "arm64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-26.04-arm64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-linux-26.04-x64.tar.gz",
+        "arch": "x64",
+        "platform": "linux",
+        "platform_version": "26.04",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-linux-26.04-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-rhel-10-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "10",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-rhel-10-x64.tar.gz"
+      },
+      {
+        "filename": "python-3.10.22-rhel-9-x64.tar.gz",
+        "arch": "x64",
+        "platform": "rhel",
+        "platform_version": "9",
+        "download_url": "https://github.com/actions/python-versions/releases/download/3.10.22-36876129702/python-3.10.22-rhel-9-x64.tar.gz"
       }
     ]
   },
