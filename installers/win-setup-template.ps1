@@ -83,6 +83,7 @@ $PythonToolcachePath = Join-Path -Path $ToolcacheRoot -ChildPath "Python"
 $PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version
 $PythonArchPath = Join-Path -Path $PythonVersionPath -ChildPath $Architecture
 
+$IsZip = $PythonExecName -match "\.zip$"
 $IsMSI = $PythonExecName -match "msi"
 $IsFreeThreaded = $Architecture -match "-freethreaded"
 
@@ -114,27 +115,35 @@ if ($null -ne $InstalledVersions) {
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
 
-Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
-Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+if (-not $IsZip) {
+    Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
+    Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+}
 
 Write-Host "Create Python $Version folder in $PythonToolcachePath"
 New-Item -ItemType Directory -Path $PythonArchPath -Force | Out-Null
 
-Write-Host "Copy Python binaries to $PythonArchPath"
-Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
+if ($IsZip) {
+    # Python 3.16+ is distributed as a package (PEP 773) that can be extracted and run as-is
+    Write-Host "Extract Python $Version in $PythonToolcachePath..."
+    Expand-Archive -Path ./$PythonExecName -DestinationPath $PythonArchPath -Force
+} else {
+    Write-Host "Copy Python binaries to $PythonArchPath"
+    Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
 
-Write-Host "Install Python $Version in $PythonToolcachePath..."
-$ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
+    Write-Host "Install Python $Version in $PythonToolcachePath..."
+    $ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
 
-cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
-if ($LASTEXITCODE -ne 0) {
-    Throw "Error happened during Python installation"
-}
+    cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
+    if ($LASTEXITCODE -ne 0) {
+        Throw "Error happened during Python installation"
+    }
 
-if ($IsFreeThreaded) {
-    # Delete python.exe and create a symlink to free-threaded exe
-    Remove-Item -Path "$PythonArchPath\python.exe" -Force
-    New-Item -Path "$PythonArchPath\python.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python${MajorVersion}.${MinorVersion}t.exe"
+    if ($IsFreeThreaded) {
+        # Delete python.exe and create a symlink to free-threaded exe
+        Remove-Item -Path "$PythonArchPath\python.exe" -Force
+        New-Item -Path "$PythonArchPath\python.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python${MajorVersion}.${MinorVersion}t.exe"
+    }
 }
 
 Write-Host "Create `python3` symlink"
