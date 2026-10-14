@@ -66,6 +66,15 @@ Describe "Tests" {
         }
     }
 
+    if ($Platform -eq "win32") {
+        It "pip.exe is from the toolcache" {
+            $pipLocation = (Get-Command "pip").Path
+            $pipLocation | Should -Not -BeNullOrEmpty
+            $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
+            $pipLocation.startsWith($expectedPath) | Should -BeTrue
+        }
+    }
+
     It "Run pip" {
         "pip install requests" | Should -ReturnZeroExitCode
         "pip uninstall requests -y" | Should -ReturnZeroExitCode
