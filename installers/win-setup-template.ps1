@@ -127,6 +127,9 @@ if ($IsZip) {
     # Python 3.16+ is distributed as a package (PEP 773) that can be extracted and run as-is
     Write-Host "Extract Python $Version in $PythonToolcachePath..."
     Expand-Archive -Path ./$PythonExecName -DestinationPath $PythonArchPath -Force
+
+    # Debug symbols are only in the "pythontest" package and were not installed by the legacy installers
+    Get-ChildItem -Path $PythonArchPath -Recurse -Filter "*.pdb" | Remove-Item -Force
 } else {
     Write-Host "Copy Python binaries to $PythonArchPath"
     Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null

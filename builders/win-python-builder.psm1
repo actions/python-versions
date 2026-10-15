@@ -46,10 +46,10 @@ class WinPythonBuilder : PythonBuilder {
         return $this.Version.Major -eq 3 -and $this.Version.Minor -ge 16
     }
 
-    [string] GetManifestPackageId() {
+    [string] GetManifestPackageId([string] $package, [bool] $freethreaded) {
         <#
         .SYNOPSIS
-        Return the id of the "pythoncore" package in the Windows release manifest for this architecture.
+        Return the id of a package ("pythoncore" or "pythontest") in the Windows release manifest for this architecture.
         #>
 
         $hardware = switch ($this.GetHardwareArchitecture()) {
@@ -58,9 +58,9 @@ class WinPythonBuilder : PythonBuilder {
             "arm64" { "arm64" }
             default { throw "Unsupported architecture: $($this.Architecture)" }
         }
-        $freethreaded = if ($this.IsFreeThreaded()) { "t" } else { "" }
+        $suffix = if ($freethreaded) { "t" } else { "" }
 
-        return "pythoncore-$($this.Version.Major).$($this.Version.Minor)${freethreaded}-${hardware}"
+        return "${package}-$($this.Version.Major).$($this.Version.Minor)${suffix}-${hardware}"
     }
 
     [uri] GetManifestUri() {
@@ -76,20 +76,27 @@ class WinPythonBuilder : PythonBuilder {
         return "${base}/${versionName}/windows-${nativeVersion}.json"
     }
 
-    [string] DownloadPackage() {
+    [object] GetManifest() {
         <#
         .SYNOPSIS
-        Download the Python package listed in the Windows release manifest and validate its SHA-256 hash.
+        Download and parse the Windows release manifest.
         #>
 
         $manifestUri = $this.GetManifestUri()
         Write-Host "Manifest URI: $manifestUri"
-        $manifest = Invoke-RestMethod -Uri $manifestUri
 
-        $packageId = $this.GetManifestPackageId()
+        return Invoke-RestMethod -Uri $manifestUri
+    }
+
+    [string] DownloadPackage([object] $manifest, [string] $packageId) {
+        <#
+        .SYNOPSIS
+        Download a package listed in the Windows release manifest and validate its SHA-256 hash.
+        #>
+
         $package = $manifest.versions | Where-Object { $_.id -eq $packageId }
         if ($null -eq $package) {
-            throw "Package '$packageId' not found in $manifestUri"
+            throw "Package '$packageId' not found in the Windows release manifest"
         }
 
         Write-Host "Sources URI: $($package.url)"
@@ -153,7 +160,12 @@ class WinPythonBuilder : PythonBuilder {
         #>
 
         if ($this.UsesPackageManifest()) {
-            return $this.DownloadPackage()
+            $manifest = $this.GetManifest()
+
+            # The "pythontest" package is "pythoncore" plus Lib/test, for consistency with the legacy installers.
+            $package = if ($this.IsFreeThreaded()) { "pythoncore" } else { "pythontest" }
+
+            return $this.DownloadPackage($manifest, $this.GetManifestPackageId($package, $this.IsFreeThreaded()))
         }
 
         $sourceUri = $this.GetSourceUri()
