@@ -79,6 +79,15 @@ Describe "Tests" {
             $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
             $pipLocation.startsWith($expectedPath) | Should -BeTrue
         }
+
+        It "py.exe finds Python" {
+            $suffix = if ($Architecture -match "-freethreaded") { "t" } else { "" }
+            $major, $minor = "$Version".Split(".")[0..1]
+            $pyLocation = py "-$major.$minor$suffix" -c "import sys; print(sys.executable)"
+            $LASTEXITCODE | Should -Be 0
+            $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
+            $pyLocation.startsWith($expectedPath) | Should -BeTrue
+        }
     }
 
     It "Run pip" {
