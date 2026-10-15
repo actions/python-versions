@@ -163,9 +163,15 @@ class WinPythonBuilder : PythonBuilder {
             $manifest = $this.GetManifest()
 
             # The "pythontest" package is "pythoncore" plus Lib/test, for consistency with the legacy installers.
-            $package = if ($this.IsFreeThreaded()) { "pythoncore" } else { "pythontest" }
+            $packageId = $this.GetManifestPackageId("pythontest", $this.IsFreeThreaded())
 
-            return $this.DownloadPackage($manifest, $this.GetManifestPackageId($package, $this.IsFreeThreaded()))
+            # 3.16.0a1 has no free-threaded "pythontest" package, so fall back to "pythoncore" (no Lib/test) for those.
+            if (-not ($manifest.versions | Where-Object { $_.id -eq $packageId })) {
+                Write-Host "Package '$packageId' not found, using 'pythoncore' instead"
+                $packageId = $this.GetManifestPackageId("pythoncore", $this.IsFreeThreaded())
+            }
+
+            return $this.DownloadPackage($manifest, $packageId)
         }
 
         $sourceUri = $this.GetSourceUri()
