@@ -66,8 +66,8 @@ Describe "Tests" {
         }
     }
 
-    # TODO: There is no free-threaded "PythonTest" package in the 3.16.0a1 Windows manifest (expected to be fixed in 3.16.0a2)
-    $SkipTestSuite = ($Platform -eq "win32") -and ($Architecture -match "-freethreaded") -and ($Version -le [semver]"3.16.0-alpha.1")
+    # Windows free-threaded Python 3.16+ is installed from a "PythonCore" package, as there is no free-threaded "PythonTest" package with Lib/test
+    $SkipTestSuite = ($Platform -eq "win32") -and ($Architecture -match "-freethreaded") -and ([semver]$Version -ge [semver]"3.16.0-alpha.1")
     It "Check if the standard library test suite (Lib/test) is installed" -Skip:$SkipTestSuite {
         "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
     }
