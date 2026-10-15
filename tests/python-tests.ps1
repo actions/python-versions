@@ -66,6 +66,10 @@ Describe "Tests" {
         }
     }
 
+    It "Check if the standard library test suite (Lib/test) is installed" {
+        "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
+    }
+
     if ($Platform -eq "win32") {
         It "pip.exe is from the toolcache" {
             $pipLocation = (Get-Command "pip").Path
