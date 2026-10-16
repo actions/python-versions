@@ -80,7 +80,9 @@ Describe "Tests" {
             $pipLocation.startsWith($expectedPath) | Should -BeTrue
         }
 
-        It "py.exe finds Python" {
+        # TODO: Python 3.16+ is extracted from a package, so it is not registered for the legacy py.exe launcher
+        $SkipPyLauncher = [semver]$Version -ge [semver]"3.16.0-alpha.1"
+        It "py.exe finds Python" -Skip:$SkipPyLauncher {
             $suffix = if ($Architecture -match "-freethreaded") { "t" } else { "" }
             $major, $minor = "$Version".Split(".")[0..1]
             $pyLocation = py "-$major.$minor$suffix" -c "import sys; print(sys.executable)"
