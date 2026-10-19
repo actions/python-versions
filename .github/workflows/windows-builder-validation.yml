@@ -1,0 +1,27 @@
+name: Windows builder tests
+on:
+  pull_request:
+    paths:
+      - 'builders/**'
+      - 'installers/win-setup-template.ps1'
+      - 'tests/WinPythonBuilder.Tests.ps1'
+      - 'tests/PythonBuildMatrix.Tests.ps1'
+      - '.github/workflows/windows-builder-validation.yml'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  test:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install Pester
+        run: Install-Module Pester -Force -Scope CurrentUser -SkipPublisherCheck -MinimumVersion 5.0
+      - name: Test Windows builder
+        run: |
+          Invoke-Pester -Path tests/WinPythonBuilder.Tests.ps1, tests/PythonBuildMatrix.Tests.ps1 -CI

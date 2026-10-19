@@ -84,6 +84,7 @@ $PythonVersionPath = Join-Path -Path $PythonToolcachePath -ChildPath $Version
 $PythonArchPath = Join-Path -Path $PythonVersionPath -ChildPath $Architecture
 
 $IsMSI = $PythonExecName -match "msi"
+$IsZip = $PythonExecName.EndsWith(".zip")
 $IsFreeThreaded = $Architecture -match "-freethreaded"
 
 $MajorVersion = $Version.Split('.')[0]
@@ -114,24 +115,31 @@ if ($null -ne $InstalledVersions) {
     Write-Host "No Python$MajorVersion.$MinorVersion.* found"
 }
 
-Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
-Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+if (-not $IsZip) {
+    Write-Host "Remove registry entries for Python ${MajorVersion}.${MinorVersion}(${Architecture})..."
+    Remove-RegistryEntries -Architecture $Architecture -MajorVersion $MajorVersion -MinorVersion $MinorVersion
+}
 
 Write-Host "Create Python $Version folder in $PythonToolcachePath"
 New-Item -ItemType Directory -Path $PythonArchPath -Force | Out-Null
 
-Write-Host "Copy Python binaries to $PythonArchPath"
-Copy-Item -Path ./$PythonExecName -Destination $PythonArchPath | Out-Null
+if ($IsZip) {
+    Write-Host "Extract Python $Version to $PythonArchPath..."
+    Expand-Archive -LiteralPath (Join-Path $PSScriptRoot $PythonExecName) -DestinationPath $PythonArchPath -Force -ErrorAction Stop
+} else {
+    Write-Host "Copy Python binaries to $PythonArchPath"
+    Copy-Item -Path (Join-Path $PSScriptRoot $PythonExecName) -Destination $PythonArchPath | Out-Null
 
-Write-Host "Install Python $Version in $PythonToolcachePath..."
-$ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
+    Write-Host "Install Python $Version in $PythonToolcachePath..."
+    $ExecParams = Get-ExecParams -IsMSI $IsMSI -IsFreeThreaded $IsFreeThreaded -PythonArchPath $PythonArchPath
 
-cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
-if ($LASTEXITCODE -ne 0) {
-    Throw "Error happened during Python installation"
+    cmd.exe /c "cd $PythonArchPath && call $PythonExecName $ExecParams /quiet"
+    if ($LASTEXITCODE -ne 0) {
+        Throw "Error happened during Python installation"
+    }
 }
 
-if ($IsFreeThreaded) {
+if ($IsFreeThreaded -and -not $IsZip) {
     # Delete python.exe and create a symlink to free-threaded exe
     Remove-Item -Path "$PythonArchPath\python.exe" -Force
     New-Item -Path "$PythonArchPath\python.exe" -ItemType SymbolicLink -Value "$PythonArchPath\python${MajorVersion}.${MinorVersion}t.exe"
@@ -143,14 +151,14 @@ New-Item -Path "$PythonArchPath\python3.exe" -ItemType SymbolicLink -Value "$Pyt
 Write-Host "Install and upgrade Pip"
 $Env:PIP_ROOT_USER_ACTION = "ignore"
 $PythonExePath = Join-Path -Path $PythonArchPath -ChildPath "python.exe"
-cmd.exe /c "$PythonExePath -c ""import pip"" 2>NUL"
+& $PythonExePath -c "import pip" 2>$null
 if ($LASTEXITCODE -ne 0) {
-    cmd.exe /c "$PythonExePath -m ensurepip"
+    & $PythonExePath -m ensurepip
     if ($LASTEXITCODE -ne 0) {
         Throw "Error happened during ensurepip execution"
     }
 }
-cmd.exe /c "$PythonExePath -m pip install --upgrade --force-reinstall pip --no-warn-script-location"
+& $PythonExePath -m pip install --upgrade --force-reinstall pip --no-warn-script-location
 if ($LASTEXITCODE -ne 0) {
     Throw "Error happened during pip installation / upgrade"
 }

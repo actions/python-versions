@@ -53,6 +53,32 @@ Describe "Tests" {
         "python ./sources/simple-test.py" | Should -ReturnZeroExitCode
     }
 
+    if ($Platform -eq "win32") {
+        It "Uses the requested Windows architecture, version and threading mode" {
+            $nativeVersion = Convert-Version -version $Version
+            "python ./sources/windows-runtime.py $Architecture $nativeVersion" | Should -ReturnZeroExitCode
+            "python3 ./sources/windows-runtime.py $Architecture $nativeVersion" | Should -ReturnZeroExitCode
+        }
+
+        It "Contains Windows development headers, import libraries and ensurepip" {
+            $pythonDirectory = Split-Path (Get-Command "python").Path
+            Join-Path $pythonDirectory "include/Python.h" | Should -Exist
+            @(Get-ChildItem (Join-Path $pythonDirectory "libs") -Filter "python*.lib").Count | Should -BeGreaterThan 0
+            "python -m ensurepip --version" | Should -ReturnZeroExitCode
+        }
+
+        if ($Version.Major -gt 3 -or ($Version.Major -eq 3 -and $Version.Minor -ge 16)) {
+            It "Contains the standard-library test suite and native test modules when published" {
+                $pythonDirectory = Split-Path (Get-Command "python").Path
+                if ($Architecture.EndsWith("-freethreaded") -and -not (Test-Path (Join-Path $pythonDirectory "Lib/test/__init__.py"))) {
+                    Set-ItResult -Skipped -Because "The Windows free-threaded runtime package for $Version does not include the test distribution."
+                    return
+                }
+                'python -c "import test, test.support, _testcapi, _testinternalcapi"' | Should -ReturnZeroExitCode
+            }
+        }
+    }
+
     # linux has no display name and no $DISPLAY environment variable - skip tk test
     # if (-not (($Platform -match "ubuntu") -or ($Platform -match "linux"))) {
     #     It "Check if tcl/tk has the same headed and library versions" {
