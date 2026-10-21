@@ -66,6 +66,32 @@ Describe "Tests" {
         }
     }
 
+    # Windows free-threaded Python 3.16+ is installed from a "PythonCore" package, as there is no free-threaded "PythonTest" package with Lib/test
+    $SkipTestSuite = ($Platform -eq "win32") -and ($Architecture -match "-freethreaded") -and ([semver]$Version -ge [semver]"3.16.0-alpha.1")
+    It "Check if the standard library test suite (Lib/test) is installed" -Skip:$SkipTestSuite {
+        "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
+    }
+
+    if ($Platform -eq "win32") {
+        It "pip.exe is from the toolcache" {
+            $pipLocation = (Get-Command "pip").Path
+            $pipLocation | Should -Not -BeNullOrEmpty
+            $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
+            $pipLocation.startsWith($expectedPath) | Should -BeTrue
+        }
+
+        # TODO: Python 3.16+ is extracted from a package, so it is not registered for the legacy py.exe launcher
+        $SkipPyLauncher = [semver]$Version -ge [semver]"3.16.0-alpha.1"
+        It "py.exe finds Python" -Skip:$SkipPyLauncher {
+            $suffix = if ($Architecture -match "-freethreaded") { "t" } else { "" }
+            $major, $minor = "$Version".Split(".")[0..1]
+            $pyLocation = py "-$major.$minor$suffix" -c "import sys; print(sys.executable)"
+            $LASTEXITCODE | Should -Be 0
+            $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
+            $pyLocation.startsWith($expectedPath) | Should -BeTrue
+        }
+    }
+
     It "Run pip" {
         "pip install requests" | Should -ReturnZeroExitCode
         "pip uninstall requests -y" | Should -ReturnZeroExitCode
