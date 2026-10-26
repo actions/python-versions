@@ -47,6 +47,7 @@ standard_library = [
     'datetime',
     'dbm',
     'decimal',
+    '_decimal',
     'difflib',
     'dis',
     'distutils',
