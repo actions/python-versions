@@ -107,8 +107,10 @@ class NixPythonBuilder : PythonBuilder {
         Extract-TarArchive -ArchivePath $archiveFilepath -OutputDirectory $sourceLocation
 
         Push-Location -Path $sourceLocation
-        ### _decimal is a shared extension module, so the static library has to be position independent
-        Execute-Command -Command "./configure --prefix=$installLocation --disable-cxx --disable-shared CFLAGS=-fPIC"
+        ### _decimal is a shared extension module, so the static library has to be position independent.
+        ### -O3 and -fvisibility=hidden match how CPython compiled its bundled libmpdec in the 3.14 builds:
+        ### libmpdec's symbols stay private to _decimal, and big-number arithmetic doesn't get slower.
+        Execute-Command -Command "./configure --prefix=$installLocation --disable-cxx --disable-shared CFLAGS='-fPIC -O3 -fvisibility=hidden'"
         Execute-Command -Command "make"
         Execute-Command -Command "make install"
         Pop-Location
