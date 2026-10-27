@@ -115,6 +115,13 @@ class NixPythonBuilder : PythonBuilder {
         Execute-Command -Command "make install"
         Pop-Location
 
+        ### Execute-Command doesn't stop on failure, and without the library _decimal would silently be left out
+        $libmpdecArchive = Join-Path -Path $installLocation -ChildPath "lib/libmpdec.a"
+        if (-not (Test-Path $libmpdecArchive)) {
+            Write-Host "libmpdec build failed, $libmpdecArchive is missing"
+            exit 1
+        }
+
         return $installLocation
     }
 
