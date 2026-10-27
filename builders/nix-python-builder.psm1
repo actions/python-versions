@@ -83,6 +83,48 @@ class NixPythonBuilder : PythonBuilder {
         return $expandedSourceLocation
     }
 
+    [string] BuildLibmpdec() {
+        <#
+        .SYNOPSIS
+        Build a static libmpdec for the _decimal module. Returns installation location path.
+        #>
+
+        $mpdecimalVersion = "4.0.1"
+        $mpdecimalSha256 = "96d33abb4bb0070c7be0fed4246cd38416188325f820468214471938545b1ac8"
+        $mpdecimalUri = "https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-${mpdecimalVersion}.tar.gz"
+        Write-Host "libmpdec sources URI: $mpdecimalUri"
+
+        $archiveFilepath = Download-File -Uri $mpdecimalUri -OutputFolder $this.TempFolderLocation
+        $actualSha256 = (Get-FileHash -Path $archiveFilepath -Algorithm SHA256).Hash
+        if ($actualSha256 -ne $mpdecimalSha256) {
+            Write-Host "SHA256 mismatch for ${archiveFilepath}: expected $mpdecimalSha256, got $actualSha256"
+            exit 1
+        }
+
+        $sourceLocation = Join-Path -Path $this.TempFolderLocation -ChildPath "mpdecimal-source"
+        $installLocation = Join-Path -Path $this.TempFolderLocation -ChildPath "mpdecimal"
+        New-Item -Path $sourceLocation -ItemType Directory
+        Extract-TarArchive -ArchivePath $archiveFilepath -OutputDirectory $sourceLocation
+
+        Push-Location -Path $sourceLocation
+        ### _decimal is a shared extension module, so the static library has to be position independent.
+        ### -O3 and -fvisibility=hidden match how CPython compiled its bundled libmpdec in the 3.14 builds:
+        ### libmpdec's symbols stay private to _decimal, and big-number arithmetic doesn't get slower.
+        Execute-Command -Command "./configure --prefix=$installLocation --disable-cxx --disable-shared CFLAGS='-fPIC -O3 -fvisibility=hidden'"
+        Execute-Command -Command "make"
+        Execute-Command -Command "make install"
+        Pop-Location
+
+        ### Execute-Command doesn't stop on failure, and without the library _decimal would silently be left out
+        $libmpdecArchive = Join-Path -Path $installLocation -ChildPath "lib/libmpdec.a"
+        if (-not (Test-Path $libmpdecArchive)) {
+            Write-Host "libmpdec build failed, $libmpdecArchive is missing"
+            exit 1
+        }
+
+        return $installLocation
+    }
+
     [void] CreateInstallationScript() {
         <#
         .SYNOPSIS
