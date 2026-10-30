@@ -66,13 +66,15 @@ Describe "Tests" {
         }
     }
 
-    # Windows free-threaded Python 3.16+ is installed from a "PythonCore" package, as there is no free-threaded "PythonTest" package with Lib/test
-    $SkipTestSuite = ($Platform -eq "win32") -and ($Architecture -match "-freethreaded") -and ([semver]$Version -ge [semver]"3.16.0-alpha.1")
-    It "Check if the standard library test suite (Lib/test) is installed" -Skip:$SkipTestSuite {
-        "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
-    }
-
     if ($Platform -eq "win32") {
+        if ([semver]$Version -ge [semver]"3.16.0-alpha.1") {
+            # 3.16.0a1 has no free-threaded "PythonTest" package, so free-threaded builds fall back to "PythonCore" without Lib/test
+            $SkipTestSuite = ($Architecture -match "-freethreaded") -and ([semver]$Version -lt [semver]"3.16.0-alpha.2")
+            It "Check if the standard library test suite (Lib/test) is installed" -Skip:$SkipTestSuite {
+                "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
+            }
+        }
+
         It "pip.exe is from the toolcache" {
             $pipLocation = (Get-Command "pip").Path
             $pipLocation | Should -Not -BeNullOrEmpty
@@ -85,7 +87,8 @@ Describe "Tests" {
         It "py.exe finds Python" -Skip:$SkipPyLauncher {
             $suffix = if ($Architecture -match "-freethreaded") { "t" } else { "" }
             $major, $minor = "$Version".Split(".")[0..1]
-            $pyLocation = py "-$major.$minor$suffix" -c "import sys; print(sys.executable)"
+            $bits = if ($Architecture -match "x86") { "32" } else { "64" }
+            $pyLocation = py "-$major.$minor$suffix-$bits" -c "import sys; print(sys.executable)"
             $LASTEXITCODE | Should -Be 0
             $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
             $pyLocation.startsWith($expectedPath) | Should -BeTrue
