@@ -69,7 +69,7 @@ Describe "Tests" {
     if ($Platform -eq "win32") {
         if ([semver]$Version -ge [semver]"3.16.0-alpha.1") {
             # 3.16.0a1 has no free-threaded "PythonTest" package, so free-threaded builds fall back to "PythonCore" without Lib/test
-            $SkipTestSuite = ($Architecture -match "-freethreaded") -and ([semver]$Version -lt [semver]"3.16.0-alpha.2")
+            $SkipTestSuite = ($Architecture -match "-freethreaded") -and ([semver]$Version -eq [semver]"3.16.0-alpha.1")
             It "Check if the standard library test suite (Lib/test) is installed" -Skip:$SkipTestSuite {
                 "python ./sources/stdlib-test-suite.py" | Should -ReturnZeroExitCode
             }
