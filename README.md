@@ -16,7 +16,7 @@ More versions are available to install on-the-fly through the [`setup-python`](h
 
 **Windows:**
 - For **Python < 3.16**, the official Python executables are simply downloaded from [python.org](https://www.python.org/ftp/python/) and archived along with the installation script for further distribution and installation.
-- For **Python >= 3.16**, which no longer ships legacy installers ([PEP 773](https://peps.python.org/pep-0773/)), the `pythontest` package (or `pythoncore` for free-threaded builds, until a free-threaded `pythontest` package is published) listed in the python.org `windows-<version>.json` release manifest is downloaded, verified against its SHA-256, and archived as a ZIP that the installation script extracts into the tool cache.
+- For **Python >= 3.16**, which no longer ships legacy installers ([PEP 773](https://peps.python.org/pep-0773/)), the `pythontest` package listed in the python.org `windows-<version>.json` release manifest is downloaded, verified against its SHA-256, and archived as a ZIP that the installation script extracts into the tool cache.
 
 ## Support policy
 We aim to make new versions of Python available as soon as they are released. Both stable and prerelease versions are considered for building and releasing. Please open an issue in [actions/setup-python](https://github.com/actions/setup-python) if a version you're looking for isn't available.
