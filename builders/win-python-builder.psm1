@@ -25,6 +25,7 @@ class WinPythonBuilder : PythonBuilder {
     [string] $InstallationTemplateName
     [string] $InstallationScriptName
     [string] $OutputArtifactName
+    [string] $PackageLocation
 
     WinPythonBuilder(
         [semver] $version,
@@ -34,6 +35,80 @@ class WinPythonBuilder : PythonBuilder {
         $this.InstallationTemplateName = "win-setup-template.ps1"
         $this.InstallationScriptName = "setup.ps1"
         $this.OutputArtifactName = "python-$Version-$Platform-$Architecture.zip"
+    }
+
+    [bool] UsesPackageManifest() {
+        <#
+        .SYNOPSIS
+        Python 3.16+ no longer ships legacy Windows installers (PEP 773), only packages listed in a release manifest.
+        #>
+
+        return $this.Version.Major -eq 3 -and $this.Version.Minor -ge 16
+    }
+
+    [string] GetManifestPackageId([string] $package, [bool] $freethreaded) {
+        <#
+        .SYNOPSIS
+        Return the id of a package ("pythoncore" or "pythontest") in the Windows release manifest for this architecture.
+        #>
+
+        $hardware = switch ($this.GetHardwareArchitecture()) {
+            "x86" { "32" }
+            "x64" { "64" }
+            "arm64" { "arm64" }
+            default { throw "Unsupported architecture: $($this.Architecture)" }
+        }
+        $suffix = if ($freethreaded) { "t" } else { "" }
+
+        return "${package}-$($this.Version.Major).$($this.Version.Minor)${suffix}-${hardware}"
+    }
+
+    [uri] GetManifestUri() {
+        <#
+        .SYNOPSIS
+        Return URI of the Windows release manifest, e.g. windows-3.16.0a1.json
+        #>
+
+        $base = $this.GetBaseUri()
+        $versionName = $this.GetBaseVersion()
+        $nativeVersion = Convert-Version -version $this.Version
+
+        return "${base}/${versionName}/windows-${nativeVersion}.json"
+    }
+
+    [object] GetManifest() {
+        <#
+        .SYNOPSIS
+        Download and parse the Windows release manifest.
+        #>
+
+        $manifestUri = $this.GetManifestUri()
+        Write-Host "Manifest URI: $manifestUri"
+
+        return Invoke-RestMethod -Uri $manifestUri
+    }
+
+    [string] DownloadPackage([object] $manifest, [string] $packageId) {
+        <#
+        .SYNOPSIS
+        Download a package listed in the Windows release manifest and validate its SHA-256 hash.
+        #>
+
+        $package = $manifest.versions | Where-Object { $_.id -eq $packageId }
+        if ($null -eq $package) {
+            throw "Package '$packageId' not found in the Windows release manifest"
+        }
+
+        Write-Host "Sources URI: $($package.url)"
+        $packagePath = Download-File -Uri $package.url -OutputFolder $this.WorkFolderLocation
+        Write-Debug "Done; Sources location: $packagePath"
+
+        $actualHash = (Get-FileHash -Path $packagePath -Algorithm SHA256).Hash
+        if ($actualHash -ne $package.hash.sha256) {
+            throw "SHA-256 mismatch for $($package.url): expected $($package.hash.sha256), got $actualHash"
+        }
+
+        return $packagePath
     }
 
     [string] GetPythonExtension() {
@@ -84,6 +159,21 @@ class WinPythonBuilder : PythonBuilder {
         Download Python installation executable into artifact location.
         #>
 
+        if ($this.UsesPackageManifest()) {
+            $manifest = $this.GetManifest()
+
+            # The "pythontest" package is "pythoncore" plus Lib/test, for consistency with the legacy installers.
+            $packageId = $this.GetManifestPackageId("pythontest", $this.IsFreeThreaded())
+
+            # 3.16.0a1 has no free-threaded "pythontest" package, so fall back to "pythoncore" (no Lib/test) for those.
+            if (-not ($manifest.versions | Where-Object { $_.id -eq $packageId })) {
+                Write-Host "Package '$packageId' not found, using 'pythoncore' instead"
+                $packageId = $this.GetManifestPackageId("pythoncore", $this.IsFreeThreaded())
+            }
+
+            return $this.DownloadPackage($manifest, $packageId)
+        }
+
         $sourceUri = $this.GetSourceUri()
 
         Write-Host "Sources URI: $sourceUri"
@@ -99,8 +189,12 @@ class WinPythonBuilder : PythonBuilder {
         Create Python artifact installation script based on specified template.
         #>
 
-        $sourceUri = $this.GetSourceUri()
-        $pythonExecName = [IO.path]::GetFileName($sourceUri.AbsoluteUri)
+        if ($this.UsesPackageManifest()) {
+            $pythonExecName = [IO.path]::GetFileName($this.PackageLocation)
+        } else {
+            $sourceUri = $this.GetSourceUri()
+            $pythonExecName = [IO.path]::GetFileName($sourceUri.AbsoluteUri)
+        }
         $installationTemplateLocation = Join-Path -Path $this.InstallationTemplatesLocation -ChildPath $this.InstallationTemplateName
         $installationTemplateContent = Get-Content -Path $installationTemplateLocation -Raw
         $installationScriptLocation = New-Item -Path $this.WorkFolderLocation -Name $this.InstallationScriptName -ItemType File
@@ -129,7 +223,7 @@ class WinPythonBuilder : PythonBuilder {
         #>
 
         Write-Host "Download Python $($this.Version) [$($this.Architecture)] executable..."
-        $this.Download()
+        $this.PackageLocation = $this.Download()
 
         Write-Host "Create installation script..."
         $this.CreateInstallationScript()
