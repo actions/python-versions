@@ -87,7 +87,7 @@ Describe "Tests" {
         It "py.exe finds Python" -Skip:$SkipPyLauncher {
             $suffix = if ($Architecture -match "-freethreaded") { "t" } else { "" }
             $major, $minor = "$Version".Split(".")[0..1]
-            $bits = if ($Architecture -match "x86") { "32" } else { "64" }
+            $bits = if ($Architecture -match "x86") { "32" } elseif ($Architecture -match "arm64") { "arm64" } else { "64" }
             $pyLocation = py "-$major.$minor$suffix-$bits" -c "import sys; print(sys.executable)"
             $LASTEXITCODE | Should -Be 0
             $expectedPath = Join-Path -Path $env:RUNNER_TOOL_CACHE -ChildPath "Python"
