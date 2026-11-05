@@ -45,6 +45,14 @@ class RhelPythonBuilder : NixPythonBuilder {
             $configureString += " --disable-gil"
         }
 
+        ### Python 3.15+ skips _decimal unless it finds a system libmpdec, and the RHEL builder doesn't install mpdecimal.
+        ### Linking a static copy also keeps the artifact from needing libmpdec on the runner.
+        if ([semver]"$($this.Version.Major).$($this.Version.Minor)" -ge [semver]"3.15") {
+            $libmpdecLocation = $this.BuildLibmpdec()
+            $configureString += " LIBMPDEC_CFLAGS='-I$libmpdecLocation/include'"
+            $configureString += " LIBMPDEC_LIBS='$libmpdecLocation/lib/libmpdec.a -lm'"
+        }
+
         ### Compile with support of loadable sqlite extensions.
         ### Link to documentation (https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.enable_load_extension)
         $configureString += " --enable-loadable-sqlite-extensions"
